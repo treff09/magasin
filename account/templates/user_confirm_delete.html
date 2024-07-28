@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmation de suppression</title>
+</head>
+<body>
+    <h1>Confirmation de suppression</h1>
+    <form method="post">
+        {% csrf_token %}
+        <p>Êtes-vous sûr de vouloir supprimer "{{ user.username }}" ?</p>
+        <button type="submit">Confirmer</button>
+    </form>
+    <a href="{% url 'user_list' %}">Annuler</a>
+</body>
+</html>

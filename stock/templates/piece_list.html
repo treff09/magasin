@@ -1,0 +1,7 @@
+{% for piece in pieces %}
+    <p>{{ piece.designation }} - {{ piece.numero_piece }}</p>
+    <a href="{% url 'piece_detail' piece.pk %}">Detail</a>
+    <a href="{% url 'piece_update' piece.pk %}">Edit</a>
+    <a href="{% url 'piece_delete' piece.pk %}">Delete</a>
+{% endfor %}
+<a href="{% url 'piece_create' %}">Ajouter une Piece</a>
