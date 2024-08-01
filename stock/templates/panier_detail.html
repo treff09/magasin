@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détails du panier</title>
+</head>
+<body>
+    <h1>Panier de {{ request.user.username }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Numéro de pièce</th>
+                <th>Désignation</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.piece.numero_piece }}</td>
+                    <td>{{ item.piece.designation }}</td>
+                    <td>{{ item.quantite }}</td>
+                    <td>{{ item.piece.prix_unitaire }}</td>
+                    <td>{{ item.piece.prix_unitaire|floatformat:2|add:item.quantite|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'valider_panier' %}">Valider le panier</a>
+</body>
+</html>

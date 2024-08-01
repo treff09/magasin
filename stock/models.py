@@ -29,3 +29,31 @@ class Piece(models.Model):
 
     def __str__(self):
         return f"{self.designation} - {self.numero_piece}"
+
+class Panier(models.Model):
+    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='paniers_crees')
+    date_creation = models.DateTimeField(auto_now_add=True)
+    valide = models.BooleanField(default=False)
+    ticket = models.CharField(max_length=10)
+    
+    
+
+class PanierItem(models.Model):
+    panier = models.ForeignKey(Panier, on_delete=models.CASCADE)
+    piece = models.ForeignKey(Piece, on_delete=models.CASCADE)
+    quantite = models.PositiveIntegerField(default=0)
+
+class Commande(models.Model):
+    panier = models.ForeignKey(Panier, on_delete=models.CASCADE)
+    numero_commande = models.CharField(max_length=100)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    paye = models.BooleanField(default=False)
+    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commandes_validees', null=True, blank=True)
+
+class Ticket(models.Model):
+    numero = models.CharField(max_length=100)
+    commande = models.OneToOneField(Commande, on_delete=models.CASCADE)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    utilise = models.BooleanField(default=False)
+    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='livraisons_effectuees', null=True, blank=True)

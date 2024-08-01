@@ -5,7 +5,6 @@ from .models import Profile
 from .forms import UserForm, ProfileForm
 from django.contrib.auth import authenticate, login
 
-
 def is_admin_magasin(user):
     return user.groups.filter(name='AdminMagasin').exists()
 
@@ -25,7 +24,9 @@ def user_create(request):
         user_form = UserForm(request.POST)
         profile_form = ProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
+            user = user_form.save(commit=False)
+            user.set_password(user_form.cleaned_data['password'])
+            user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
@@ -64,15 +65,12 @@ def user_delete(request, pk):
         return redirect('user_list')
     return render(request, 'user_confirm_delete.html', {'user': user})
 
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-      
-      
-        print(f"user {user}")
+        
         if user is not None:
             login(request, user)
             if user.groups.filter(name='Caissiers').exists():
@@ -86,4 +84,4 @@ def login_view(request):
         else:
             return render(request, 'login.html', {'error': 'Invalid username or password'})
     else:
-        return render(request, 'login.html') 
+        return render(request, 'login.html')

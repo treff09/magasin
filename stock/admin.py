@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categorie, Piece, Fournisseur
+from .models import Categorie, Piece, Fournisseur,PanierItem
 
 @admin.register(Categorie)
 class CategorieAdmin(admin.ModelAdmin):
@@ -16,3 +16,8 @@ class PieceAdmin(admin.ModelAdmin):
 class FournisseurAdmin(admin.ModelAdmin):
     list_display = ['nom', 'contact']
     search_fields = ['nom']
+
+@admin.register(PanierItem)
+class PanierItemAdmin(admin.ModelAdmin):
+    list_display = ['panier', 'piece','quantite']
+    search_fields = ['piece']

@@ -11,6 +11,7 @@
         <a href="{% url 'user_update' user.pk %}">Edit</a>
         <a href="{% url 'user_delete' user.pk %}">Delete</a>
     {% endfor %}
-    <a href="{% url 'user_create' %}">Ajouter un nouvel utilisateur</a>
+    <br><a href="{% url 'user_create' %}">Ajouter un nouvel utilisateur</a>
+    <br><a href="{% url 'piece_list' %}">liste des piece</a> 
 </body>
 </html>
