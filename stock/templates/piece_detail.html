@@ -1,0 +1,10 @@
+<p>{{ piece.designation }} - {{ piece.numero_piece }}</p>
+<p>Type Voiture: {{ piece.type_voiture.type_voiture }}</p>
+<p>Prix Unitaire: {{ piece.prix_unitaire }}</p>
+<p>Quantité: {{ piece.quantite }}</p>
+<p>Emplacement: {{ piece.emplacement }}</p>
+<p>Utilisateur: {{ piece.utilisateur.username }}</p>
+<p>Fournisseur: {{ piece.fournisseur.nom }}</p>
+<a href="{% url 'piece_update' piece.pk %}">Edit</a>
+<a href="{% url 'piece_delete' piece.pk %}">Delete</a>
+<a href="{% url 'piece_list' %}">Back to List</a>

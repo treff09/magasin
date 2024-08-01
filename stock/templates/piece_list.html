@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des Pièces</title>
+</head>
+<body>
+    <h1>Liste des Pièces</h1>
+    <form method="post" action="{% url 'ajouter_au_panier' %}">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Numéro de Pièce</th>
+                    <th>Désignation</th>
+                    <th>Prix Unitaire</th>
+                    <th>Quantité Disponible</th>
+                    <th>Quantité à Commander</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for piece in pieces %}
+                <tr>
+                    <td>{{ piece.numero_piece }}</td>
+                    <td>{{ piece.designation }}</td>
+                    <td>{{ piece.prix_unitaire }}</td>
+                    <td>{{ piece.quantite }}</td>
+                    <td>
+                        <input type="number" name="quantites_{{ piece.pk }}" value="1" min="1" max="{{ piece.quantite }}">
+                        <input type="hidden" name="pieces" value="{{ piece.pk }}">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><a href="{% url 'piece_create' %}">Ajouter des pieces</a>
+        <button type="submit">Ajouter au Panier</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulaire d'utilisateur</title>
+</head>
+<body>
+    <h1>Formulaire d'utilisateur</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <button type="submit">Enregistrer</button>
+    </form>
+    <a href="{% url 'user_list' %}">Retour à la liste</a>
+</body>
+</html>

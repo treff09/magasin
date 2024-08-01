@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Valider le paiement</title>
+</head>
+<body>
+    <h1>Valider le paiement pour le ticket {{ ticket.numero }}</h1>
+    <p>Montant total à payer : {{ commande.total }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <label for="montant">Montant payé :</label>
+        <input type="number" step="0.01" name="montant" id="montant" required>
+        <button type="submit">Valider le paiement</button>
+    </form>
+    <a href="{% url 'caissier_accueil' %}">Retour à l'accueil</a>
+</body>
+</html>

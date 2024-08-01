@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Valider la livraison</title>
+</head>
+<body>
+    <h1>Valider la livraison pour le ticket {{ ticket.numero }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Valider la livraison</button>
+    </form>
+    <a href="{% url 'livraison_accueil' %}">Retour à l'accueil</a>
+</body>
+</html>
