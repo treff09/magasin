@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from seantheme.com/quantum/ui_tabs_accordions.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Aug 2024 21:45:53 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Quantum | Tabs &amp; Accordions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content />
+<meta name="author" content />
+
+<link href="assets/css/vendor.min.css" rel="stylesheet" />
+<link href="assets/css/app.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+<div id="loader" class="app-loader">
+<div class="d-flex align-items-center">
+<div class="app-loader-circle"></div>
+<div class="app-loader-text">LOADING...</div>
+</div>
+</div>
+
+
+<div id="app" class="app">
+
+<div id="header" class="app-header">
+
+<div class="desktop-toggler">
+<button type="button" class="menu-toggler" data-toggle-class="app-sidebar-collapsed" data-dismiss-class="app-sidebar-toggled" data-toggle-target=".app">
+<span class="bar"></span>
+<span class="bar"></span>
+</button>
+</div>
+
+
+<div class="mobile-toggler">
+<button type="button" class="menu-toggler" data-toggle-class="app-sidebar-mobile-toggled" data-toggle-target=".app">
+<span class="bar"></span>
+<span class="bar"></span>
+</button>
+</div>
+
+
+<div class="brand">
+<a href="index.html" class="brand-logo w-100">
+<iconify-icon icon="lets-icons:time-progress-duotone" class="fs-24px me-2 text-theme"></iconify-icon>
+<span class="brand-text fw-500 fs-14px">QUANTUM</span>
+</a>
+</div>
+
+
+<div class="menu">
+<div class="menu-item dropdown d-lg-flex d-none">
+<a href="#" class="menu-link">
+<span>$1,859,050.12</span>
+</a>
+</div>
+<div class="menu-item dropdown d-lg-flex d-none me-3">
+<div class="menu-search-inline">
+<iconify-icon icon="ph:magnifying-glass-duotone" class="menu-icon"></iconify-icon>
+<input class="form-control" placeholder="Search something..." value name="keywords" />
+</div>
+</div>
+<div class="menu-item dropdown d-lg-none d-flex">
+<a href="#" class="menu-link menu-link-icon" data-toggle-class="app-header-menu-search-toggled" data-toggle-target=".app">
+<iconify-icon icon="ph:magnifying-glass-duotone" class="menu-icon"></iconify-icon>
+</a>
+</div>
+<div class="menu-item dropdown">
+<a href="#" class="menu-link menu-link-icon px-lg-3" data-bs-toggle="dropdown" data-bs-display="static">
+<iconify-icon icon="ph:globe-duotone" class="menu-icon me-lg-2"></iconify-icon>
+<span class="d-lg-flex d-none">EN</span>
+</a>
+<div class="dropdown-menu fade dropdown-menu-end mt-1 fs-10px text-uppercase">
+<a href="#" class="dropdown-item d-flex align-items-center">English <span class="ms-auto fw-semibold text-white w-20px text-center">EN</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Spanish <span class="ms-auto fw-semibold text-white w-20px text-center">ES</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">French <span class="ms-auto fw-semibold text-white w-20px text-center">FR</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">German <span class="ms-auto fw-semibold text-white w-20px text-center">DE</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Italian <span class="ms-auto fw-semibold text-white w-20px text-center">IT</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Japanese <span class="ms-auto fw-semibold text-white w-20px text-center">JA</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Chinese <span class="ms-auto fw-semibold text-white w-20px text-center">ZH</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Russian <span class="ms-auto fw-semibold text-white w-20px text-center">RU</span></a>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:calendar-dots-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu dropdown-menu-end p-0 w-300px">
+<div class="card">
+<div class="card-header">TODAY, NOV 4</div>
+<div class="card-body p-0 widget-reminder">
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">09:00<br>12:00</div>
+<div class="widget-reminder-divider bg-success"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Meeting with HR</div>
+<div> - Conference Room</div>
+</div>
+</div>
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">20:00<br>23:00</div>
+<div class="widget-reminder-divider bg-primary"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Dinner with Richard</div>
+<div> - Tom's Too Restaurant</div>
+<div class="d-flex align-items-center mt-2">
+<div class="flex-fill d-flex align-items-center">
+<img src="assets/img/user/user-3.jpg" alt width="16" class="me-2"> Richard Leong
+</div>
+<a href="#" class="ms-auto">Contact</a>
+</div>
+</div>
+</div>
+</div>
+<div class="card-header">TOMORROW, NOV 5</div>
+<div class="card-body p-0 widget-reminder">
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">All day</div>
+<div class="widget-reminder-divider bg-gray-300"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Terry Birthday</div>
+</div>
+</div>
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">08:00</div>
+<div class="widget-reminder-divider bg-gray-300"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Meeting</div>
+</div>
+</div>
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">00:00<br>00:30</div>
+<div class="widget-reminder-divider bg-gray-300"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Server Maintenance</div>
+<div> - Data Centre</div>
+</div>
+</div>
+</div>
+</div>
+<a class="dropdown-item fs-10px text-center py-2 d-block" href="calendar.html">VIEW ALL</a>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:chats-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu dropdown-menu-end fade p-0 w-300px">
+<div class="card">
+<div class="card-header with-btn">
+DISCUSSION GROUP
+</div>
+<div data-scrollbar="true" class="h-200px card-body fs-10px">
+<div class="widget-chat">
+<div class="widget-chat-item">
+<div class="widget-chat-media"><img src="assets/img/user/user-2.jpg" alt></div>
+<div class="widget-chat-content">
+<div class="widget-chat-name">Roberto Lambert</div>
+<div class="widget-chat-message last">
+Hey, I'm testing out group messaging.
+</div>
+</div>
+</div>
+<div class="widget-chat-item reply">
+<div class="widget-chat-content">
+<div class="widget-chat-message last">
+Cool
+</div>
+<div class="widget-chat-status">Read 16:26</div>
+</div>
+</div>
+<div class="widget-chat-date">Today 14:21</div>
+<div class="widget-chat-item">
+<div class="widget-chat-media"><img src="assets/img/user/user-3.jpg" alt></div>
+<div class="widget-chat-content">
+<div class="widget-chat-name">Rick Powell</div>
+<div class="widget-chat-message last">
+Awesome! What's new?
+</div>
+</div>
+</div>
+<div class="widget-chat-item">
+<div class="widget-chat-media"><img src="assets/img/user/user-2.jpg" alt></div>
+<div class="widget-chat-content">
+<div class="widget-chat-name">Roberto Lambert</div>
+<div class="widget-chat-message">
+Not much, It's got a new look, contact pics show up in group messaging, some other small stuff.
+</div>
+<div class="widget-chat-message last">
+How's crusty old iOS 6 treating you?
+</div>
+</div>
+</div>
+<div class="widget-chat-item reply">
+<div class="widget-chat-content">
+<div class="widget-chat-message last">
+Sucks
+</div>
+<div class="widget-chat-status">Read 16:30</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a class="dropdown-item fs-10px text-center py-2 d-block" href="messenger.html">VIEW ALL</a>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:squares-four-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu fade dropdown-menu-end p-0 w-300px text-center">
+<div class="row row-grid gx-0">
+<div class="col-4">
+<a href="email_inbox.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div class="position-relative">
+<i class="bi bi-circle-fill position-absolute text-theme top-0 mt-n2 me-n2 fs-6px d-block text-center w-100"></i>
+<i class="bi bi-envelope h2 opacity-5 d-block my-1"></i>
+</div>
+<div class="fw-500 fs-10px text-white">INBOX</div>
+</a>
+</div>
+<div class="col-4">
+<a href="pos_customer_order.html" target="_blank" class="dropdown-item text-decoration-none p-3 bg-none">
+<div><i class="bi bi-hdd-network h2 opacity-5 d-block my-1"></i></div>
+<div class="fw-500 fs-10px text-white">POS SYSTEM</div>
+</a>
+</div>
+<div class="col-4">
+<a href="calendar.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div><i class="bi bi-calendar4 h2 opacity-5 d-block my-1"></i></div>
+<div class="fw-500 fs-10px text-white">CALENDAR</div>
+</a>
+</div>
+</div>
+<div class="row row-grid gx-0">
+<div class="col-4">
+<a href="helper.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div><i class="bi bi-terminal h2 opacity-5 d-block my-1"></i></div>
+<div class="fw-500 fs-10px text-white">HELPER</div>
+</a>
+</div>
+<div class="col-4">
+<a href="settings.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div class="position-relative">
+<i class="bi bi-circle-fill position-absolute text-theme top-0 mt-n2 me-n2 fs-6px d-block text-center w-100"></i>
+<i class="bi bi-sliders h2 opacity-5 d-block my-1"></i>
+</div>
+<div class="fw-500 fs-10px text-white">SETTINGS</div>
+</a>
+</div>
+<div class="col-4">
+<a href="widgets.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div><i class="bi bi-collection-play h2 opacity-5 d-block my-1"></i></div>
+<div class="fw-500 fs-10px text-white">WIDGETS</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:warning-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu dropdown-menu-end fade w-300px p-0">
+<h6 class="dropdown-header fw-semibold py-2">NOTIFICATIONS</h6>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:mark-email-unread-outline-sharp"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">New email received</div>
+<div class="text-white text-opacity-75">You have a new email from John Doe.</div>
+<div class="text-white text-opacity-50 small">2 minutes ago</div>
+</div>
+</a>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:calendar-clock-outline-sharp"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">Meeting reminder: Tomorrow at 9:00 AM</div>
+<div class="text-white text-opacity-75">Don't forget your meeting with the client.</div>
+<div class="text-white text-opacity-50 small">1 hour ago</div>
+</div>
+</a>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:checklist"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">Task completed</div>
+<div class="text-white text-opacity-75">The task assigned to you has been completed.</div>
+<div class="text-white text-opacity-50 small">4 hours ago</div>
+</div>
+</a>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:mark-unread-chat-alt-outline-sharp"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">New comment on your post</div>
+<div class="text-white text-opacity-75">Someone commented on your recent post.</div>
+<div class="text-white text-opacity-50 small">10 hours ago</div>
+</div>
+</a>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:update"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">System update scheduled</div>
+<div class="text-white text-opacity-75">There will be a system update tomorrow.</div>
+<div class="text-white text-opacity-50 small">Yesterday at 6:00 PM</div>
+</div>
+</a>
+<a class="dropdown-item fs-10px text-center py-2 d-block" href="messenger.html">VIEW ALL</a>
+</div>
+</div>
+<div class="menu-item dropdown">
+<a href="#" data-toggle="theme-panel-expand" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:gear-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu dropdown-menu-end fade">
+<h6 class="dropdown-header">Settings</h6>
+<a class="dropdown-item" href="#">General Settings</a>
+<a class="dropdown-item" href="#">System Preferences</a>
+<a class="dropdown-item" href="#">Security Settings</a>
+<a class="dropdown-item" href="#">Application Settings</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="#">About</a>
+<a class="dropdown-item" href="#">Feedback</a>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link d-flex align-items-center">
+<div class="menu-img online me-sm-2 ms-lg-0 ms-n2">
+<img src="assets/img/user/profile.jpg" alt="Profile" class />
+</div>
+<div class="menu-text d-sm-block d-none">
+<span class="d-block"><span><span class="__cf_email__" data-cfemail="386d6b7d6a7679757d787f75797174167b7775">[email&#160;protected]</span></span></span>
+</div>
+</a>
+<div class="dropdown-menu dropdown-menu-end me-lg-3 fs-10px fade">
+<h6 class="dropdown-header">USER OPTIONS</h6>
+<a class="dropdown-item" href="profile.html">VIEW PROFILE</a>
+<a class="dropdown-item" href="settings.html">ACCOUNT SETTINGS</a>
+<a class="dropdown-item" href="calendar.html">CALENDER SETTINGS</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="helper.html">HELP & SUPPORT</a>
+<a class="dropdown-item" href="page_login.html">LOG OUT</a>
+</div>
+</div>
+</div>
+
+
+<form class="menu-search-float" method="POST" name="header_search_form">
+<div class="menu-search-container">
+<div class="menu-search-icon"><i class="bi bi-search"></i></div>
+<div class="menu-search-input">
+<input type="text" class="form-control" placeholder="Search something..." />
+</div>
+<div class="menu-search-icon">
+<a href="#" data-toggle-class="app-header-menu-search-toggled" data-toggle-target=".app"><i class="bi bi-x-lg"></i></a>
+</div>
+</div>
+</form>
+
+</div>
+
+
+<div id="sidebar" class="app-sidebar">
+
+<div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+
+<div class="menu">
+<div class="menu-header">APP INTERFACE</div>
+<div class="menu-item ">
+<a href="index.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:rocket-duotone"></iconify-icon>
+</span>
+<span class="menu-text">DASHBOARD</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="analytics.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:chart-bar-duotone"></iconify-icon>
+</span>
+<span class="menu-text">ANALYTICS</span>
+</a>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:envelope-duotone"></iconify-icon>
+</span>
+<span class="menu-text">EMAIL</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="email_inbox.html" class="menu-link">
+<span class="menu-text">INBOX</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="email_compose.html" class="menu-link">
+<span class="menu-text">COMPOSE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="email_detail.html" class="menu-link">
+<span class="menu-text">DETAIL</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-header">UXUI COMPONENTS</div>
+<div class="menu-item ">
+<a href="widgets.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:stack-duotone"></iconify-icon>
+</span>
+<span class="menu-text">WIDGETS</span>
+</a>
+</div>
+<div class="menu-item has-sub ">
+<a href="javascript:;" class="menu-link">
+<div class="menu-icon">
+<iconify-icon icon="ph:handbag-simple-duotone"></iconify-icon>
+<span class="w-5px h-5px rounded-3 bg-theme position-absolute top-0 end-0 mt-3px me-3px d-none"></span>
+</div>
+<div class="menu-text d-flex align-items-center">POS SYSTEM</div>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item">
+<a href="pos_customer_order.html" target="_blank" class="menu-link">
+<div class="menu-text">CUSTOMER ORDER</div>
+</a>
+</div>
+<div class="menu-item">
+<a href="pos_kitchen_order.html" target="_blank" class="menu-link">
+<div class="menu-text">KITCHEN ORDER</div>
+</a>
+</div>
+<div class="menu-item">
+<a href="pos_counter_checkout.html" target="_blank" class="menu-link">
+<div class="menu-text">COUNTER CHECKOUT</div>
+</a>
+</div>
+<div class="menu-item">
+<a href="pos_table_booking.html" target="_blank" class="menu-link">
+<div class="menu-text">TABLE BOOKING</div>
+</a>
+</div>
+<div class="menu-item">
+<a href="pos_menu_stock.html" target="_blank" class="menu-link">
+<div class="menu-text">MENU STOCK</div>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub active">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:game-controller-duotone"></iconify-icon>
+</span>
+<span class="menu-text">UI KITS</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="ui_bootstrap.html" class="menu-link">
+<span class="menu-text">BOOTSTRAP</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_buttons.html" class="menu-link">
+<span class="menu-text">BUTTONS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_card.html" class="menu-link">
+<span class="menu-text">CARD</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_icons.html" class="menu-link">
+<span class="menu-text">ICONS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_modal_notification.html" class="menu-link">
+<span class="menu-text">MODAL & NOTIFICATION</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_typography.html" class="menu-link">
+<span class="menu-text">TYPOGRAPHY</span>
+</a>
+</div>
+<div class="menu-item active">
+<a href="ui_tabs_accordions.html" class="menu-link">
+<span class="menu-text">TABS & ACCORDIONS</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:pencil-simple-duotone"></iconify-icon>
+</span>
+<span class="menu-text">FORMS</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="form_elements.html" class="menu-link">
+<span class="menu-text">FORM ELEMENTS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="form_plugins.html" class="menu-link">
+<span class="menu-text">FORM PLUGINS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="form_wizards.html" class="menu-link">
+<span class="menu-text">WIZARDS</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:grid-nine-duotone"></iconify-icon>
+</span>
+<span class="menu-text">TABLES</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="table_elements.html" class="menu-link">
+<span class="menu-text">TABLE ELEMENTS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="table_plugins.html" class="menu-link">
+<span class="menu-text">TABLE PLUGINS</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:chart-donut-duotone"></iconify-icon>
+</span>
+<span class="menu-text">CHARTS</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="chart_js.html" class="menu-link">
+<span class="menu-text">CHART.JS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="chart_apex.html" class="menu-link">
+<span class="menu-text">APEXCHARTS.JS</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item ">
+<a href="map.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:map-pin-area-duotone"></iconify-icon>
+</span>
+<span class="menu-text">MAP</span>
+</a>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:terminal-window-duotone"></iconify-icon>
+</span>
+<span class="menu-text">LAYOUT</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="layout_starter.html" class="menu-link">
+<span class="menu-text">STARTER PAGE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_fixed_footer.html" class="menu-link">
+<span class="menu-text">FIXED FOOTER</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_full_height.html" class="menu-link">
+<span class="menu-text">FULL HEIGHT</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_full_width.html" class="menu-link">
+<span class="menu-text">FULL WIDTH</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_boxed_layout.html" class="menu-link">
+<span class="menu-text">BOXED LAYOUT</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_collapsed_sidebar.html" class="menu-link">
+<span class="menu-text">COLLAPSED SIDEBAR</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_top_nav.html" class="menu-link">
+<span class="menu-text">TOP NAV</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_mixed_nav.html" class="menu-link">
+<span class="menu-text">MIXED NAV</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_mixed_nav_boxed_layout.html" class="menu-link">
+<span class="menu-text">MIXED NAV BOXED LAYOUT</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:open-ai-logo-duotone"></iconify-icon>
+</span>
+<span class="menu-text">PAGES</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="page_scrum_board.html" class="menu-link">
+<span class="menu-text">SCRUM BOARD</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_products.html" class="menu-link">
+<span class="menu-text">PRODUCTS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_product_details.html" class="menu-link">
+<span class="menu-text">PRODUCT DETAILS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_orders.html" class="menu-link">
+<span class="menu-text">ORDERS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_order_details.html" class="menu-link">
+<span class="menu-text">ORDER DETAILS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_gallery.html" class="menu-link">
+<span class="menu-text">GALLERY</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_search_results.html" class="menu-link">
+<span class="menu-text">SEARCH RESULTS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_coming_soon.html" class="menu-link">
+<span class="menu-text">COMING SOON PAGE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_404_error.html" class="menu-link">
+<span class="menu-text">404 ERROR PAGE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_login.html" class="menu-link">
+<span class="menu-text">LOGIN</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_register.html" class="menu-link">
+<span class="menu-text">REGISTER</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_data_management.html" class="menu-link">
+<span class="menu-text">DATA MANAGEMENT</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_pricing.html" class="menu-link">
+<span class="menu-text">PRICING PAGE</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-header">USER PORTAL</div>
+<div class="menu-item ">
+<a href="file_manager.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:folder-duotone"></iconify-icon>
+</span>
+<span class="menu-text">FILE MANAGER</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="messenger.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:messenger-logo-duotone"></iconify-icon>
+</span>
+<span class="menu-text">MESSENGER</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="profile.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:user-focus-duotone"></iconify-icon>
+</span>
+<span class="menu-text">PROFILE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="calendar.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:calendar-duotone"></iconify-icon>
+</span>
+<span class="menu-text">CALENDAR</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="settings.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:gear-duotone"></iconify-icon>
+</span>
+<span class="menu-text">SETTINGS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="helper.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:first-aid-kit-duotone"></iconify-icon>
+</span>
+<span class="menu-text">HELPER</span>
+</a>
+</div>
+</div>
+
+<div class="mt-auto p-15px w-100">
+<a href="documentation/index.html" target="_blank" class="btn d-block btn-secondary btn-sm py-6px w-100">
+DOCUMENTATION
+</a>
+</div>
+</div>
+
+</div>
+
+
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+
+<div id="content" class="app-content">
+
+<div class="container">
+
+<div class="row justify-content-center">
+
+<div class="col-xl-10">
+
+<div class="row">
+
+<div class="col-xl-9">
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="#">UI KITS</a></li>
+<li class="breadcrumb-item active">TABS & ACCORDIONS</li>
+</ul>
+<h1 class="page-header">
+Tabs & Accordions <small>page header description goes here...</small>
+</h1>
+<hr class="mb-4 opacity-3" />
+
+<div id="tabs" class="mb-5">
+<h4>Tabs</h4>
+<p>
+Takes the basic nav from above and adds the .nav-tabs class to generate a tabbed interface. Use them to create tabbable regions with bootstrap tab JavaScript plugin.
+Please read the <a href="https://getbootstrap.com/docs/5.3/components/navs/#tabs" target="_blank">official Bootstrap documentation</a> for the full list of options.
+</p>
+<div class="card">
+<div class="card-header with-btn">
+INSTALLATION
+<div class="card-header-btn">
+<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
+<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
+<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
+</div>
+</div>
+<div class="card-body">
+
+<ul class="nav nav-tabs">
+<li class="nav-item me-1"><a href="#home" class="nav-link active" data-bs-toggle="tab">Home</a></li>
+<li class="nav-item me-1"><a href="#profile" class="nav-link" data-bs-toggle="tab">Profile</a></li>
+<li class="nav-item me-1 dropdown">
+<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+Dropdown
+</a>
+<div class="dropdown-menu">
+<a href="#dropdown1" class="dropdown-item" data-bs-toggle="tab">@fat</a>
+<a href="#dropdown2" class="dropdown-item" data-bs-toggle="tab">@mdo</a>
+</div>
+</li>
+</ul>
+
+
+<div class="tab-content pt-3">
+
+<div class="tab-pane fade show active" id="home">
+<p>
+Raw denim you probably haven't heard of them jean shorts Austin.
+Nesciunt tofu stumptown aliqua, retro synth master cleanse.
+Mustache cliche tempor, williamsburg carles vegan helvetica.
+Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+Cosby sweater eu banh mi, qui irure terry richardson ex squid.
+Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel,
+butcher voluptate nisi qui.
+</p>
+</div>
+
+
+<div class="tab-pane fade" id="profile">
+<p>
+Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan
+four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft
+beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda
+labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit
+sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
+shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown,
+tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+</p>
+</div>
+
+
+<div class="tab-pane fade" id="dropdown1">
+<p>
+Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
+lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed
+craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth
+PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever
+gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you
+probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu
+synth chambray yr.
+</p>
+</div>
+
+
+<div class="tab-pane fade" id="dropdown2">
+<p>
+Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY,
+art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR,
+banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral,
+mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial
+keffiyeh echo park vegan.
+</p>
+</div>
+
+</div>
+
+</div>
+<div class="hljs-container">
+<pre><code class="xml" data-url="assets/data/ui-tabs-accordions/code-1.json"></code></pre>
+</div>
+</div>
+</div>
+
+
+<div id="tabsV2" class="mb-5">
+<h4>Tabs v2</h4>
+<p>
+This is an extended ui layout from default Bootstrap navigation tabs. Add <code>.nav-tabs-v2</code> to the navigation element in order to activate the v2 layout.
+</p>
+<div class="card">
+<div class="card-header with-btn">
+INSTALLATION
+<div class="card-header-btn">
+<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
+<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
+<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
+</div>
+</div>
+<div class="card-body pt-1">
+
+<ul class="nav nav-tabs nav-tabs-v2">
+<li class="nav-item mx-3"><a href="#homev2" class="nav-link active py-2" data-bs-toggle="tab">Home</a></li>
+<li class="nav-item mx-3"><a href="#profilev2" class="nav-link py-2" data-bs-toggle="tab">Profile</a></li>
+<li class="nav-item mx-3 dropdown">
+<a href="#" class="nav-link dropdown-toggle py-2" data-bs-toggle="dropdown">
+Dropdown
+</a>
+<div class="dropdown-menu">
+<a href="#dropdown1v2" class="dropdown-item" data-bs-toggle="tab">@fat</a>
+<a href="#dropdown2v2" class="dropdown-item" data-bs-toggle="tab">@mdo</a>
+</div>
+</li>
+</ul>
+
+
+<div class="tab-content pt-3">
+
+<div class="tab-pane fade show active" id="homev2">
+<p>
+Raw denim you probably haven't heard of them jean shorts Austin.
+Nesciunt tofu stumptown aliqua, retro synth master cleanse.
+Mustache cliche tempor, williamsburg carles vegan helvetica.
+Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+Cosby sweater eu banh mi, qui irure terry richardson ex squid.
+Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel,
+butcher voluptate nisi qui.
+</p>
+</div>
+
+
+<div class="tab-pane fade" id="profilev2">
+<p>
+Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan
+four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft
+beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda
+labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit
+sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
+shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown,
+tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+</p>
+</div>
+
+
+<div class="tab-pane fade" id="dropdown1v2">
+<p>
+Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic
+lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed
+craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth
+PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever
+gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you
+probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu
+synth chambray yr.
+</p>
+</div>
+
+
+<div class="tab-pane fade" id="dropdown2v2">
+<p>
+Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out
+master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY,
+art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR,
+banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral,
+mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial
+keffiyeh echo park vegan.
+</p>
+</div>
+
+</div>
+
+</div>
+<div class="hljs-container">
+<pre><code class="xml" data-url="assets/data/ui-tabs-accordions/code-2.json"></code></pre>
+</div>
+</div>
+</div>
+
+
+<div id="tabsWithCard" class="mb-5">
+<h4>Tabs with card</h4>
+<p>
+This is an extended ui layout from default Bootstrap navigation tabs. Add <code>.nav-tabs-v2</code> to the navigation element in order to activate the v2 layout.
+</p>
+<div class="card">
+<div class="card-header with-btn">
+INSTALLATION
+<div class="card-header-btn">
+<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
+<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
+<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
+</div>
+</div>
+<div class="card-body pt-1">
+<div class="row">
+<div class="col-xl-6">
+<div class="card">
+<ul class="nav nav-tabs pt-3 px-3">
+<li class="nav-item me-1"><a href="#homeWithCard" class="nav-link active" data-bs-toggle="tab">Home</a></li>
+<li class="nav-item me-1"><a href="#profileWithCard" class="nav-link" data-bs-toggle="tab">Profile</a></li>
+</ul>
+<div class="tab-content p-4">
+
+<div class="tab-pane fade show active" id="homeWithCard">
+<p>
+Raw denim you probably haven't heard of them jean shorts Austin.
+Nesciunt tofu stumptown aliqua, retro synth master cleanse.
+Mustache cliche tempor, williamsburg carles vegan helvetica.
+Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+Cosby sweater eu banh mi, qui irure terry richardson ex squid.
+Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel,
+butcher voluptate nisi qui.
+</p>
+</div>
+
+
+<div class="tab-pane fade" id="profileWithCard">
+<p>
+Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan
+four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft
+beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda
+labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit
+sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
+shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown,
+tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+</p>
+</div>
+
+</div>
+</div>
+</div>
+<div class="col-xl-6">
+<div class="card">
+<ul class="nav nav-tabs nav-tabs-v2 ps-4 pe-4">
+<li class="nav-item me-3"><a href="#homev2WithCard" class="nav-link active" data-bs-toggle="tab">Home</a></li>
+<li class="nav-item me-3"><a href="#profilev2WithCard" class="nav-link" data-bs-toggle="tab">Profile</a></li>
+</ul>
+<div class="tab-content p-4">
+
+<div class="tab-pane fade show active" id="homev2WithCard">
+<p>
+Raw denim you probably haven't heard of them jean shorts Austin.
+Nesciunt tofu stumptown aliqua, retro synth master cleanse.
+Mustache cliche tempor, williamsburg carles vegan helvetica.
+Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+Cosby sweater eu banh mi, qui irure terry richardson ex squid.
+Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel,
+butcher voluptate nisi qui.
+</p>
+</div>
+
+
+<div class="tab-pane fade" id="profilev2WithCard">
+<p>
+Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan
+four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft
+beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda
+labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit
+sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
+shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown,
+tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+</p>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="hljs-container">
+<pre><code class="xml" data-url="assets/data/ui-tabs-accordions/code-3.json"></code></pre>
+</div>
+</div>
+</div>
+
+
+<div id="pills" class="mb-5">
+<h4>Pills</h4>
+<p>
+Take that same HTML, but use <code>.nav-pills</code> instead:
+</p>
+<div class="card">
+<div class="card-header with-btn">
+INSTALLATION
+<div class="card-header-btn">
+<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
+<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
+<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
+</div>
+</div>
+<div class="card-body">
+<ul class="nav nav-pills mb-3" id="pills-tab">
+<li class="nav-item">
+<a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile">Profile</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" href="#pills-contact">Contact</a>
+</li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+<div class="tab-pane fade show active" id="pills-home">
+Consequat occaecat ullamco amet non eiusmod nostrud dolore irure incididunt est duis anim sunt officia. Fugiat velit proident aliquip nisi incididunt nostrud exercitation proident est nisi. Irure magna elit commodo anim ex veniam culpa eiusmod id nostrud sit cupidatat in veniam ad. Eiusmod consequat eu adipisicing minim anim aliquip cupidatat culpa excepteur quis. Occaecat sit eu exercitation irure Lorem incididunt nostrud.
+</div>
+<div class="tab-pane fade" id="pills-profile">
+Ad pariatur nostrud pariatur exercitation ipsum ipsum culpa mollit commodo mollit ex. Aute sunt incididunt amet commodo est sint nisi deserunt pariatur do. Aliquip ex eiusmod voluptate exercitation cillum id incididunt elit sunt. Qui minim sit magna Lorem id et dolore velit Lorem amet exercitation duis deserunt. Anim id labore elit adipisicing ut in id occaecat pariatur ut ullamco ea tempor duis.
+</div>
+<div class="tab-pane fade" id="pills-contact">
+Est quis nulla laborum officia ad nisi ex nostrud culpa Lorem excepteur aliquip dolor aliqua irure ex. Nulla ut duis ipsum nisi elit fugiat commodo sunt reprehenderit laborum veniam eu veniam. Eiusmod minim exercitation fugiat irure ex labore incididunt do fugiat commodo aliquip sit id deserunt reprehenderit aliquip nostrud. Amet ex cupidatat excepteur aute veniam incididunt mollit cupidatat esse irure officia elit do ipsum ullamco Lorem. Ullamco ut ad minim do mollit labore ipsum laboris ipsum commodo sunt tempor enim incididunt. Commodo quis sunt dolore aliquip aute tempor irure magna enim minim reprehenderit. Ullamco consectetur culpa veniam sint cillum aliqua incididunt velit ullamco sunt ullamco quis quis commodo voluptate. Mollit nulla nostrud adipisicing aliqua cupidatat aliqua pariatur mollit voluptate voluptate consequat non.
+</div>
+</div>
+</div>
+<div class="hljs-container">
+<pre><code class="xml" data-url="assets/data/ui-tabs-accordions/code-4.json"></code></pre>
+</div>
+</div>
+</div>
+
+
+<div id="accordion" class="mb-5">
+<h4>Accordion</h4>
+<p>
+Build vertically collapsing accordions in combination with Bootstrap Collapse JavaScript plugin. Please read the <a href="https://getbootstrap.com/docs/5.3/components/accordion/" target="_blank">official Bootstrap documentation</a> for the full list of options.
+</p>
+<div class="card">
+<div class="card-header with-btn">
+INSTALLATION
+<div class="card-header-btn">
+<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
+<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
+<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
+</div>
+</div>
+<div class="card-body">
+<div class="accordion" id="accordionExample">
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingOne">
+<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+Accordion Item #1
+</button>
+</h2>
+<div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+<div class="accordion-body">
+<strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+</div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingTwo">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+Accordion Item #2
+</button>
+</h2>
+<div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+<div class="accordion-body">
+<strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+</div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingThree">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+Accordion Item #3
+</button>
+</h2>
+<div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+<div class="accordion-body">
+<strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="hljs-container">
+<pre><code class="xml" data-url="assets/data/ui-tabs-accordions/code-5.json"></code></pre>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<div class="col-xl-3">
+
+<nav id="sidebar-bootstrap" class="navbar navbar-sticky d-none d-xl-block">
+<nav class="nav">
+<a class="nav-link" href="#tabs" data-toggle="scroll-to">Tabs</a>
+<a class="nav-link" href="#tabsV2" data-toggle="scroll-to">Tabs v2</a>
+<a class="nav-link" href="#tabsWithCard" data-toggle="scroll-to">Tabs with card</a>
+<a class="nav-link" href="#pills" data-toggle="scroll-to">Pills</a>
+<a class="nav-link" href="#accordion" data-toggle="scroll-to">Accordion</a>
+</nav>
+</nav>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
+<iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
+</a>
+
+
+<div class="app-theme-panel">
+<div class="app-theme-panel-container">
+<a href="#" data-toggle="theme-panel-expand" class="app-theme-toggle-btn"><iconify-icon icon="ph:gear-duotone"></iconify-icon></a>
+<div class="app-theme-panel-content">
+<div class="fs-10px fw-semibold text-white">
+THEME COLOR
+</div>
+<div class="fs-9px lh-sm mb-2 text-white text-opacity-75">
+Choose your favorite theme color
+</div>
+
+<div class="app-theme-list">
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-pink" data-theme-class="theme-pink" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Pink">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-red" data-theme-class="theme-red" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Red">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-warning" data-theme-class="theme-warning" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-yellow" data-theme-class="theme-yellow" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-lime" data-theme-class="theme-lime" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Lime">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-green" data-theme-class="theme-green" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green">&nbsp;</a></div>
+<div class="app-theme-list-item active"><a href="#" class="app-theme-list-link bg-teal" data-theme-class data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Default">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-info" data-theme-class="theme-info" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Cyan">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-primary" data-theme-class="theme-primary" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Blue">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-indigo" data-theme-class="theme-indigo" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-purple" data-theme-class="theme-purple" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-white" data-theme-class="theme-white" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="White">&nbsp;</a></div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+
+<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../../code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" type="bfc3d866b4bd4ad744efcdc4-text/javascript"></script>
+<script src="assets/js/vendor.min.js" type="bfc3d866b4bd4ad744efcdc4-text/javascript"></script>
+<script src="assets/js/app.min.js" type="bfc3d866b4bd4ad744efcdc4-text/javascript"></script>
+
+<script src="assets/plugins/%40highlightjs/cdn-assets/highlight.min.js" type="bfc3d866b4bd4ad744efcdc4-text/javascript"></script>
+<script src="assets/js/demo/highlightjs.demo.js" type="bfc3d866b4bd4ad744efcdc4-text/javascript"></script>
+<script src="assets/js/demo/sidebar-scrollspy.demo.js" type="bfc3d866b4bd4ad744efcdc4-text/javascript"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3Q0VGQKY3" type="bfc3d866b4bd4ad744efcdc4-text/javascript"></script>
+<script type="bfc3d866b4bd4ad744efcdc4-text/javascript">
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-Y3Q0VGQKY3');
+	</script>
+<script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="bfc3d866b4bd4ad744efcdc4-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8ad97a2b5ec1b91a","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"4db8c6ef997743fda032d4f73cfeff63","b":1}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from seantheme.com/quantum/ui_tabs_accordions.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Aug 2024 21:45:53 GMT -->
+</html>

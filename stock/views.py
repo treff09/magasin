@@ -4,6 +4,13 @@ from .models import Categorie, Piece, Fournisseur, Panier, PanierItem, Commande,
 from .forms import AjouterAuPanierForm, PieceForm
 from django.contrib import messages 
 
+
+def base(request):
+    return render(request,'magasin/base.html',)
+def admin_magasin(request):
+    return render(request,'dash_admin_magasin.html',)
+
+
 def is_admin_magasin(user):
     return user.groups.filter(name='AdminMagasin').exists()
 def is_caissier(user):
