@@ -35,6 +35,7 @@ class Panier(models.Model):
     date_creation = models.DateTimeField(auto_now_add=True)
     valide = models.BooleanField(default=False)
     ticket = models.CharField(max_length=10)
+    panier_paye = models.BooleanField(default=False)
     
     
 

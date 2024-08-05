@@ -22,7 +22,7 @@
                 <tr>
                     <td>{{ panier.ticket }}</td>
                     <td>{{ panier.utilisateur.username }}</td>
-                    <td>{{ ticket.date_creation }}</td>
+                    <td>{{ panier.date_creation }}</td>
                     <td>
                         <a href="">Voir Détails</a>
                         <a href="{% url 'valider_paiement' panier.ticket %}" onclick="return confirm('Êtes-vous sûr de vouloir valider ce panier ?');">Valider</a>
