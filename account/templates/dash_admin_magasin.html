@@ -101,49 +101,39 @@
 
 
 	<div class="col-xl-2 col-lg-4 col-6">
-
-	<div class="card h-100">
-
-	<div class="card-header">TOP REFERRING SITES</div>
-
-
-	<div class="card-body">
-	<div class="h4 fw-100 text-theme mb-1">Google</div>
-	<p class="text-white fs-10px mb-0">
-	2 new referrals added
-	</p>
-	<p class="fs-9px mb-0 text-white text-opacity-50">
-	updated 1 min ago
-	</p>
-	</div>
-
-	</div>
-
+		<div class="card h-100">
+			<div class="card-header">NBRE DE PIECE EN RUPTURE</div>
+			<div class="card-body">
+				<div class="h4 fw-100 text-theme mb-1">28</div>
+				<p class="text-white fs-10px mb-0">
+					2 new referrals added
+				</p>
+				<p class="fs-9px mb-0 text-white text-opacity-50">
+					updated 1 min ago
+				</p>
+			</div>
+		</div>
 	</div>
 
 
 	<div class="col-xl-2 col-lg-4 col-6">
+		<div class="card h-100">
+			<div class="card-header">EMPLOYERS</div>
+				<div class="card-body">
+					<div class="h4 fw-100 text-theme mb-1">87</div>
+						<p class="text-white fs-10px mb-0">
+							+5 countries vs last year
+						</p>
+						<p class="fs-9px mb-0 text-white text-opacity-50">
+							updated 1 min ago
+						</p>
+					</div>
+			
+				</div>
+		
+			</div>
 
-	<div class="card h-100">
-
-	<div class="card-header">COUNTRIES REACH</div>
-
-
-	<div class="card-body">
-	<div class="h4 fw-100 text-theme mb-1">87</div>
-	<p class="text-white fs-10px mb-0">
-	+5 countries vs last year
-	</p>
-	<p class="fs-9px mb-0 text-white text-opacity-50">
-	updated 1 min ago
-	</p>
-	</div>
-
-	</div>
-
-	</div>
-
-	</div>
+		</div>
 
 	</div>
 
@@ -154,29 +144,62 @@
 
 	<div class="card-header with-btn">
 	TRAFFIC ANALYTICS
-	<div class="card-header-btn">
-	<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
-	<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
-	<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
-	</div>
-	</div>
-
-
-	<div class="card-body p-0">
-	<div class="row gx-0">
-	<div class="col-lg-8 position-relative">
-
-	<div id="world-map" class style="height: 344px;"></div>
-	<div class="position-absolute text-white fs-10px bottom-0 end-0 start-0 p-15px d-flex align-items-center">
-	<iconify-icon class="text-white fs-30px me-2" icon="solar:map-point-rotate-bold-duotone"></iconify-icon>
 	
 	</div>
+
+
+	<div class="card-body p-0  ">
+	<div class="row gx-0">
+	<div class="col-lg-8 position-relative">
+		<div class="card-body">
+			<div class="h-320px  p-0">
+				<canvas id="CA" class="h-100 w-100" width="500" height="343" style="display: block; box-sizing: border-box; height: 350px; width: 500px; position:relative;">
+					<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				</canvas>
+				<script>
+					const cta = document.getElementById('CA');
+					var labels = ['jan','fev','Mar','Avr','mai','jui','jui','aou','sep','oct','nov','dec'];
+					var recetData = [10, 7, 10, 81, 56, 55, 40,80, 81, 20, 4, 69];
+					new Chart(cta, {
+					  type: 'bar',
+					  data: {
+						labels: labels,
+						datasets: [{
+						  label: "Evolution des ventes",
+						  data: recetData,
+						  fill: true,
+						  borderColor: ['rgb(34,110,90)'],
+						  tension: 0.4,
+						  borderWidth: 1,
+						  backgroundColor: [
+                                  '#00b57f',
+                                ],
+						}]
+					  },
+					  options: {
+						scales: {
+						  y: {
+							beginAtZero: true,
+							easing: 'linear',
+							from: 1,
+						  }
+						}
+					  }
+					});
+				  </script>
+		
+			</div>
+		</div>
+			
+	
+
+	
 
 	</div>
 	<div class="col-lg-4">
 	<div class="p-3">
 	<div class="h4 text-theme mb-0 fw-100">[33,129]</div>
-	<p class="text-white fs-10px fw-semibold mb-0">TOTAL VISITS</p>
+	<p class="text-white fs-10px fw-semibold mb-0">MEILLEURS VENTES</p>
 	<hr class="my-2" />
 	<table class="w-100 text-truncate fs-10px">
 	<thead>
@@ -238,7 +261,7 @@
 	<table class="w-100 text-truncate fs-10px">
 	<thead>
 	<tr class="text-white">
-	<th class="w-50">BROWSER</th>
+	<th class="w-50">MOINS ACHETER</th>
 	<th class="w-25 text-end">NO/m</th>
 	<th class="w-25 text-end">PCT%</th>
 	</tr>
@@ -366,12 +389,7 @@
 
 			<div class="col-lg-12">
 				<div class="card h-100">
-					<div class="card-header with-btn">THREAT DETECTION
-						<div class="card-header-btn">
-							<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
-							<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
-							<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
-						</div>
+					<div class="card-header with-btn">NOMBRE DE PIECE VENDUE PAR CATEGORIE DE VEHICULE
 					</div>
 				
 					<div class="card-body">
@@ -380,26 +398,26 @@
 								<div class="d-flex flex-column justify-content-center text-center">
 									<div class="w-40px mx-auto">
 										<div data-render="apexchart" data-type="donut" data-height="40"></div></div>
-										<div class="mt-2">THREATS</div>
+										<div class="mt-2">ALTO</div>
 										<div class="text-white">459</div>
 									</div>
 								</div>
 				
 				
-					<div class="col-4">
-					<div class="d-flex flex-column justify-content-center text-center">
-					<div class="w-40px mx-auto"><div data-render="apexchart" data-type="donut" data-height="40"></div></div>
-					<div class="mt-2">FALSE POS</div>
-					<div class="text-white mt-0">20</div>
-					</div>
-					</div>
+						<div class="col-4">
+							<div class="d-flex flex-column justify-content-center text-center">
+								<div class="w-40px mx-auto"><div data-render="apexchart" data-type="donut" data-height="40"></div></div>
+								<div class="mt-2">SUZIKI</div>
+								<div class="text-white mt-0">20</div>
+							</div>
+						</div>
 				
 				
 					<div class="col-4">
 					<div class="d-flex flex-column justify-content-center text-center">
 					<div class="w-40px mx-auto"><div data-render="apexchart" data-type="donut" data-height="40"></div></div>
-					<div class="mt-2">RESP. TIME</div>
-					<div class="text-white mt-0">1 min</div>
+					<div class="mt-2">EXPRESSO</div>
+					<div class="text-white mt-0">200</div>
 					</div>
 					</div>
 				
@@ -409,8 +427,8 @@
 					<table class="w-100 text-truncate fs-10px table-py-1px">
 						<thead>
 						<tr class="text-white">
-						<th width="40%">DETECTION SRC.</th>
-						<th width="25%">TYPE</th>
+						<th width="35%">Libelle.</th>
+						<th width="30%">CATEGORIE</th>
 						<th width="25%">SEVERITY</th>
 						<th width="10%">TOTAL</th>
 						</tr>

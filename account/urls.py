@@ -15,6 +15,6 @@ urlpatterns = [
     path('accueillant_dashboard/', login_required(lambda request: render(request, 'accueillant_dashboard.html')), name='accueillant_dashboard'),
     path('livraison_dashboard/', login_required(lambda request: render(request, 'livraison_dashboard.html')), name='livraison_dashboard'),
     path('users/', user_list, name='user_list'),
-    path('login/', login_view, name='login'),
+    path('', login_view, name='login'),
     path('logout/', logout_view, name='deconnexion'),
 ]
