@@ -3,10 +3,11 @@ from django.contrib.auth.decorators import user_passes_test
 from .models import Categorie, Piece, Fournisseur, Panier, PanierItem, Commande, Ticket
 from .forms import AjouterAuPanierForm, PieceForm
 from django.contrib import messages 
-
+from django.contrib.auth.decorators import login_required
 
 def base(request):
     return render(request,'magasin/base.html',)
+login_required(login_url='login')
 def admin_magasin(request):
     return render(request,'dash_admin_magasin.html',)
 

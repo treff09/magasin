@@ -3,12 +3,20 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-
+    
+    username = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"magasin@20",'class':'form-control'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Bradtref",'class':'form-control'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"........",'class':'form-control'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder":"email@gmail.com....",'class':'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"1234.....",'class':'form-control'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"1234.....",'class':'form-control'}))
+    
+    
+   
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
+       
 
     def clean(self):
         cleaned_data = super().clean()
@@ -22,4 +30,7 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['role']
+        fields = ['role',]
+        widgets = {
+            'role': forms.Select(attrs={'class':'form-control'}),
+        } 

@@ -1,15 +1,93 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Confirmation de suppression</title>
-</head>
-<body>
-    <h1>Confirmation de suppression</h1>
-    <form method="post">
-        {% csrf_token %}
-        <p>Êtes-vous sûr de vouloir supprimer "{{ user.username }}" ?</p>
-        <button type="submit">Confirmer</button>
-    </form>
-    <a href="{% url 'user_list' %}">Annuler</a>
-</body>
-</html>
+{% extends "magasin/base.html" %}
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block main_content %}
+
+
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+
+<div id="content" class="app-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="row">
+                    <div class="col-xl-9">
+                        <div id="general" class="mb-5">
+                            <h4 class="d-flex align-items-center mb-1"><i class="fa fa-5px fa-user-circle"></i>  SUPPRESION D'UN COMPTE UTILISATEUR </h4>
+                            <div class="card">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="flex-fill">
+                                            <div class="text-white text-opacity-50">Nom utilisateur</div>
+                                            <div class="text-white">{{user.username}}</div>
+                                        </div>  
+                                    </div>
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="flex-fill">
+                                            <div class="text-white text-opacity-50">Nom</div>
+                                            <div class="text-white">{{user.first_name}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="flex-fill">
+                                            <div class="text-white text-opacity-50">Nom</div>
+                                            <div class="text-white">{{user.last_name}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="flex-fill">
+                                            <div class="text-white text-opacity-50">Email address</div>
+                                            <div class="text-white">{{user.email}}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="flex-fill">
+                                            <div class="text-white text-opacity-50">Role</div>
+                                            <div class="text-white">{{user.profile.role}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body d-flex align-items-center"></div>
+
+                                    <div class="card-body d-flex align-items-center">
+                                        <div class="flex-fill">
+                                            <div class="text-white text-opacity-50"><a href="{% url "user_create" %}" class="btn btn-outline-light  btn-block" style="border-radius: 8px;"><i class="fa fa-reply"></i> RETOUR</a></div>
+                                        </div>
+                                        <dir></dir>
+                                        <button type="submit" class="btn btn-outline-light  btn-block" style="border-radius: 8px;" onclick="return confirm('Etes-vous sûre de vouloir supprimer le compte de {{ user.username|upper }}? car si vous supprimer toutes les informations liées seront perdues')">SUPPRIMER <i class="fa fa-trash"></i></button>
+                                        
+                                        {% comment %} <input type="submit" value="Supprimer" onclick="return confirm('Etes-vous sûre de vouloir supprimer les informations concernant {{ vehicule.marque|upper }} - {{ vehicule.immatriculation|upper }}? car si vous supprimer toutes les informations liées seront perdues')" style="box-shadow: 0 0 3px 0 rgb(75, 75, 75); height:35px; width:100px; border-radius:8px; border-color: rgb(250, 186, 186);background:rgb(182, 1, 1); color:aliceblue"> {% endcomment %}
+                                    </div>
+                                
+                                
+                                     </div>
+                                    </div>
+
+                                </form>
+                    </div>
+            
+                        <div class="col-xl-3">
+                            <nav id="sidebar-bootstrap" class="navbar navbar-sticky d-none d-xl-block">
+                                <nav class="nav">
+                                    <a class="nav-link" href="#general" data-bs-toggle="scroll-to">Information Générale</a>
+                                </nav>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+</div>
+
+
+
+    
+    
+{% endblock  %}
