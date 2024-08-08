@@ -4,6 +4,13 @@ from .models import Categorie, Piece, Fournisseur, Panier, PanierItem, Commande,
 from .forms import AjouterAuPanierForm, PieceForm
 from django.contrib import messages 
 
+
+def base(request):
+    return render(request,'magasin/base.html',)
+def admin_magasin(request):
+    return render(request,'dash_admin_magasin.html',)
+
+
 def is_admin_magasin(user):
     return user.groups.filter(name='AdminMagasin').exists()
 def is_caissier(user):
@@ -17,8 +24,63 @@ def is_liveur(user):
 @user_passes_test(is_accueillant)
 def piece_list(request):
     pieces = Piece.objects.all()
-    return render(request, 'piece_list.html', {'pieces': pieces})
 
+    # Retrieve or create the cart for the current user
+    panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
+    panier_items = PanierItem.objects.filter(panier=panier)
+
+    # Calculate totals
+    for item in panier_items:
+        item.total = item.piece.prix_unitaire * item.quantite
+    sous_total = sum(item.total for item in panier_items)
+
+    context = {
+        'pieces': pieces,
+        'panier_items': panier_items,
+        'sous_total': sous_total,
+    }
+    return render(request, 'piece_list.html', context)
+@user_passes_test(is_accueillant)
+def ajouter_au_panier(request, piece_id):
+    piece = get_object_or_404(Piece, id=piece_id)
+    panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
+    panier_item, created = PanierItem.objects.get_or_create(panier=panier, piece=piece)
+
+    # Increment quantity if item already exists in the cart
+    if not created:
+        panier_item.quantite += 1
+        panier_item.save()
+
+    return redirect('piece_list')  # Redirect to the page showing both list and cart
+@user_passes_test(is_accueillant)
+def valider_panier(request):
+    panier = Panier.objects.get(utilisateur=request.user, valide=False)
+    if request.method == 'POST':
+        # Handle quantity updates
+        for item in panier.panieritem_set.all():
+            quantite = int(request.POST.get(f'quantite_{item.piece.id}', 0))
+            item.quantite = quantite
+            item.save()
+
+        # Handle validation and save panier
+        remise = request.POST.get('remise', 0)
+        panier.valide = True
+        panier.save()
+        return redirect('piece_list')  # Redirect to a confirmation page
+
+    context = {
+        'panier': panier,
+    }
+    return render(request, 'piece_list.html', context)
+@user_passes_test(is_accueillant)
+def supprimer_du_panier(request, item_id):
+    panier = Panier.objects.get(utilisateur=request.user, valide=False)
+    panier_item = get_object_or_404(PanierItem, id=item_id, panier=panier)
+    
+    # Remove item from the cart
+    panier_item.delete()
+    
+    return redirect('piece_list')
 @user_passes_test(is_admin_magasin)
 def piece_detail(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
@@ -73,80 +135,35 @@ from django.db import transaction
 
 
 @user_passes_test(is_accueillant)
-def ajouter_au_panier(request):
+def panier(request):
+    panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
+    panier_items = PanierItem.objects.filter(panier=panier)
+
+    # Calculate totals
+    for item in panier_items:
+        item.total = item.piece.prix_unitaire * item.quantite
+    sous_total = sum(item.total for item in panier_items)
+
     if request.method == 'POST':
-        # Vérifier si un panier non validé existe
-        panier = Panier.objects.filter(utilisateur=request.user, valide=False).first()
-        
-        if not panier:
-            # Créer un nouveau panier non validé si aucun panier non validé n'existe
-            panier = Panier.objects.create(utilisateur=request.user, valide=False)
+        #
+        for item in panier_items:
+            quantite = int(request.POST.get(f'quantite_{item.piece.id}', 0))
+            item.quantite = quantite
+            item.save()
 
-        with transaction.atomic():
-            # Itérer à travers chaque pièce
-            for key in request.POST:
-                if key.startswith('quantites_'):
-                    piece_id = key.replace('quantites_', '')
-                    try:
-                        quantite = int(request.POST.get(key, 0))
-                        if quantite > 0:
-                            piece = get_object_or_404(Piece, pk=piece_id)
-                            panier_item, created = PanierItem.objects.get_or_create(panier=panier, piece=piece)
-                            
-                            if not created:
-                                panier_item.quantite += quantite
-                            else:
-                                panier_item.quantite = quantite
-                            panier_item.save()
-                    except ValueError:
-                        # Gérer les cas où la quantité n'est pas un entier
-                        messages.error(request, f"Quantité invalide pour l'article avec l'ID {piece_id}.")
-        
-        messages.success(request, "Les articles ont été ajoutés au panier.")
-        return redirect('panier_detail')
-    
-    return redirect('piece_list')
+        #
+        remise = request.POST.get('remise', 0)
+        panier.valide = True
+        panier.save()
+        return redirect('piece_list')  
 
+    context = {
+        'panier_items': panier_items,
+        'panier': panier,
+        'sous_total': sous_total,
+    }
+    return render(request, 'panier.html', context)
 
-@user_passes_test(is_accueillant) 
-def panier_detail(request):
-    panier = get_object_or_404(Panier, utilisateur=request.user, valide=False)
-    items = PanierItem.objects.filter(panier=panier)
-    return render(request, 'panier_detail.html', {'panier': panier, 'items': items})
-
-@user_passes_test(is_accueillant)
-def valider_panier(request):
-    panier = get_object_or_404(Panier, utilisateur=request.user, valide=False)
-    
-    # Calculer le total du panier
-    total = sum(item.piece.prix_unitaire * item.quantite for item in PanierItem.objects.filter(panier=panier))
-    
-    # Créer une nouvelle commande pour le panier
-    commande = Commande.objects.create(
-        panier=panier,
-        numero_commande='CMD' + str(panier.id) + '-' + str(Commande.objects.filter(panier=panier).count() + 1),
-        total=total,
-        utilisateur=request.user
-    )
-    
-    # Créer un ticket pour la nouvelle commande
-    ticket = Ticket.objects.create(
-        numero='TKT' + str(commande.id),
-        commande=commande
-    )
-    
-    # Vider le panier
-    PanierItem.objects.filter(panier=panier).delete()
-    
-    # Marquer le panier comme validé
-    panier.valide = True
-    numero=f"TKT{str(commande.id)}"
-    numero=str(numero)
-    panier.ticket =numero
-    panier.save()
-
-    messages.success(request, f"Panier validé avec succès. Votre numéro de ticket est {ticket.numero}.")
-    return redirect('accueil')
 
 @user_passes_test(is_caissier)
 def valider_paiement(request, ticket_id):
@@ -156,7 +173,7 @@ def valider_paiement(request, ticket_id):
     
     if request.method == 'POST':
         montant = request.POST.get('montant')
-        if float(montant) > commande.total:
+        if float(montant) >= commande.total:
             commande.paye = True
             reste = float(montant) - float(commande.total)
             commande.utilisateur = request.user
@@ -202,9 +219,19 @@ def livraison_accueil(request):
 def accueil(request):
     return render(request, 'accueil.html')
 
+@user_passes_test(is_caissier)
+def caisseDashboard(request):
+    # Filtrer les paniers dont le statut 'valide' est True
+    
+    paniers_non_valides = Panier.objects.filter(valide=True)
+    context =  {
+        'paniers_non_valides': paniers_non_valides,
+    }
+    return render(request, 'caissier_dashboard.html', context)
 
 
-def caisse_dashboard(request):
-    # Filtrer les paniers dont le statut 'valide' est False
-    paniers_en_attente = Panier.objects.filter(valide=True,panier_paye =False) 
-    return render(request, 'caissier_dashboard.html', {'paniers_en_attente': paniers_en_attente})
+@user_passes_test(is_liveur)
+def livraison_dashboard(request):
+    # Filtrer les paniers dont le statut 'valide' est True
+    livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True) 
+    return render(request, 'livraison_dashboard.html', {'livraison_en_attente': livraison_en_attente})

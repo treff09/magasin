@@ -1,39 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Liste des Pièces</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Pièces et Panier</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .pieces, .panier {
+            width: 48%;
+        }
+        .pieces table, .panier table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .pieces th, .pieces td, .panier th, .panier td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .total {
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
-    <h1>Liste des Pièces</h1>
-    <form method="post" action="{% url 'ajouter_au_panier' %}">
-        {% csrf_token %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Numéro de Pièce</th>
-                    <th>Désignation</th>
-                    <th>Prix Unitaire</th>
-                    <th>Quantité Disponible</th>
-                    <th>Quantité à Commander</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for piece in pieces %}
-                <tr>
-                    <td>{{ piece.numero_piece }}</td>
-                    <td>{{ piece.designation }}</td>
-                    <td>{{ piece.prix_unitaire }}</td>
-                    <td>{{ piece.quantite }}</td>
-                    <td>
-                        <input type="number" name="quantites_{{ piece.pk }}" value="1" min="1" max="{{ piece.quantite }}">
-                        <input type="hidden" name="pieces" value="{{ piece.pk }}">
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br><a href="{% url 'piece_create' %}">Ajouter des pieces</a>
-        <button type="submit">Ajouter au Panier</button>
-    </form>
+    <div class="container">
+        <!-- Liste des pièces -->
+        <div class="pieces">
+            <h2>Liste des pièces</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No Pièce</th>
+                        <th>Désignation</th>
+                        <th>Qté en stock</th>
+                        <th>Prix Unitaire</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for piece in pieces %}
+                    <tr>
+                        <td>{{ piece.id }}</td>
+                        <td>{{ piece.designation }}</td>
+                        <td>{{ piece.quantite }}</td>
+                        <td>{{ piece.prix_unitaire }}</td>
+                        <td><a href="{% url 'ajouter_au_panier' piece.id %}">Ajouter au panier</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Panier -->
+        <div class="panier">
+            <h2>Panier</h2>
+            <form method="post" action="{% url 'valider_panier' %}">
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Désignation</th>
+                            <th>Prix</th>
+                            <th>Qté</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in panier_items %}
+                        <tr>
+                            <td>{{ item.piece.designation }}</td>
+                            <td>{{ item.piece.prix_unitaire }}</td>
+                            <td><input type="number" name="quantite_{{ item.piece.id }}" value="{{ item.quantite }}"></td>
+                            <td>{{ item.total }}</td>
+                            <td>
+                                <a href="{% url 'supprimer_du_panier' item.id %}">Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="total">Sous-total:</td>
+                            <td>{{ sous_total }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="total">Remise:</td>
+                            <td><input type="text" name="remise" placeholder="Entrez % remise..."></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="total">Total:</td>
+                            <td>{{ sous_total }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <button type="submit">Valider</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

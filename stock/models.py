@@ -31,18 +31,15 @@ class Piece(models.Model):
         return f"{self.designation} - {self.numero_piece}"
 
 class Panier(models.Model):
-    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='paniers_crees')
-    date_creation = models.DateTimeField(auto_now_add=True)
+    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE)
     valide = models.BooleanField(default=False)
-    ticket = models.CharField(max_length=10)
     panier_paye = models.BooleanField(default=False)
-    
-    
+    ticket = models.CharField(max_length=100, null=True, blank=True)
 
 class PanierItem(models.Model):
     panier = models.ForeignKey(Panier, on_delete=models.CASCADE)
     piece = models.ForeignKey(Piece, on_delete=models.CASCADE)
-    quantite = models.PositiveIntegerField(default=0)
+    quantite = models.PositiveIntegerField(default=1)
 
 class Commande(models.Model):
     panier = models.ForeignKey(Panier, on_delete=models.CASCADE)

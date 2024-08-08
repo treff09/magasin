@@ -3,15 +3,16 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User,Group
 from .models import Profile
 from .forms import UserForm, ProfileForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 def is_admin_magasin(user):
-    return user.groups.filter(name='AdminMagasin').exists()
+    return user.is_authenticated and user.groups.filter(name='AdminMagasin').exists()
 
 @user_passes_test(is_admin_magasin)
 def user_list(request):
     users = User.objects.filter(is_superuser=False)
-    return render(request, 'user_list.html', {'users': users})
+    return render(request, 'users_list.html', {'users': users})
 
 @user_passes_test(is_admin_magasin)
 def user_detail(request, pk):
@@ -32,6 +33,7 @@ def user_create(request):
             profile.save()
             group = Group.objects.get(name=profile.role)
             user.groups.add(group)
+            messages.success(request, 'Utilisateur enregistré avec succès')
             return redirect('user_list')
     else:
         user_form = UserForm()
@@ -74,14 +76,24 @@ def login_view(request):
         if user is not None:
             login(request, user)
             if user.groups.filter(name='Caissiers').exists():
-                return redirect('caissier_dashboard')
+                return redirect('caisseDashboard') #templates est dans stock
             elif user.groups.filter(name='Accueillants').exists():
                 return redirect('accueillant_dashboard')
             elif user.groups.filter(name='Livraisons').exists():
                 return redirect('livraison_dashboard')
             else:
-                return redirect('user_list')  
+                return redirect('adminmagasin')  
         else:
-            return render(request, 'login.html', {'error': 'Invalid username or password'})
+            return render(request, 'logins.html', {'error': 'Nom utilisateur ou mot de passe incorrecte'})
     else:
-        return render(request, 'login.html')
+        return render(request, 'logins.html')
+    
+    
+    
+def logout_view(request):
+    logout(request)
+    messages.success(request, "Vous êtes deconnecté.")
+    return redirect("login")
+
+
+

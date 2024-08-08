@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from seantheme.com/quantum/pos_counter_checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Aug 2024 21:45:47 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Quantum | POS - Counter Checkout System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content />
+<meta name="author" content />
+
+<link href="assets/css/vendor.min.css" rel="stylesheet" />
+<link href="assets/css/app.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+<div id="loader" class="app-loader">
+<div class="d-flex align-items-center">
+<div class="app-loader-circle"></div>
+<div class="app-loader-text">LOADING...</div>
+</div>
+</div>
+
+
+<div id="app" class="app app-content-full-height app-without-sidebar app-without-header">
+
+<div id="content" class="app-content p-0">
+
+<div class="pos pos-with-header pos-with-sidebar" id="pos">
+
+<div class="pos-container">
+
+<div class="pos-header">
+<div class="logo">
+<a href="index.html">
+<div class="logo-img"><iconify-icon icon="material-symbols-light:food-bank"></iconify-icon></div>
+<div class="logo-text">FOOD BANK</div>
+</a>
+</div>
+<div class="time" id="time">00:00</div>
+<div class="nav">
+<div class="nav-item">
+<a href="pos_counter_checkout.html" class="nav-link active" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Counter Checkout">
+<iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="nav-icon"></iconify-icon>
+</a>
+</div>
+<div class="nav-item">
+<a href="pos_kitchen_order.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kitchen Order">
+<iconify-icon icon="material-symbols-light:order-approve-outline-sharp" class="nav-icon"></iconify-icon>
+</a>
+</div>
+<div class="nav-item">
+<a href="pos_table_booking.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Table Booking">
+<iconify-icon icon="material-symbols-light:calendar-month-outline-sharp" class="nav-icon"></iconify-icon>
+</a>
+</div>
+<div class="nav-item">
+<a href="pos_menu_stock.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Menu Stock">
+<iconify-icon icon="material-symbols-light:inventory-2-outline-sharp" class="nav-icon"></iconify-icon>
+</a>
+</div>
+</div>
+</div>
+
+
+<div class="pos-content">
+<div class="pos-content-container p-3">
+<div class="row g-3">
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table in-use">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">1</div>
+<div class="small">9 order</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">4 / 4</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">35:20</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">$318.20</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">Unpaid</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table in-use">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">2</div>
+<div class="small">12 orders</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">6 / 8</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">12:69</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">$682.20</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">Unpaid</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">3</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">4</div>
+<div class="small">max 4 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 4</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">5</div>
+<div class="small">max 4 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 4</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table in-use">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">6</div>
+<div class="small">3 orders</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">3 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">20:52</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">$56.49</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">Unpaid</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table in-use">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">7</div>
+<div class="small">6 orders</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">3 / 4</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">58:40</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">$329.02</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:check-circle-outline" class="fs-16px d-block text-success"></iconify-icon></div>
+<div class="w-60px text-success">Paid</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table in-use">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">8</div>
+<div class="small">0 orders</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">2 / 4</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">05:12</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">$329.02</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">Unpaid</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table in-use">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">9</div>
+<div class="small">4 orders</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">2 / 4</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">52:58</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">$49.50</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">Unpaid</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table in-use">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">10</div>
+<div class="small">12 orders</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">9 / 12</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">66:69</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">$768.24</div>
+</div>
+<div class="col-6 d-flex justify-content-center text-success">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:check-circle-outline" class="fs-16px d-block text-success"></iconify-icon></div>
+<div class="w-60px">Paid</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table disabled">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">11</div>
+<div class="small">Reserved for Sean</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 4</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">12</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">13</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">14</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">15</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">16</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">17</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">18</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">19</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="pos-checkout-table available">
+<a href="#" class="pos-checkout-table-container" data-toggle="select-table">
+<div class="pos-checkout-table-header">
+<div class="status"><i class="fa fa-circle"></i></div>
+<div class="fw-semibold small">TABLE</div>
+<div class="h1 mb-0">20</div>
+<div class="small">max 6 pax</div>
+</div>
+<div class="pos-checkout-table-info small">
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:group-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">0 / 6</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+<div class="row">
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:receipt-outline" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+<div class="col-6 d-flex justify-content-center">
+<div class="w-20px"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="fs-16px d-block"></iconify-icon></div>
+<div class="w-60px">-</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="pos-sidebar" id="pos-sidebar">
+
+<div class="pos-sidebar-header my-2px">
+<div class="back-btn">
+<button type="button" data-toggle-class="pos-mobile-sidebar-toggled" data-toggle-target="#pos" class="btn">
+<i class="fa fa-chevron-left"></i>
+</button>
+</div>
+<div class="icon"><i class="fa fa-plate-wheat"></i></div>
+<div class="title">Table 01</div>
+<div class="order">Order: <span class="fw-semibold">#0001</span></div>
+</div>
+
+
+<div class="pos-sidebar-body" data-scrollbar="true" data-height="100%">
+
+<div class="pos-order py-3">
+<div class="pos-order-product">
+<div class="img" style="background-image: url(assets/img/pos/product-2.jpg)"></div>
+<div class="flex-1">
+<div class="row">
+<div class="col-7">
+<div class="fw-semibold text-white">Grill Pork Chop</div>
+<div class="mb-1">$12.99</div>
+<div class="small">- size: large</div>
+</div>
+<div class="col-2">x1</div>
+<div class="col-3 fw-semibold text-white">$12.99</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="pos-order py-3">
+<div class="pos-order-product">
+<div class="img" style="background-image: url(assets/img/pos/product-8.jpg)"></div>
+<div class="flex-1">
+<div class="row">
+<div class="col-7">
+<div class="fw-semibold text-white">Orange Juice</div>
+<div class="mb-1">$5.00</div>
+<div class="small">- size: large<br>- less ice</div>
+</div>
+<div class="col-2">x2</div>
+<div class="col-3 fw-semibold text-white">$10.00</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="pos-order py-3">
+<div class="pos-order-product">
+<div class="img" style="background-image: url(assets/img/pos/product-13.jpg)"></div>
+<div class="flex-1">
+<div class="row">
+<div class="col-7">
+<div class="fw-semibold text-white">Vanilla Ice-cream</div>
+<div class="mb-1">$3.99</div>
+<div class="small">- scoop: 1 <br>- flavour: vanilla</div>
+</div>
+<div class="col-2">x1</div>
+<div class="col-3 fw-semibold text-white">$3.99</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="pos-order py-3">
+<div class="pos-order-product">
+<div class="img" style="background-image: url(assets/img/pos/product-1.jpg)"></div>
+<div class="flex-1">
+<div class="row">
+<div class="col-7">
+<div class="fw-semibold text-white">Grill chicken chop</div>
+<div class="mb-1">$3.99</div>
+<div class="small">- size: large<br>- spicy: medium</div>
+</div>
+<div class="col-2">x1</div>
+<div class="col-3 fw-semibold text-white">$10.99</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="pos-order py-3">
+<div class="pos-order-product">
+<div class="img" style="background-image: url(assets/img/pos/product-10.jpg)"></div>
+<div class="flex-1">
+<div class="row">
+<div class="col-7">
+<div class="fw-semibold text-white">Mushroom Soup</div>
+<div class="mb-1">$3.99</div>
+<div class="small">- size: large<br>- more cheese</div>
+</div>
+<div class="col-2">x1</div>
+<div class="col-3 fw-semibold text-white">$3.99</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="pos-order py-3">
+<div class="pos-order-product">
+<div class="img" style="background-image: url(assets/img/pos/product-5.jpg)"></div>
+<div class="flex-1">
+<div class="row">
+<div class="col-7">
+<div class="fw-semibold text-white">Hawaiian Pizza</div>
+<div class="mb-1">$15.00</div>
+<div class="small">- size: large<br>- more onion</div>
+</div>
+<div class="col-2">x1</div>
+<div class="col-3 fw-semibold text-white">$15.00</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="pos-order py-3">
+<div class="pos-order-product">
+<div class="img" style="background-image: url(assets/img/pos/product-15.jpg)"></div>
+<div class="flex-1">
+<div class="row">
+<div class="col-7">
+<div class="fw-semibold text-white">Perfect Yeast Doughnuts</div>
+<div class="mb-1">$2.99</div>
+<div class="small">- size: 1 set<br>- flavour: random</div>
+</div>
+<div class="col-2">x1</div>
+<div class="col-3 fw-semibold text-white">$2.99</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="pos-order py-3">
+<div class="pos-order-product">
+<div class="img" style="background-image: url(assets/img/pos/product-14.jpg)"></div>
+<div class="flex-1">
+<div class="row">
+<div class="col-7">
+<div class="fw-semibold text-white">Macarons</div>
+<div class="mb-1">$4.99</div>
+<div class="small">- size: 1 set<br>- flavour: random</div>
+</div>
+<div class="col-2">x1</div>
+<div class="col-3 fw-semibold text-white">$4.99</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<div class="pos-sidebar-footer mt-2px">
+<div class="d-flex align-items-center mb-2">
+<div>Subtotal</div>
+<div class="flex-1 text-end h6 mb-0">$64.94</div>
+</div>
+<div class="d-flex align-items-center">
+<div>Taxes (6%)</div>
+<div class="flex-1 text-end h6 mb-0">$3.90</div>
+</div>
+<hr/>
+<div class="d-flex align-items-center mb-2">
+<div>Total</div>
+<div class="flex-1 text-end h4 mb-0">$68.84</div>
+</div>
+<div class="mt-3">
+<div class="d-flex">
+<a href="#" class="btn btn-secondary btn-sm w-70px">
+<iconify-icon icon="material-symbols-light:cast-outline-sharp" class="d-flex fs-24px justify-content-center mt-1"></iconify-icon>
+<span>E-WALLET</span>
+</a>
+<span class="w-10px"></span>
+<a href="#" class="btn btn-secondary btn-sm w-70px">
+<iconify-icon icon="material-symbols-light:credit-card-outline-sharp" class="d-flex fs-24px justify-content-center mt-1"></iconify-icon>
+<span>BILL</span>
+</a>
+<span class="w-10px"></span>
+<a href="#" class="btn btn-default btn-sm flex-fill">
+<iconify-icon icon="material-symbols-light:account-balance-wallet-outline-sharp" class="d-flex fs-24px justify-content-center mt-1"></iconify-icon>
+<span>CASH</span>
+</a>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
+<iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
+</a>
+
+
+<div class="app-theme-panel">
+<div class="app-theme-panel-container">
+<a href="#" data-toggle="theme-panel-expand" class="app-theme-toggle-btn"><iconify-icon icon="ph:gear-duotone"></iconify-icon></a>
+<div class="app-theme-panel-content">
+<div class="fs-10px fw-semibold text-white">
+THEME COLOR
+</div>
+<div class="fs-9px lh-sm mb-2 text-white text-opacity-75">
+Choose your favorite theme color
+</div>
+
+<div class="app-theme-list">
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-pink" data-theme-class="theme-pink" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Pink">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-red" data-theme-class="theme-red" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Red">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-warning" data-theme-class="theme-warning" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-yellow" data-theme-class="theme-yellow" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-lime" data-theme-class="theme-lime" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Lime">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-green" data-theme-class="theme-green" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green">&nbsp;</a></div>
+<div class="app-theme-list-item active"><a href="#" class="app-theme-list-link bg-teal" data-theme-class data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Default">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-info" data-theme-class="theme-info" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Cyan">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-primary" data-theme-class="theme-primary" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Blue">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-indigo" data-theme-class="theme-indigo" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-purple" data-theme-class="theme-purple" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-white" data-theme-class="theme-white" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="White">&nbsp;</a></div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+
+<script src="../../code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" type="30be6a1ee71e5b72e60530cf-text/javascript"></script>
+<script src="assets/js/vendor.min.js" type="30be6a1ee71e5b72e60530cf-text/javascript"></script>
+<script src="assets/js/app.min.js" type="30be6a1ee71e5b72e60530cf-text/javascript"></script>
+
+<script src="assets/js/demo/pos-counter-checkout.demo.js" type="30be6a1ee71e5b72e60530cf-text/javascript"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3Q0VGQKY3" type="30be6a1ee71e5b72e60530cf-text/javascript"></script>
+<script type="30be6a1ee71e5b72e60530cf-text/javascript">
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-Y3Q0VGQKY3');
+	</script>
+<script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="30be6a1ee71e5b72e60530cf-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8ad97a0b0e870e34","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"4db8c6ef997743fda032d4f73cfeff63","b":1}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from seantheme.com/quantum/pos_counter_checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Aug 2024 21:45:48 GMT -->
+</html>

@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from seantheme.com/quantum/page_scrum_board.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Aug 2024 21:46:20 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Quantum | Scrum Board</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content />
+<meta name="author" content />
+
+<link href="assets/css/vendor.min.css" rel="stylesheet" />
+<link href="assets/css/app.min.css" rel="stylesheet" />
+
+<link href="assets/plugins/tag-it/css/jquery.tagit.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="loader" class="app-loader">
+<div class="d-flex align-items-center">
+<div class="app-loader-circle"></div>
+<div class="app-loader-text">LOADING...</div>
+</div>
+</div>
+
+
+<div id="app" class="app">
+
+<div id="header" class="app-header">
+
+<div class="desktop-toggler">
+<button type="button" class="menu-toggler" data-toggle-class="app-sidebar-collapsed" data-dismiss-class="app-sidebar-toggled" data-toggle-target=".app">
+<span class="bar"></span>
+<span class="bar"></span>
+</button>
+</div>
+
+
+<div class="mobile-toggler">
+<button type="button" class="menu-toggler" data-toggle-class="app-sidebar-mobile-toggled" data-toggle-target=".app">
+<span class="bar"></span>
+<span class="bar"></span>
+</button>
+</div>
+
+
+<div class="brand">
+<a href="index.html" class="brand-logo w-100">
+<iconify-icon icon="lets-icons:time-progress-duotone" class="fs-24px me-2 text-theme"></iconify-icon>
+<span class="brand-text fw-500 fs-14px">QUANTUM</span>
+</a>
+</div>
+
+
+<div class="menu">
+<div class="menu-item dropdown d-lg-flex d-none">
+<a href="#" class="menu-link">
+<span>$1,859,050.12</span>
+</a>
+</div>
+<div class="menu-item dropdown d-lg-flex d-none me-3">
+<div class="menu-search-inline">
+<iconify-icon icon="ph:magnifying-glass-duotone" class="menu-icon"></iconify-icon>
+<input class="form-control" placeholder="Search something..." value name="keywords" />
+</div>
+</div>
+<div class="menu-item dropdown d-lg-none d-flex">
+<a href="#" class="menu-link menu-link-icon" data-toggle-class="app-header-menu-search-toggled" data-toggle-target=".app">
+<iconify-icon icon="ph:magnifying-glass-duotone" class="menu-icon"></iconify-icon>
+</a>
+</div>
+<div class="menu-item dropdown">
+<a href="#" class="menu-link menu-link-icon px-lg-3" data-bs-toggle="dropdown" data-bs-display="static">
+<iconify-icon icon="ph:globe-duotone" class="menu-icon me-lg-2"></iconify-icon>
+<span class="d-lg-flex d-none">EN</span>
+</a>
+<div class="dropdown-menu fade dropdown-menu-end mt-1 fs-10px text-uppercase">
+<a href="#" class="dropdown-item d-flex align-items-center">English <span class="ms-auto fw-semibold text-white w-20px text-center">EN</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Spanish <span class="ms-auto fw-semibold text-white w-20px text-center">ES</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">French <span class="ms-auto fw-semibold text-white w-20px text-center">FR</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">German <span class="ms-auto fw-semibold text-white w-20px text-center">DE</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Italian <span class="ms-auto fw-semibold text-white w-20px text-center">IT</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Japanese <span class="ms-auto fw-semibold text-white w-20px text-center">JA</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Chinese <span class="ms-auto fw-semibold text-white w-20px text-center">ZH</span></a>
+<a href="#" class="dropdown-item d-flex align-items-center">Russian <span class="ms-auto fw-semibold text-white w-20px text-center">RU</span></a>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:calendar-dots-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu dropdown-menu-end p-0 w-300px">
+<div class="card">
+<div class="card-header">TODAY, NOV 4</div>
+<div class="card-body p-0 widget-reminder">
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">09:00<br>12:00</div>
+<div class="widget-reminder-divider bg-success"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Meeting with HR</div>
+<div> - Conference Room</div>
+</div>
+</div>
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">20:00<br>23:00</div>
+<div class="widget-reminder-divider bg-primary"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Dinner with Richard</div>
+<div> - Tom's Too Restaurant</div>
+<div class="d-flex align-items-center mt-2">
+<div class="flex-fill d-flex align-items-center">
+<img src="assets/img/user/user-3.jpg" alt width="16" class="me-2"> Richard Leong
+</div>
+<a href="#" class="ms-auto">Contact</a>
+</div>
+</div>
+</div>
+</div>
+<div class="card-header">TOMORROW, NOV 5</div>
+<div class="card-body p-0 widget-reminder">
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">All day</div>
+<div class="widget-reminder-divider bg-gray-300"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Terry Birthday</div>
+</div>
+</div>
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">08:00</div>
+<div class="widget-reminder-divider bg-gray-300"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Meeting</div>
+</div>
+</div>
+<div class="widget-reminder-item">
+<div class="widget-reminder-time">00:00<br>00:30</div>
+<div class="widget-reminder-divider bg-gray-300"></div>
+<div class="widget-reminder-content">
+<div class="fw-semibold text-white">Server Maintenance</div>
+<div> - Data Centre</div>
+</div>
+</div>
+</div>
+</div>
+<a class="dropdown-item fs-10px text-center py-2 d-block" href="calendar.html">VIEW ALL</a>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:chats-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu dropdown-menu-end fade p-0 w-300px">
+<div class="card">
+<div class="card-header with-btn">
+DISCUSSION GROUP
+</div>
+<div data-scrollbar="true" class="h-200px card-body fs-10px">
+<div class="widget-chat">
+<div class="widget-chat-item">
+<div class="widget-chat-media"><img src="assets/img/user/user-2.jpg" alt></div>
+<div class="widget-chat-content">
+<div class="widget-chat-name">Roberto Lambert</div>
+<div class="widget-chat-message last">
+Hey, I'm testing out group messaging.
+</div>
+</div>
+</div>
+<div class="widget-chat-item reply">
+<div class="widget-chat-content">
+<div class="widget-chat-message last">
+Cool
+</div>
+<div class="widget-chat-status">Read 16:26</div>
+</div>
+</div>
+<div class="widget-chat-date">Today 14:21</div>
+<div class="widget-chat-item">
+<div class="widget-chat-media"><img src="assets/img/user/user-3.jpg" alt></div>
+<div class="widget-chat-content">
+<div class="widget-chat-name">Rick Powell</div>
+<div class="widget-chat-message last">
+Awesome! What's new?
+</div>
+</div>
+</div>
+<div class="widget-chat-item">
+<div class="widget-chat-media"><img src="assets/img/user/user-2.jpg" alt></div>
+<div class="widget-chat-content">
+<div class="widget-chat-name">Roberto Lambert</div>
+<div class="widget-chat-message">
+Not much, It's got a new look, contact pics show up in group messaging, some other small stuff.
+</div>
+<div class="widget-chat-message last">
+How's crusty old iOS 6 treating you?
+</div>
+</div>
+</div>
+<div class="widget-chat-item reply">
+<div class="widget-chat-content">
+<div class="widget-chat-message last">
+Sucks
+</div>
+<div class="widget-chat-status">Read 16:30</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a class="dropdown-item fs-10px text-center py-2 d-block" href="messenger.html">VIEW ALL</a>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:squares-four-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu fade dropdown-menu-end p-0 w-300px text-center">
+<div class="row row-grid gx-0">
+<div class="col-4">
+<a href="email_inbox.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div class="position-relative">
+<i class="bi bi-circle-fill position-absolute text-theme top-0 mt-n2 me-n2 fs-6px d-block text-center w-100"></i>
+<i class="bi bi-envelope h2 opacity-5 d-block my-1"></i>
+</div>
+<div class="fw-500 fs-10px text-white">INBOX</div>
+</a>
+</div>
+<div class="col-4">
+<a href="pos_customer_order.html" target="_blank" class="dropdown-item text-decoration-none p-3 bg-none">
+<div><i class="bi bi-hdd-network h2 opacity-5 d-block my-1"></i></div>
+<div class="fw-500 fs-10px text-white">POS SYSTEM</div>
+</a>
+</div>
+<div class="col-4">
+<a href="calendar.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div><i class="bi bi-calendar4 h2 opacity-5 d-block my-1"></i></div>
+<div class="fw-500 fs-10px text-white">CALENDAR</div>
+</a>
+</div>
+</div>
+<div class="row row-grid gx-0">
+<div class="col-4">
+<a href="helper.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div><i class="bi bi-terminal h2 opacity-5 d-block my-1"></i></div>
+<div class="fw-500 fs-10px text-white">HELPER</div>
+</a>
+</div>
+<div class="col-4">
+<a href="settings.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div class="position-relative">
+<i class="bi bi-circle-fill position-absolute text-theme top-0 mt-n2 me-n2 fs-6px d-block text-center w-100"></i>
+<i class="bi bi-sliders h2 opacity-5 d-block my-1"></i>
+</div>
+<div class="fw-500 fs-10px text-white">SETTINGS</div>
+</a>
+</div>
+<div class="col-4">
+<a href="widgets.html" class="dropdown-item text-decoration-none p-3 bg-none">
+<div><i class="bi bi-collection-play h2 opacity-5 d-block my-1"></i></div>
+<div class="fw-500 fs-10px text-white">WIDGETS</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:warning-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu dropdown-menu-end fade w-300px p-0">
+<h6 class="dropdown-header fw-semibold py-2">NOTIFICATIONS</h6>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:mark-email-unread-outline-sharp"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">New email received</div>
+<div class="text-white text-opacity-75">You have a new email from John Doe.</div>
+<div class="text-white text-opacity-50 small">2 minutes ago</div>
+</div>
+</a>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:calendar-clock-outline-sharp"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">Meeting reminder: Tomorrow at 9:00 AM</div>
+<div class="text-white text-opacity-75">Don't forget your meeting with the client.</div>
+<div class="text-white text-opacity-50 small">1 hour ago</div>
+</div>
+</a>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:checklist"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">Task completed</div>
+<div class="text-white text-opacity-75">The task assigned to you has been completed.</div>
+<div class="text-white text-opacity-50 small">4 hours ago</div>
+</div>
+</a>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:mark-unread-chat-alt-outline-sharp"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">New comment on your post</div>
+<div class="text-white text-opacity-75">Someone commented on your recent post.</div>
+<div class="text-white text-opacity-50 small">10 hours ago</div>
+</div>
+</a>
+<a class="dropdown-item d-flex align-items-center fs-10px" href="#">
+<div>
+<div class="w-40px h-40px bg-white bg-opacity-10 text-white fs-30px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:update"></iconify-icon>
+</div>
+</div>
+<div class="flex-1 ps-3 text-truncate">
+<div class="text-white fw-semibold">System update scheduled</div>
+<div class="text-white text-opacity-75">There will be a system update tomorrow.</div>
+<div class="text-white text-opacity-50 small">Yesterday at 6:00 PM</div>
+</div>
+</a>
+<a class="dropdown-item fs-10px text-center py-2 d-block" href="messenger.html">VIEW ALL</a>
+</div>
+</div>
+<div class="menu-item dropdown">
+<a href="#" data-toggle="theme-panel-expand" class="menu-link menu-link-icon">
+<iconify-icon icon="ph:gear-duotone" class="menu-icon"></iconify-icon>
+</a>
+<div class="dropdown-menu dropdown-menu-end fade">
+<h6 class="dropdown-header">Settings</h6>
+<a class="dropdown-item" href="#">General Settings</a>
+<a class="dropdown-item" href="#">System Preferences</a>
+<a class="dropdown-item" href="#">Security Settings</a>
+<a class="dropdown-item" href="#">Application Settings</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="#">About</a>
+<a class="dropdown-item" href="#">Feedback</a>
+</div>
+</div>
+<div class="menu-item dropdown dropdown-mobile-full">
+<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link d-flex align-items-center">
+<div class="menu-img online me-sm-2 ms-lg-0 ms-n2">
+<img src="assets/img/user/profile.jpg" alt="Profile" class />
+</div>
+<div class="menu-text d-sm-block d-none">
+<span class="d-block"><span><span class="__cf_email__" data-cfemail="5c090f190e121d11191c1b111d1510721f1311">[email&#160;protected]</span></span></span>
+</div>
+</a>
+<div class="dropdown-menu dropdown-menu-end me-lg-3 fs-10px fade">
+<h6 class="dropdown-header">USER OPTIONS</h6>
+<a class="dropdown-item" href="profile.html">VIEW PROFILE</a>
+<a class="dropdown-item" href="settings.html">ACCOUNT SETTINGS</a>
+<a class="dropdown-item" href="calendar.html">CALENDER SETTINGS</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="helper.html">HELP & SUPPORT</a>
+<a class="dropdown-item" href="page_login.html">LOG OUT</a>
+</div>
+</div>
+</div>
+
+
+<form class="menu-search-float" method="POST" name="header_search_form">
+<div class="menu-search-container">
+<div class="menu-search-icon"><i class="bi bi-search"></i></div>
+<div class="menu-search-input">
+<input type="text" class="form-control" placeholder="Search something..." />
+</div>
+<div class="menu-search-icon">
+<a href="#" data-toggle-class="app-header-menu-search-toggled" data-toggle-target=".app"><i class="bi bi-x-lg"></i></a>
+</div>
+</div>
+</form>
+
+</div>
+
+
+<div id="sidebar" class="app-sidebar">
+
+<div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+
+<div class="menu">
+<div class="menu-header">APP INTERFACE</div>
+<div class="menu-item ">
+<a href="index.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:rocket-duotone"></iconify-icon>
+</span>
+<span class="menu-text">DASHBOARD</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="analytics.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:chart-bar-duotone"></iconify-icon>
+</span>
+<span class="menu-text">ANALYTICS</span>
+</a>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:envelope-duotone"></iconify-icon>
+</span>
+<span class="menu-text">EMAIL</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="email_inbox.html" class="menu-link">
+<span class="menu-text">INBOX</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="email_compose.html" class="menu-link">
+<span class="menu-text">COMPOSE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="email_detail.html" class="menu-link">
+<span class="menu-text">DETAIL</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-header">UXUI COMPONENTS</div>
+<div class="menu-item ">
+<a href="widgets.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:stack-duotone"></iconify-icon>
+</span>
+<span class="menu-text">WIDGETS</span>
+</a>
+</div>
+<div class="menu-item has-sub ">
+<a href="javascript:;" class="menu-link">
+<div class="menu-icon">
+<iconify-icon icon="ph:handbag-simple-duotone"></iconify-icon>
+<span class="w-5px h-5px rounded-3 bg-theme position-absolute top-0 end-0 mt-3px me-3px d-none"></span>
+</div>
+<div class="menu-text d-flex align-items-center">POS SYSTEM</div>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item">
+<a href="pos_customer_order.html" target="_blank" class="menu-link">
+<div class="menu-text">CUSTOMER ORDER</div>
+</a>
+</div>
+<div class="menu-item">
+<a href="pos_kitchen_order.html" target="_blank" class="menu-link">
+<div class="menu-text">KITCHEN ORDER</div>
+</a>
+</div>
+<div class="menu-item">
+<a href="pos_counter_checkout.html" target="_blank" class="menu-link">
+<div class="menu-text">COUNTER CHECKOUT</div>
+</a>
+</div>
+<div class="menu-item">
+<a href="pos_table_booking.html" target="_blank" class="menu-link">
+<div class="menu-text">TABLE BOOKING</div>
+</a>
+</div>
+<div class="menu-item">
+<a href="pos_menu_stock.html" target="_blank" class="menu-link">
+<div class="menu-text">MENU STOCK</div>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:game-controller-duotone"></iconify-icon>
+</span>
+<span class="menu-text">UI KITS</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="ui_bootstrap.html" class="menu-link">
+<span class="menu-text">BOOTSTRAP</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_buttons.html" class="menu-link">
+<span class="menu-text">BUTTONS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_card.html" class="menu-link">
+<span class="menu-text">CARD</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_icons.html" class="menu-link">
+<span class="menu-text">ICONS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_modal_notification.html" class="menu-link">
+<span class="menu-text">MODAL & NOTIFICATION</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_typography.html" class="menu-link">
+<span class="menu-text">TYPOGRAPHY</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="ui_tabs_accordions.html" class="menu-link">
+<span class="menu-text">TABS & ACCORDIONS</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:pencil-simple-duotone"></iconify-icon>
+</span>
+<span class="menu-text">FORMS</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="form_elements.html" class="menu-link">
+<span class="menu-text">FORM ELEMENTS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="form_plugins.html" class="menu-link">
+<span class="menu-text">FORM PLUGINS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="form_wizards.html" class="menu-link">
+<span class="menu-text">WIZARDS</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:grid-nine-duotone"></iconify-icon>
+</span>
+<span class="menu-text">TABLES</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="table_elements.html" class="menu-link">
+<span class="menu-text">TABLE ELEMENTS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="table_plugins.html" class="menu-link">
+<span class="menu-text">TABLE PLUGINS</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:chart-donut-duotone"></iconify-icon>
+</span>
+<span class="menu-text">CHARTS</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="chart_js.html" class="menu-link">
+<span class="menu-text">CHART.JS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="chart_apex.html" class="menu-link">
+<span class="menu-text">APEXCHARTS.JS</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item ">
+<a href="map.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:map-pin-area-duotone"></iconify-icon>
+</span>
+<span class="menu-text">MAP</span>
+</a>
+</div>
+<div class="menu-item has-sub ">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:terminal-window-duotone"></iconify-icon>
+</span>
+<span class="menu-text">LAYOUT</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item ">
+<a href="layout_starter.html" class="menu-link">
+<span class="menu-text">STARTER PAGE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_fixed_footer.html" class="menu-link">
+<span class="menu-text">FIXED FOOTER</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_full_height.html" class="menu-link">
+<span class="menu-text">FULL HEIGHT</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_full_width.html" class="menu-link">
+<span class="menu-text">FULL WIDTH</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_boxed_layout.html" class="menu-link">
+<span class="menu-text">BOXED LAYOUT</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_collapsed_sidebar.html" class="menu-link">
+<span class="menu-text">COLLAPSED SIDEBAR</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_top_nav.html" class="menu-link">
+<span class="menu-text">TOP NAV</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_mixed_nav.html" class="menu-link">
+<span class="menu-text">MIXED NAV</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="layout_mixed_nav_boxed_layout.html" class="menu-link">
+<span class="menu-text">MIXED NAV BOXED LAYOUT</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-item has-sub active">
+<a href="#" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:open-ai-logo-duotone"></iconify-icon>
+</span>
+<span class="menu-text">PAGES</span>
+<span class="menu-caret"><b class="caret"></b></span>
+</a>
+<div class="menu-submenu">
+<div class="menu-item active">
+<a href="page_scrum_board.html" class="menu-link">
+<span class="menu-text">SCRUM BOARD</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_products.html" class="menu-link">
+<span class="menu-text">PRODUCTS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_product_details.html" class="menu-link">
+<span class="menu-text">PRODUCT DETAILS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_orders.html" class="menu-link">
+<span class="menu-text">ORDERS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_order_details.html" class="menu-link">
+<span class="menu-text">ORDER DETAILS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_gallery.html" class="menu-link">
+<span class="menu-text">GALLERY</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_search_results.html" class="menu-link">
+<span class="menu-text">SEARCH RESULTS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_coming_soon.html" class="menu-link">
+<span class="menu-text">COMING SOON PAGE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_404_error.html" class="menu-link">
+<span class="menu-text">404 ERROR PAGE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_login.html" class="menu-link">
+<span class="menu-text">LOGIN</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_register.html" class="menu-link">
+<span class="menu-text">REGISTER</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_data_management.html" class="menu-link">
+<span class="menu-text">DATA MANAGEMENT</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="page_pricing.html" class="menu-link">
+<span class="menu-text">PRICING PAGE</span>
+</a>
+</div>
+</div>
+</div>
+<div class="menu-header">USER PORTAL</div>
+<div class="menu-item ">
+<a href="file_manager.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:folder-duotone"></iconify-icon>
+</span>
+<span class="menu-text">FILE MANAGER</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="messenger.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:messenger-logo-duotone"></iconify-icon>
+</span>
+<span class="menu-text">MESSENGER</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="profile.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:user-focus-duotone"></iconify-icon>
+</span>
+<span class="menu-text">PROFILE</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="calendar.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:calendar-duotone"></iconify-icon>
+</span>
+<span class="menu-text">CALENDAR</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="settings.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:gear-duotone"></iconify-icon>
+</span>
+<span class="menu-text">SETTINGS</span>
+</a>
+</div>
+<div class="menu-item ">
+<a href="helper.html" class="menu-link">
+<span class="menu-icon">
+<iconify-icon icon="ph:first-aid-kit-duotone"></iconify-icon>
+</span>
+<span class="menu-text">HELPER</span>
+</a>
+</div>
+</div>
+
+<div class="mt-auto p-15px w-100">
+<a href="documentation/index.html" target="_blank" class="btn d-block btn-secondary btn-sm py-6px w-100">
+DOCUMENTATION
+</a>
+</div>
+</div>
+
+</div>
+
+
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+
+<div id="content" class="app-content">
+<div class="d-flex align-items-center mb-md-3 mb-2">
+<div class="flex-fill">
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="#">PAGES</a></li>
+<li class="breadcrumb-item active">SCRUM BOARD</li>
+</ul>
+<h1 class="page-header mb-0">
+Scrum Board
+</h1>
+</div>
+<div class="ms-auto">
+<a href="#modalAddTask" data-bs-toggle="modal" class="btn btn-theme btn-sm py-2 fs-11px w-120px d-flex align-items-center justify-content-center">
+<iconify-icon icon="material-symbols-light:add" class="fs-22px me-1 ms-n3 my-n3"></iconify-icon>
+ADD TASK
+</a>
+</div>
+</div>
+<div class="mb-md-4 mb-3 d-md-flex">
+<div class="me-2">
+<a href="#" data-bs-toggle="dropdown" class="text-body text-decoration-none d-flex align-items-center"><iconify-icon icon="material-symbols-light:folder-outline-rounded" class="fs-20px opacity-5 me-2"></iconify-icon> project <b class="caret opacity-5 ms-3"></b></a>
+<div class="dropdown-menu">
+<a href="#" class="dropdown-item"><i class="far fa-folder fa-fw me-1"></i> project/mobile-app-dev</a>
+<a href="#" class="dropdown-item"><i class="far fa-folder fa-fw me-1"></i> project/bootstrap-5</a>
+<a href="#" class="dropdown-item"><i class="far fa-folder fa-fw me-1"></i> project/mvc-version</a>
+<a href="#" class="dropdown-item"><i class="far fa-folder fa-fw me-1"></i> project/ruby-version</a>
+</div>
+</div>
+<div class="ms-md-4 mt-md-0 mt-2 me-2 text-body d-flex align-items-center"><iconify-icon icon="material-symbols-light:cable" class="fs-20px opacity-5 me-2"></iconify-icon> 1,392 pull request</div>
+<div class="ms-md-4 mt-md-0 mt-2 me-2 text-body  d-flex align-items-center"><iconify-icon icon="material-symbols-light:settings-outline" class="fs-20px opacity-5 me-2"></iconify-icon> 52 participant</div>
+<div class="ms-md-4 mt-md-0 mt-2 me-2 text-body  d-flex align-items-center"><iconify-icon icon="material-symbols-light:nest-clock-farsight-analog-outline" class="fs-20px opacity-5 me-2"></iconify-icon> 14 day(s)</div>
+</div>
+
+<div class="row gy-3 gx-3">
+
+<div class="col-xl-4 col-lg-6">
+
+<div class="card">
+
+<div class="card-header with-btn">
+TO DO (5)
+<div class="card-header-btn">
+<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
+<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
+<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
+</div>
+</div>
+
+
+<div class="list-group list-group-flush card-body p-0 text-white">
+
+<div class="list-group-item d-flex px-3 text-body">
+<div class="me-3">
+<i class="far fa-question-circle opacity-5 fa-fw fa-lg"></i>
+</div>
+<div class="flex-fill">
+<div class="fw-semibold">Enable open search</div>
+<div class="small mb-2 opacity-75">#29949 opened yesterday by Terry</div>
+<div class>
+<span class="badge bg-primary bg-opacity-10 text-primary border border-primary">docs</span>
+<span class="badge bg-success bg-opacity-10 text-success border border-success">feature</span>
+</div>
+<hr class="my-3" />
+<div class="d-flex align-items-center mb-2 small">
+<div class="fw-semibold me-2">
+Task (2/3)
+</div>
+<div class="flex-1">
+<a href="#" class="text-body text-opacity-50" data-bs-toggle="collapse" data-bs-target="#todoBoard">
+<i class="bi bi-plus-square"></i>
+</a>
+</div>
+<div class="progress progress-xs w-100px me-3 h-4px">
+<div class="progress-bar progress-bar-striped" style="width: 66%;"></div>
+</div>
+<div>66%</div>
+</div>
+<div class="form-group mb-0 pb-1 fs-11px text-body text-opacity-75">
+<div class="collapse show" id="todoBoard">
+<div class="form-check">
+<input type="checkbox" class="form-check-input" id="customCheck1" checked>
+<label class="form-check-label mb-1px ps-1" for="customCheck1">create ui for autocomplete</label>
+</div>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" id="customCheck2" checked>
+<label class="form-check-label mb-1px ps-1" for="customCheck2">integrate jquery autocomplete with ui</label>
+</div>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" id="customCheck3">
+<label class="form-check-label mb-1px ps-1" for="customCheck3">backend search return as json data</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<a href="#" class="list-group-item list-group-item-action d-flex px-3 text-body">
+<div class="me-3">
+<i class="far fa-question-circle opacity-5 fa-fw fa-lg opacity-5"></i>
+</div>
+<div class="flex-fill">
+<div class="fw-semibold">Investigate adding markdownlint</div>
+<div class="small opacity-75 mb-2">#29919 opened 9 days ago by xMediaKron</div>
+<div class="mb-1">
+<span class="badge bg-white bg-opacity-10 text-white text-opacity-75 border border-white">build</span>
+<span class="badge bg-indigo bg-opacity-10 text-indigo border border-indigo">v5</span>
+</div>
+</div>
+</a>
+
+
+<a href="#" class="list-group-item list-group-item-action d-flex px-3 text-body">
+<div class="me-3">
+<i class="far fa-question-circle text-muted fa-fw fa-lg opacity-5"></i>
+</div>
+<div class="flex-fill">
+<div class="fw-semibold">Add a "Submit a Resource" form</div>
+<div class="small opacity-75 mb-2">#29916 opened 9 days ago by Wasbbok</div>
+<div class="mb-1 d-flex align-items-center">
+<span class="badge bg-success bg-opacity-10 text-success border border-success me-2">enhancement</span>
+<div class="widget-user-list">
+<div class="widget-user-list-item w-20px h-20px"><div class="widget-user-list-link w-20px h-20px"><img src="assets/img/user/user-1.jpg" alt></div></div>
+<div class="widget-user-list-item w-20px h-20px"><div class="widget-user-list-link w-20px h-20px"><img src="assets/img/user/user-2.jpg" alt></div></div>
+<div class="widget-user-list-item w-20px h-20px"><div class="widget-user-list-link w-20px h-20px"><img src="assets/img/user/user-3.jpg" alt></div></div>
+<div class="widget-user-list-item w-20px h-20px"><div class="widget-user-list-link w-20px h-20px"><img src="assets/img/user/user-4.jpg" alt></div></div>
+<div class="widget-user-list-item w-20px h-20px"><div class="widget-user-list-link w-20px h-20px"><img src="assets/img/user/user-5.jpg" alt></div></div>
+<div class="widget-user-list-item w-20px h-20px"><div class="widget-user-list-link w-20px h-20px bg-white bg-opacity-15 text-white fs-9px fw-semibold">+2</div></div>
+</div>
+</div>
+</div>
+</a>
+
+
+<a href="#" class="list-group-item list-group-item-action d-flex px-3 text-body">
+<div class="me-3">
+<i class="far fa-question-circle text-muted fa-fw fa-lg opacity-5"></i>
+</div>
+<div class="flex-fill">
+<div class="fw-semibold">Custom control border color missing on focus</div>
+<div class="small opacity-75 mb-2">#29796 opened 29 days ago by mdo</div>
+<div class="mb-1">
+<span class="badge bg-pink bg-opacity-10 text-pink border border-pink">docs</span>
+</div>
+</div>
+</a>
+
+
+<a href="#" class="list-group-item list-group-item-action d-flex px-3 text-body">
+<div class="me-3">
+<i class="far fa-question-circle text-muted fa-fw fa-lg opacity-5"></i>
+</div>
+<div class="flex-fill">
+<div class="fw-semibold">New design for corporate page</div>
+<div class="small opacity-75 mb-2">#29919 opened 19 days ago by sean</div>
+<div class="mb-1">
+<span class="badge bg-white bg-opacity-10 text-white text-opacity-75 border border-white">design</span>
+<span class="badge bg-primary bg-opacity-10 text-primary border border-primary">v5</span>
+</div>
+</div>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-xl-4 col-lg-6">
+
+<div class="card mb-3">
+
+<div class="card-header with-btn">
+IN PROGRESS (2)
+<div class="card-header-btn">
+<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
+<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
+<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
+</div>
+</div>
+
+
+<div class="list-group list-group-flush card-body p-0">
+
+<div class="list-group-item d-flex px-3 text-body">
+<div class="me-3">
+<i class="fa fa-tools fa-fw fa-lg opacity-5"></i>
+</div>
+<div class="flex-fill">
+<div class="fw-semibold">HTML5 flexbox old browser compatibility</div>
+<div class="small mb-2 opacity-75">#29982 handled by Sean</div>
+<div class="mb-1">
+<span class="badge bg-indigo bg-opacity-10 text-indigo border border-indigo">enhancement</span>
+</div>
+<hr class="my-3" />
+<div class="d-flex align-items-center mb-2 small">
+<div class="fw-semibold me-2">
+Task (1/2)
+</div>
+<div class="flex-1">
+<a href="#" class="text-body text-opacity-50" data-bs-toggle="collapse" data-bs-target="#inProgressBoard">
+<i class="bi bi-plus-square"></i>
+</a>
+</div>
+<div class="progress progress-xs w-100px me-2" style="height: 6px;">
+<div class="progress-bar progress-bar-striped bg-warning" style="width: 50%;"></div>
+</div>
+<div>50%</div>
+</div>
+<div class="form-group mb-0 pb-1 fs-11px text-body text-opacity-75">
+<div class="collapse show" id="inProgressBoard">
+<div class="form-check mb-2px">
+<input type="checkbox" class="form-check-input" id="customCheck4" checked>
+<label class="form-check-label mb-1px ps-1" for="customCheck4">check all browser compatibility for HTML5 flexbox</label>
+</div>
+<div class="form-check mb-2px">
+<input type="checkbox" class="form-check-input" id="customCheck5">
+<label class="form-check-label mb-1px ps-1" for="customCheck5">fallback integration by using other display property</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="list-group-item d-flex px-3 text-body">
+<div class="me-3">
+<i class="fa fa-bug text-danger fa-fw fa-lg"></i>
+</div>
+<div class="flex-fill">
+<div class="fw-600 text-body">Mobile app autoclose on iOS</div>
+<div class="small mb-2 opacity-75">#29953 handled by Ken</div>
+<div class="mb-1">
+<span class="badge bg-white bg-opacity-10 text-white text-opacity-75 border border-white">issue</span>
+<span class="badge bg-danger bg-opacity-10 text-danger border border-danger">bug</span>
+</div>
+<hr class="my-3" />
+<div class="d-flex align-items-center mb-2 small">
+<div class="fw-semibold me-2">
+Task (0/1)
+</div>
+<div class="flex-1">
+<a href="#" class="text-body text-opacity-50" data-bs-toggle="collapse" data-bs-target="#inProgress2Board">
+<i class="bi bi-plus-square"></i>
+</a>
+</div>
+<div class="progress progress-xs w-100px me-3 h-4px">
+<div class="progress-bar progress-bar-striped bg-danger" style="width: 5%;"></div>
+</div>
+<div>0%</div>
+</div>
+<div class="form-group mb-0 pb-1 fs-11px text-body text-opacity-75">
+<div class="collapse show" id="inProgress2Board">
+<div class="form-check mb-2px">
+<input type="checkbox" class="form-check-input" id="customCheck6">
+<label class="form-check-label mb-1px ps-1" for="customCheck6">debug and fix mobile auto close while using GPS issue</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-xl-4 col-lg-6">
+
+<div class="card mb-3">
+
+<div class="card-header with-btn">
+DONE (1)
+<div class="card-header-btn">
+<a href="#" data-toggle="card-collapse" class="btn"><iconify-icon icon="material-symbols-light:stat-minus-1"></iconify-icon></a>
+<a href="#" data-toggle="card-expand" class="btn"><iconify-icon icon="material-symbols-light:fullscreen"></iconify-icon></a>
+<a href="#" data-toggle="card-remove" class="btn"><iconify-icon icon="material-symbols-light:close-rounded"></iconify-icon></a>
+</div>
+</div>
+
+
+<div class="list-group list-group-flush card-body p-0">
+
+<div class="list-group-item d-flex px-3 text-body">
+<div class="me-3">
+<i class="far fa-check-circle text-success fa-fw fa-lg"></i>
+</div>
+<div class="flex-fill">
+<div class="fw-semibold">Angular version missing daterangepicker</div>
+<div class="small mb-2 opacity-75">#29930 closed yesterday by Sean</div>
+<div class="mb-1">
+<span class="badge bg-white bg-opacity-10 text-white text-opacity-75 border border-white">build</span>
+<span class="badge bg-success bg-opacity-10 text-success border border-success">feature</span>
+</div>
+<hr class="my-3" />
+<div class="d-flex align-items-center mb-2 small">
+<div class="fw-semibold me-2">
+Task (3/3)
+</div>
+<div class="flex-1">
+<a href="#" class="text-body text-opacity-50" data-bs-toggle="collapse" data-bs-target="#completedBoard">
+<i class="bi bi-plus-square"></i>
+</a>
+</div>
+<div class="progress progress-xs w-100px me-3 h-4px">
+<div class="progress-bar progress-bar-striped bg-success" style="width: 100%;"></div>
+</div>
+<div>100%</div>
+</div>
+<div class="form-group mb-0 pb-1 fs-11px text-body text-opacity-75">
+<div class="collapse show" id="completedBoard">
+<div class="form-check mb-2px">
+<input type="checkbox" class="form-check-input" id="customCheck7" checked>
+<label class="form-check-label pt-1px" for="customCheck7">install angular-daterangepicker</label>
+</div>
+<div class="form-check mb-2px">
+<input type="checkbox" class="form-check-input" id="customCheck8" checked>
+<label class="form-check-label pt-1px" for="customCheck8">customize ui with scss</label>
+</div>
+<div class="form-check mb-2px">
+<input type="checkbox" class="form-check-input" id="customCheck9" checked>
+<label class="form-check-label pt-1px" for="customCheck9">backend integration for data filter with daterange input</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="modal fade" id="modalAddTask">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Add Task</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<div class="mb-3">
+<label class="form-label">Title</label>
+<input type="text" class="form-control" placeholder="e.g Feature enhancement">
+</div>
+<div class="mb-3">
+<label class="form-label">Status</label>
+<select class="form-select">
+<option value>To Do</option>
+<option value>In Progress</option>
+<option value>Done</option>
+</select>
+</div>
+<div class="mb-3">
+<label class="form-label">Tags</label>
+<ul id="jquery-tagit" class="tagit form-control">
+<li>enhancement</li>
+</ul>
+</div>
+<div class="form-group">
+<label>Description</label>
+<textarea class="form-control" rows="10"></textarea>
+</div>
+</div>
+<div class="modal-footer">
+<a href="#" class="btn btn-outline-default w-100px" data-bs-dismiss="modal">CANCEL</a>
+<button type="button" class="btn btn-theme w-100px">CREATE</button>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
+<iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
+</a>
+
+
+<div class="app-theme-panel">
+<div class="app-theme-panel-container">
+<a href="#" data-toggle="theme-panel-expand" class="app-theme-toggle-btn"><iconify-icon icon="ph:gear-duotone"></iconify-icon></a>
+<div class="app-theme-panel-content">
+<div class="fs-10px fw-semibold text-white">
+THEME COLOR
+</div>
+<div class="fs-9px lh-sm mb-2 text-white text-opacity-75">
+Choose your favorite theme color
+</div>
+
+<div class="app-theme-list">
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-pink" data-theme-class="theme-pink" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Pink">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-red" data-theme-class="theme-red" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Red">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-warning" data-theme-class="theme-warning" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-yellow" data-theme-class="theme-yellow" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-lime" data-theme-class="theme-lime" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Lime">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-green" data-theme-class="theme-green" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green">&nbsp;</a></div>
+<div class="app-theme-list-item active"><a href="#" class="app-theme-list-link bg-teal" data-theme-class data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Default">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-info" data-theme-class="theme-info" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Cyan">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-primary" data-theme-class="theme-primary" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Blue">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-indigo" data-theme-class="theme-indigo" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-purple" data-theme-class="theme-purple" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple">&nbsp;</a></div>
+<div class="app-theme-list-item"><a href="#" class="app-theme-list-link bg-white" data-theme-class="theme-white" data-toggle="theme-selector" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="White">&nbsp;</a></div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+
+<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../../code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" type="17d9c5e86b8dcb5ecc4f0bc7-text/javascript"></script>
+<script src="assets/js/vendor.min.js" type="17d9c5e86b8dcb5ecc4f0bc7-text/javascript"></script>
+<script src="assets/js/app.min.js" type="17d9c5e86b8dcb5ecc4f0bc7-text/javascript"></script>
+
+<script src="assets/plugins/jquery-migrate/dist/jquery-migrate.min.js" type="17d9c5e86b8dcb5ecc4f0bc7-text/javascript"></script>
+<script src="assets/plugins/tag-it/js/tag-it.min.js" type="17d9c5e86b8dcb5ecc4f0bc7-text/javascript"></script>
+<script src="assets/js/demo/page-scrum-board.demo.js" type="17d9c5e86b8dcb5ecc4f0bc7-text/javascript"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3Q0VGQKY3" type="17d9c5e86b8dcb5ecc4f0bc7-text/javascript"></script>
+<script type="17d9c5e86b8dcb5ecc4f0bc7-text/javascript">
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-Y3Q0VGQKY3');
+	</script>
+<script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="17d9c5e86b8dcb5ecc4f0bc7-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8ad97ac21deab91a","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"4db8c6ef997743fda032d4f73cfeff63","b":1}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from seantheme.com/quantum/page_scrum_board.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 03 Aug 2024 21:46:21 GMT -->
+</html>
