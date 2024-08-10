@@ -6,6 +6,7 @@
 <body>
     <h1>Accueil des caissiers</h1>
     <p>Bienvenue, {{ request.user.username }} !</p>
+    
     <a href="{% url 'caisse_dashboard' %}">Liste Attente</a>
 </body>
 </html>

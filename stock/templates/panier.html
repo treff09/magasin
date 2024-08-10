@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .pieces, .panier {
+            width: 48%;
+        }
+        .panier table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .panier th, .panier td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .total {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Panier -->
+        <div class="panier">
+            <h2>Panier</h2>
+            <form method="post" action="{% url 'valider_panier' %}">
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Désignation</th>
+                            <th>Prix</th>
+                            <th>Qté</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in panier_items %}
+                        <tr>
+                            <td>{{ item.piece.designation }}</td>
+                            <td>{{ item.piece.prix_unitaire }}</td>
+                            <td><input type="number" name="quantite_{{ item.piece.id }}" value="{{ item.quantite }}"></td>
+                            <td>{{ item.total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="total">Sous-total:</td>
+                            <td>{{ sous_total }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="total">Remise:</td>
+                            <td><input type="text" name="remise" placeholder="Entrez % remise..."></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="total">Total:</td>
+                            <td>{{ sous_total }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <button type="submit">Valider</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

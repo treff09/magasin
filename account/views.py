@@ -8,7 +8,7 @@ from django.contrib import messages
 
 
 def is_admin_magasin(user):
-    return user.groups.filter(name='AdminMagasin').exists()
+    return user.is_authenticated and user.groups.filter(name='AdminMagasin').exists()
 
 @user_passes_test(is_admin_magasin)
 def user_detail(request, pk):
@@ -72,6 +72,19 @@ def user_delete(request, pk):
     return render(request, 'user_confirm_delete.html', {'user': user})
 
 def login_view(request):
+    if request.user.is_authenticated:
+        user = request.user
+        if user.groups.filter(name='Caissiers').exists():
+            return redirect('caissier_dashboard')
+        elif user.groups.filter(name='Accueillants').exists():
+            messages.success(request, "Bienvenue au service accueil")
+            return redirect('accueillant_dashboard')
+        elif user.groups.filter(name='Livraisons').exists():
+            messages.success(request, "Bienvenue au service livraison")
+            return redirect('livraison_dashboard')
+        else:
+            messages.success(request, "Bienvenue administrateur")
+            return redirect('adminmagasin')  
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -79,7 +92,6 @@ def login_view(request):
         if user is not None:
             login(request, user)
             if user.groups.filter(name='Caissiers').exists():
-                messages.success(request, "Bienvenue a la caisse")
                 return redirect('caissier_dashboard')
             elif user.groups.filter(name='Accueillants').exists():
                 messages.success(request, "Bienvenue au service accueil")
@@ -101,3 +113,6 @@ def logout_view(request):
     logout(request)
     messages.success(request, "Vous êtes deconnecté.")
     return redirect("login")
+
+
+

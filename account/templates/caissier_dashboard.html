@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Tableau de Bord du Caissier</title>
+    <title>Accueil des caissiers</title>
 </head>
 <body>
+    <h1>Accueil des caissiers</h1>
+    <p>Bienvenue, {{ request.user.username }} !</p>
+    
+ 
     <h1>Tableau de Bord du Caissier</h1>
     <h2>Paniers en Attente de Paiement</h2>
     <table>
@@ -17,12 +20,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for panier in paniers_en_attente %}
+            {% for panier in paniers_non_valides %}
                 {% with panier.ticket_set.first as ticket %}
                 <tr>
                     <td>{{ panier.ticket }}</td>
                     <td>{{ panier.utilisateur.username }}</td>
-                    <td>{{ ticket.date_creation }}</td>
+                    <td>{{ panier.date_creation }}</td>
                     <td>
                         <a href="">Voir Détails</a>
                         <a href="{% url 'valider_paiement' panier.ticket %}" onclick="return confirm('Êtes-vous sûr de vouloir valider ce panier ?');">Valider</a>
@@ -31,10 +34,11 @@
                 {% endwith %}
             {% empty %}
                 <tr>
-                    <td colspan="4">Aucun panier en attente de paiement.</td>
+                    <td colspan="4">Aucun panier en {{paniers_non_valides}}attente de paiement.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
 </body>
 </html>
