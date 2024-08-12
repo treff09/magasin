@@ -238,7 +238,7 @@ def accueil(request):
 def caisseDashboard(request):
     # Filtrer les paniers dont le statut 'valide' est True
     
-    paniers_non_valides = Panier.objects.filter(valide=True)
+    paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
     context =  {
         'paniers_non_valides': paniers_non_valides,
     }

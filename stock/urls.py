@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin_magasin/', admin_magasin, name='adminmagasin'),
     path('b/', base, name='bb'),
     #piece
-    path('piece/', piece_list, name='piece_list'),
+    path('piece/', piece_list, name='piece_list'),#VUE ACCEUILLANT
     path('piece/<int:pk>/',piece_detail, name='piece_detail'),
     path('piece/new/',piece_create, name='piece_create'),
     path('piece/<int:pk>/edit/',piece_update, name='piece_update'),
@@ -19,11 +19,11 @@ urlpatterns = [
     path('panier/valider/', valider_panier, name='valider_panier'),
     path('panier/supprimer/<int:item_id>/', supprimer_du_panier, name='supprimer_du_panier'),
     path('panier/remove/<int:piece_id>/', retirer_du_cart, name='retirer_du_panier'),
-    #caisse
+    #VUE caisse
     path('caissier/', caissier_accueil, name='caissier_accueil'),
     path('caissier/dashboard/', caisseDashboard, name='caisseDashboard'),
     path('caissier/valider/<str:ticket_id>/', valider_paiement, name='valider_paiement'),
-    #livraison
+    #VUE livraison
     path('livraison/', livraison_accueil, name='livraison_accueil'), #bienvenue
      path('livraison/dashboard/', livraison_dashboard, name='livraison_dashboard'),
     path('livraison/valider/<str:ticket_id>/', valider_livraison, name='valider_livraison'),

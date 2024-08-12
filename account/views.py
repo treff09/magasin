@@ -75,13 +75,13 @@ def login_view(request):
     if request.user.is_authenticated:
         user = request.user
         if user.groups.filter(name='Caissiers').exists():
-            return redirect('caissier_dashboard')
+            return redirect('caissier_accueil')
         elif user.groups.filter(name='Accueillants').exists():
             messages.success(request, "Bienvenue au service accueil")
-            return redirect('accueillant_dashboard')
+            return redirect('piece')
         elif user.groups.filter(name='Livraisons').exists():
             messages.success(request, "Bienvenue au service livraison")
-            return redirect('livraison_dashboard')
+            return redirect('livraison')
         else:
             messages.success(request, "Bienvenue administrateur")
             return redirect('adminmagasin')  
