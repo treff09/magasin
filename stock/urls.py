@@ -25,7 +25,7 @@ urlpatterns = [
     path('caissier/valider/<str:ticket_id>/', valider_paiement, name='valider_paiement'),
     #livraison
     path('livraison/', livraison_accueil, name='livraison_accueil'), #bienvenue
-     path('livraison/dashboard/', livraison_dashboard, name='livraison_dashboard'),
+    path('livraison/dashboard/', livraison_dashboard, name='livraison_dashboard'),
     path('livraison/valider/<str:ticket_id>/', valider_livraison, name='valider_livraison'),
     #pour acceuil (Client)
     path('acceuil/', accueil, name='accueil'),

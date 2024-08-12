@@ -4,13 +4,20 @@
 	
 <head>
 <meta charset="utf-8" />
-<title>Piece | Oder</title>
+<title>Pièce | Oder</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content />
 <meta name="author" content />
 
 <link href="{% static 'assets/css/vendor.min.css' %} " rel="stylesheet" />
 <link href="{% static 'assets/css/app.min.css' %} " rel="stylesheet" />
+
+<link href="{% static 'assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %} " rel="stylesheet" />
+<link href="{% static 'assets/plugins/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css' %} " rel="stylesheet" />
+<link href="{% static 'assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' %} " rel="stylesheet" />
+<link href="{% static 'assets/plugins/bootstrap-table/dist/bootstrap-table.min.css' %} " rel="stylesheet" />
+	
+
 
 </head>
 <body>
@@ -24,9 +31,7 @@
 
 
 <div id="app" class="app app-content-full-height app-without-sidebar app-without-header">
-
 		<div id="content" class="app-content p-0">
-
 			<div class="pos pos-with-menu pos-with-sidebar" id="pos">
 				<div class="pos-container">
 					<div class="pos-menu">
@@ -36,8 +41,7 @@
 								<div class="logo-text">MAGASIN</div>
 							</a>
 						</div>
-				
-				
+
 						<div class="nav-container">
 							<div class="h-100" data-scrollbar="true" data-skip-mobile="true">
 								<ul class="nav nav-tabs">
@@ -53,7 +57,6 @@
 											MAIN
 										</a>
 									</li>
-								
 								</ul>
 							</div>
 						</div>
@@ -62,7 +65,7 @@
 					<div class="pos-content">
 						<div class="pos-content-container h-100">
 							<div class="row g-3">
-								<div id="datatable" class="mb-5">
+								<div class="mb-5">
 									<div class="card">
 										<div class="row g-2">
 											<div class="col-xl-3 col-lg-4 col-6">
@@ -133,19 +136,19 @@
 											PIECES
 										</div>
 										<div class="card-body">
-											<table id="datatableDefault" width="100%" class="table text-nowrap text-theme" >
-												<thead style="text-align: center;" >
-													<tr >
-													<th>-</th>
-													<th class="text-theme">N°Pieces</th>
-													<th class="text-theme">Désignation</th>
-													<th class="text-theme">Véhicule</th>
-													<th class="text-theme">Quantité en stock</th>
-													<th class="text-theme">Prix unitaire</th>
-													<th class="text-theme">Action</th>
+											<table id="datatableDefault" width="100%" class="table text-nowrap" >
+												<thead>
+													<tr>
+														<th>-</th>
+														<th class="text-theme">N°Pieces</th>
+														<th class="text-theme">Désignation</th>
+														<th class="text-theme">Véhicule</th>
+														<th class="text-theme">Quantité en stock</th>
+														<th class="text-theme">Prix unitaire</th>
+														<th class="text-theme" >Action</th>
 													</tr>
 												</thead>
-												<tbody style="text-align: center;">
+												<tbody>
 													{% for piece in pieces %}
 													<tr>
 														<td>-</td>
@@ -154,7 +157,7 @@
 														<td>{{ piece.type_voiture }}</td>
 														<td>{{ piece.quantite }}</td>
 														<td>{{ piece.prix_unitaire }}</td>
-														<td><a href="{% url 'ajouter_au_panier' piece.id %}"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="nav-icon" title="Ajouter au panier" style="font-size: 18px;"></iconify-icon></a></td>
+														<td class="text-center"><a href="{% url 'ajouter_au_panier' piece.id %}"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="nav-icon" title="Ajouter au panier" style="font-size: 18px;"></iconify-icon></a></td>
 													</tr>
 													{% endfor%}
 												</tbody>
@@ -210,9 +213,9 @@
 															- spicy: medium
 															</div>
 															<div class="d-flex">
-																<a href="{% url 'retirer_du_panier' item.piece.id %}" class="btn btn-secondary btn-sm px-2px"><iconify-icon icon="material-symbols-light:check-indeterminate-small" class="d-block fs-20px my-n1"></iconify-icon></a>
-																<input type="text" class="form-control w-30px px-0 form-control-sm mx-2 bg-white bg-opacity-25 text-center" name="quantite_{{ item.piece.id }}" value="{{ item.quantite }}" disabled/>
-																<a href="{% url 'ajouter_au_panier' item.piece.id %}" class="btn btn-secondary btn-sm px-2px"><iconify-icon icon="material-symbols-light:add" class="d-block fs-20px my-n1"></iconify-icon></a>
+																<a id="retirer" href="{% url 'retirer_du_panier' item.piece.id %}" class="btn-retirer btn btn-secondary btn-sm px-2px" data-piece-id="{{ item.piece.id }}"><iconify-icon icon="material-symbols-light:check-indeterminate-small" class="d-block fs-20px my-n1"></iconify-icon></a>
+																<input id="quantite_piece" type="text" class="form-control w-30px px-0 form-control-sm mx-2 bg-white bg-opacity-25 text-center" name="quantite_{{ item.piece.id }}" value="{{ item.quantite }}" disabled/>
+																<a id="ajouter" href="{% url 'ajouter_au_panier' item.piece.id %}" class="btn-ajouter btn btn-secondary btn-sm px-2px " data-piece-id="{{ item.piece.id }}"><iconify-icon icon="material-symbols-light:add" class="d-block fs-20px my-n1"></iconify-icon></a>
 															</div>
 														</div>
 													</div>
@@ -227,11 +230,10 @@
 											</div>
 										</div>
 										
-										
 										<div class="pos-sidebar-footer">
 											<div class="d-flex align-items-center mb-2">
 												<div>Subtotal</div>
-												<div class="flex-1 text-end h6 mb-0">{{ sous_total }}</div>
+												<div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ sous_total }}</div>
 											</div>
 											<div class="d-flex align-items-center">
 												<div>Remise (%) </div>
@@ -240,7 +242,7 @@
 											<hr class="my-3" />
 											<div class="d-flex align-items-center mb-2">
 												<div>Total</div>
-												<div class="flex-1 text-end h4 mb-0">{{ sous_total }}</div>
+												<div id="#total-general" class="flex-1 text-end h4 mb-0">{{ sous_total }}</div>
 											</div>
 											<div class="mt-3">
 												<div class="d-flex">
@@ -333,22 +335,20 @@
 	</div>
 
 <script src="{% static 'assets/magas/code/2.1.0/iconify-icon.min.js' %} " type="text/javascript"></script>
-
 <script src="{% static 'assets/js/vendor.min.js' %} " type="text/javascript"></script>
 <script src="{% static 'assets/js/app.min.js' %} " type="text/javascript"></script>
-	
 <script src="{% static 'assets/js/demo/pos-customer-order.demo.js' %} " type="text/javascript"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3Q0VGQKY3" type="text/javascript"></script>
-<script type="6cb8244a12b34d5d39550d81-text/javascript">
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-
-		gtag('config', 'G-Y3Q0VGQKY3');
-	</script>
-
+<script type="text/javascript">
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-Y3Q0VGQKY3');
+</script>
+<script src="{% static 'assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js' %} " type="text/javascript"></script>
 <script src="{% static 'assets/magas/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js' %} " data-cf-settings="10847b0cfbd4efa22118d4f9-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8ad979c61e3a0e34","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"4db8c6ef997743fda032d4f73cfeff63","b":1}' crossorigin="anonymous"></script>
 <script src="{% static 'assets/js/demo/highlightjs.demo.js' %}" type="text/javascript"></script>
+
 <script src="{% static 'assets/plugins/datatables.net/js/dataTables.min.js' %} " type="text/javascript"></script>
 <script src="{% static 'assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js' %}" type="text/javascript"></script>
@@ -359,7 +359,13 @@
 <script src="{% static 'assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js' %} " type="text/javascript"></script>
 <script src="{% static 'assets/plugins/bootstrap-table/dist/bootstrap-table.min.js' %} " type="text/javascript"></script>
 <script src="{% static 'assets/js/demo/table-plugins.demo.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/demo/sidebar-scrollspy.demo.js' %} " type="text/javascript"></script>
+<script src="{% static 'assets/plugins/%40highlightjs/cdn-assets/highlight.min.js' %} " type="text/javascript"></script>
+
+<script>
 	
+</script>
+
 </body>
 
 </html>
