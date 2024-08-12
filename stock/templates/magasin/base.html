@@ -14,9 +14,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content />
 	<meta name="author" content />
-	<link href="{% static 'assets/css/vendor.min.css' %} " rel="stylesheet" />
-	<link href="{% static 'assets/css/app.min.css' %} " rel="stylesheet" />
+	<link href="{% static 'assets/css/vendor.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'assets/plugins/jvectormap-next/jquery-jvectormap.css' %} " rel="stylesheet" />
+
+
+	<link href="{% static 'assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %} " rel="stylesheet" />
+	<link href="{% static 'assets/plugins/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css' %} " rel="stylesheet" />
+	<link href="{% static 'assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' %} " rel="stylesheet" />
+	<link href="{% static 'assets/plugins/bootstrap-table/dist/bootstrap-table.min.css' %} " rel="stylesheet" />
+	
 </head>
 {% block content %}
 	
@@ -37,12 +44,14 @@
 			<button type="button" class="menu-toggler" data-toggle-class="app-sidebar-collapsed" data-dismiss-class="app-sidebar-toggled" data-toggle-target=".app">
 				<span class="bar"></span>
 				<span class="bar"></span>
+				<span class="bar"></span>
 			</button>
 		</div>
 
 
 		<div class="mobile-toggler">
 			<button type="button" class="menu-toggler" data-toggle-class="app-sidebar-mobile-toggled" data-toggle-target=".app">
+				<span class="bar"></span>
 				<span class="bar"></span>
 				<span class="bar"></span>
 			</button>
@@ -74,124 +83,123 @@
 			<iconify-icon icon="ph:calendar-dots-duotone" class="menu-icon"></iconify-icon>
 			</a>
 			<div class="dropdown-menu dropdown-menu-end p-0 w-300px">
-			<div class="card">
-			<div class="card-header">TODAY, NOV 4</div>
-			<div class="card-body p-0 widget-reminder">
-			<div class="widget-reminder-item">
-			<div class="widget-reminder-time">09:00<br>12:00</div>
-			<div class="widget-reminder-divider bg-success"></div>
-			<div class="widget-reminder-content">
-			<div class="fw-semibold text-white">Meeting with HR</div>
-			<div> - Conference Room</div>
-			</div>
-			</div>
-			<div class="widget-reminder-item">
-			<div class="widget-reminder-time">20:00<br>23:00</div>
-			<div class="widget-reminder-divider bg-primary"></div>
-			<div class="widget-reminder-content">
-			<div class="fw-semibold text-white">Dinner with Richard</div>
-			<div> - Tom's Too Restaurant</div>
-			<div class="d-flex align-items-center mt-2">
-			<div class="flex-fill d-flex align-items-center">
-			<img src="assets/img/user/user-3.jpg" alt width="16" class="me-2"> Richard Leong
-			</div>
-			<a href="#" class="ms-auto">Contact</a>
-			</div>
-			</div>
-			</div>
-			</div>
-			<div class="card-header">TOMORROW, NOV 5</div>
-			<div class="card-body p-0 widget-reminder">
-			<div class="widget-reminder-item">
-			<div class="widget-reminder-time">All day</div>
-			<div class="widget-reminder-divider bg-gray-300"></div>
-			<div class="widget-reminder-content">
-			<div class="fw-semibold text-white">Terry Birthday</div>
-			</div>
-			</div>
-			<div class="widget-reminder-item">
-			<div class="widget-reminder-time">08:00</div>
-			<div class="widget-reminder-divider bg-gray-300"></div>
-			<div class="widget-reminder-content">
-			<div class="fw-semibold text-white">Meeting</div>
-			</div>
-			</div>
-			<div class="widget-reminder-item">
-			<div class="widget-reminder-time">00:00<br>00:30</div>
-			<div class="widget-reminder-divider bg-gray-300"></div>
-			<div class="widget-reminder-content">
-			<div class="fw-semibold text-white">Server Maintenance</div>
-			<div> - Data Centre</div>
-			</div>
-			</div>
-			</div>
-			</div>
-			<a class="dropdown-item fs-10px text-center py-2 d-block" href="calendar.html">VIEW ALL</a>
-			</div>
+				<div class="card">
+					<div class="card-header">TODAY, NOV 4</div>
+					<div class="card-body p-0 widget-reminder">
+						<div class="widget-reminder-item">
+							<div class="widget-reminder-time">09:00<br>12:00</div>
+							<div class="widget-reminder-divider bg-success"></div>
+							<div class="widget-reminder-content">
+								<div class="fw-semibold text-white">Meeting with HR</div>
+								<div> - Conference Room</div>
+							</div>
+						</div>
+						<div class="widget-reminder-item">
+							<div class="widget-reminder-time">20:00<br>23:00</div>
+							<div class="widget-reminder-divider bg-primary"></div>
+							<div class="widget-reminder-content">
+								<div class="fw-semibold text-white">Dinner with Richard</div>
+								<div> - Tom's Too Restaurant</div>
+								<div class="d-flex align-items-center mt-2">
+									<div class="flex-fill d-flex align-items-center">
+										<img src="assets/img/user/user-3.jpg" alt width="16" class="me-2"> Richard Leong
+									</div>
+									<a href="#" class="ms-auto">Contact</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-header">TOMORROW, NOV 5</div>
+					<div class="card-body p-0 widget-reminder">
+						<div class="widget-reminder-item">
+							<div class="widget-reminder-time">All day</div>
+							<div class="widget-reminder-divider bg-gray-300"></div>
+							<div class="widget-reminder-content">
+								<div class="fw-semibold text-white">Terry Birthday</div>
+							</div>
+						</div>
+						<div class="widget-reminder-item">
+							<div class="widget-reminder-time">08:00</div>
+							<div class="widget-reminder-divider bg-gray-300"></div>
+							<div class="widget-reminder-content">
+								<div class="fw-semibold text-white">Meeting</div>
+							</div>
+						</div>
+						<div class="widget-reminder-item">
+							<div class="widget-reminder-time">00:00<br>00:30</div>
+							<div class="widget-reminder-divider bg-gray-300"></div>
+							<div class="widget-reminder-content">
+								<div class="fw-semibold text-white">Server Maintenance</div>
+								<div> - Data Centre</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<a class="dropdown-item fs-10px text-center py-2 d-block" href="calendar.html">VIEW ALL</a>
+				</div>
 			</div>
 		
 			<div class="menu-item dropdown dropdown-mobile-full">
-			<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
-			<iconify-icon icon="ph:squares-four-duotone" class="menu-icon"></iconify-icon>
-			</a>
-			<div class="dropdown-menu fade dropdown-menu-end p-0 w-300px text-center">
-			<div class="row row-grid gx-0">
-			<div class="col-4">
-			<a href="email_inbox.html" class="dropdown-item text-decoration-none p-3 bg-none">
-			<div class="position-relative">
-			<i class="bi bi-circle-fill position-absolute text-theme top-0 mt-n2 me-n2 fs-6px d-block text-center w-100"></i>
-			<i class="bi bi-envelope h2 opacity-5 d-block my-1"></i>
-			</div>
-			<div class="fw-500 fs-10px text-white">COMMANDE</div>
-			</a>
-			</div>
-			<div class="col-4">
-				<a href="pos_customer_order.html" target="_blank" class="dropdown-item text-decoration-none p-3 bg-none">
-					<div><i class="bi bi-hdd-network h2 opacity-5 d-block my-1"></i></div>
-					<div class="fw-500 fs-10px text-white">POS SYSTEM</div>
+				<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+					<iconify-icon icon="ph:squares-four-duotone" class="menu-icon"></iconify-icon>
 				</a>
-			</div>
-			<div class="col-4">
-				<a href="calendar.html" class="dropdown-item text-decoration-none p-3 bg-none">
-					<div><i class="bi bi-calendar4 h2 opacity-5 d-block my-1"></i></div>
-					<div class="fw-500 fs-10px text-white">CALENDAR</div>
-				</a>
+				<div class="dropdown-menu fade dropdown-menu-end p-0 w-300px text-center">
+					<div class="row row-grid gx-0">
+						<div class="col-4">
+							<a href="email_inbox.html" class="dropdown-item text-decoration-none p-3 bg-none">
+								<div class="position-relative">
+									<i class="bi bi-circle-fill position-absolute text-theme top-0 mt-n2 me-n2 fs-6px d-block text-center w-100"></i>
+									<i class="bi bi-envelope h2 opacity-5 d-block my-1"></i>
+								</div>
+								<div class="fw-500 fs-10px text-white">COMMANDE</div>
+							</a>
+						</div>
+						<div class="col-4">
+							<a href="pos_customer_order.html" target="_blank" class="dropdown-item text-decoration-none p-3 bg-none">
+								<div><i class="bi bi-hdd-network h2 opacity-5 d-block my-1"></i></div>
+								<div class="fw-500 fs-10px text-white">POS SYSTEM</div>
+							</a>
+						</div>
+						<div class="col-4">
+							<a href="calendar.html" class="dropdown-item text-decoration-none p-3 bg-none">
+								<div><i class="bi bi-calendar4 h2 opacity-5 d-block my-1"></i></div>
+								<div class="fw-500 fs-10px text-white">CALENDAR</div>
+							</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="menu-item dropdown dropdown-mobile-full">
+					<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link d-flex align-items-center">
+						<div class="menu-img online me-sm-2 ms-lg-0 ms-n2">
+							<img src="assets/img/user/profile.jpg" alt="Profile" class />
+						</div>
+						<div class="menu-text d-sm-block d-none">
+							<span class="d-block"><span><span class="__cf_email__" >{{user.username}}</span></span></span>
+						</div>
+					</a>
+					<div class="dropdown-menu dropdown-menu-end me-lg-3 fs-10px fade">
+						<h6 class="dropdown-header">{{ user.profile.role }}</h6>
+						<a class="dropdown-item" href="{% url "user_detail" user.pk %}">Profile</a>
+						<a class="dropdown-item" href="settings.html">Modifier mot de passe</a>
+					{% comment %} <a class="dropdown-item" href="calendar.html">CALENDER SETTINGS</a> {% endcomment %}
+					<div class="dropdown-divider"></div>
+					{% comment %} <a class="dropdown-item" href="helper.html">HELP & SUPPORT</a> {% endcomment %}
+					<a class="dropdown-item" href="{% url "deconnexion" %}"><i class="fa fa-sign-out" aria-hidden="true"></i> DECONNEXION</a>
 				</div>
 			</div>
-			
-			</div>
-			</div>
-		<div class="menu-item dropdown dropdown-mobile-full">
-			<a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link d-flex align-items-center">
-				<div class="menu-img online me-sm-2 ms-lg-0 ms-n2">
-					<img src="assets/img/user/profile.jpg" alt="Profile" class />
-				</div>
-				<div class="menu-text d-sm-block d-none">
-					<span class="d-block"><span><span class="__cf_email__" >{{user.username}}</span></span></span>
-				</div>
-			</a>
-			<div class="dropdown-menu dropdown-menu-end me-lg-3 fs-10px fade">
-				<h6 class="dropdown-header">{{ user.profile.role }}</h6>
-				<a class="dropdown-item" href="{% url "user_detail" user.pk %}">Profile</a>
-				<a class="dropdown-item" href="settings.html">Modifier mot de passe</a>
-			{% comment %} <a class="dropdown-item" href="calendar.html">CALENDER SETTINGS</a> {% endcomment %}
-			<div class="dropdown-divider"></div>
-			{% comment %} <a class="dropdown-item" href="helper.html">HELP & SUPPORT</a> {% endcomment %}
-			<a class="dropdown-item" href="{% url "deconnexion" %}"><i class="fa fa-sign-out" aria-hidden="true"></i> DECONNEXION</a>
-		</div>
-		</div>
 		</div>
 
 
 		<form class="menu-search-float" method="POST" name="header_search_form">
 			<div class="menu-search-container">
-			<div class="menu-search-icon"><i class="bi bi-search"></i></div>
-			<div class="menu-search-input">
-			<input type="text" class="form-control" placeholder="Search something..." />
-			</div>
-			<div class="menu-search-icon">
-			<a href="#" data-toggle-class="app-header-menu-search-toggled" data-toggle-target=".app"><i class="bi bi-x-lg"></i></a>
-			</div>
+				<div class="menu-search-icon"><i class="bi bi-search"></i></div>
+				<div class="menu-search-input">
+					<input type="text" class="form-control" placeholder="Search something..." />
+				</div>
+				<div class="menu-search-icon">
+					<a href="#" data-toggle-class="app-header-menu-search-toggled" data-toggle-target=".app"><i class="bi bi-x-lg"></i></a>
+				</div>
 			</div>
 		</form>
 	</div>
@@ -233,107 +241,106 @@
 
 					<div class="menu-header">FORMULAIRES & LISTES</div>
 					<div class="menu-item has-sub ">
-					<a href="javascript:;" class="menu-link">
-					<div class="menu-icon">
-					<iconify-icon icon="ph:gear-duotone"></iconify-icon>
-					<span class="w-5px h-5px rounded-3 bg-theme position-absolute top-0 end-0 mt-3px me-3px d-none"></span>
-					</div>
-					<div class="menu-text d-flex align-items-center">STOCK</div>
-					<span class="menu-caret"><b class="caret"></b></span>
-					</a>
-					<div class="menu-submenu">
-					<div class="menu-item">
-					<a href="pos_customer_order.html" target="_blank" class="menu-link">
-						<div class="menu-text">PIECES</div>
-					</a>
-					</div>
+						<a href="javascript:;" class="menu-link">
+							<div class="menu-icon">
+								<iconify-icon icon="ph:gear-duotone"></iconify-icon>
+								<span class="w-5px h-5px rounded-3 bg-theme position-absolute top-0 end-0 mt-3px me-3px d-none"></span>
+							</div>
+							<div class="menu-text d-flex align-items-center">STOCK</div>
+							<span class="menu-caret"><b class="caret"></b></span>
+						</a>
+						<div class="menu-submenu">
+							<div class="menu-item">
+								<a href="{% url 'piece_create' %}" target="_blank" class="menu-link">
+									<div class="menu-text">PIECES</div>
+								</a>
+							</div>
 					
-					<div class="menu-item">
-					<a href="pos_counter_checkout.html" target="_blank" class="menu-link">
-					<div class="menu-text">PIECE EN RUPTURE</div>
-					</a>
-					</div>
-					<div class="menu-item">
-					<a href="pos_table_booking.html" target="_blank" class="menu-link">
-					<div class="menu-text">TABLE BOOKING</div>
-					</a>
-					</div>
-					
-					</div>
+							<div class="menu-item">
+								<a href="{% url 'piece_create' %}" target="_blank" class="menu-link">
+									<div class="menu-text">PIECE EN RUPTURE</div>
+								</a>
+							</div>
+							<div class="menu-item">
+								<a href="pos_table_booking.html" target="_blank" class="menu-link">
+									<div class="menu-text">TABLE BOOKING</div>
+								</a>
+							</div>
+						</div>
 					</div>
 
 					<div class="menu-item has-sub ">
-					<a href="#" class="menu-link">
-					<span class="menu-icon">
-					<iconify-icon icon="ph:pencil-simple-duotone"></iconify-icon>
-					</span>
-					<span class="menu-text">FORMS</span>
-					<span class="menu-caret"><b class="caret"></b></span>
-					</a>
-					<div class="menu-submenu">
-					<div class="menu-item ">
-					<a href="form_elements.html" class="menu-link">
-					<span class="menu-text">FORM ELEMENTS</span>
-					</a>
+						<a href="#" class="menu-link">
+							<span class="menu-icon">
+								<iconify-icon icon="ph:pencil-simple-duotone"></iconify-icon>
+							</span>
+							<span class="menu-text">FORMS</span>
+							<span class="menu-caret"><b class="caret"></b></span>
+						</a>
+						<div class="menu-submenu">
+						<div class="menu-item ">
+							<a href="form_elements.html" class="menu-link">
+								<span class="menu-text">FORM ELEMENTS</span>
+							</a>
+						</div>
+						<div class="menu-item ">
+							<a href="form_plugins.html" class="menu-link">
+								<span class="menu-text">FORM PLUGINS</span>
+							</a>
+						</div>
+						<div class="menu-item ">
+							<a href="form_wizards.html" class="menu-link">
+								<span class="menu-text">WIZARDS</span>
+							</a>
+						</div>
 					</div>
-					<div class="menu-item ">
-					<a href="form_plugins.html" class="menu-link">
-					<span class="menu-text">FORM PLUGINS</span>
-					</a>
-					</div>
-					<div class="menu-item ">
-					<a href="form_wizards.html" class="menu-link">
-					<span class="menu-text">WIZARDS</span>
-					</a>
-					</div>
-					</div>
-					</div>
+				</div>
 					
 				<div class="menu-item has-sub ">
 					<a href="#" class="menu-link">
-					<span class="menu-icon">
-					<iconify-icon icon="ph:open-ai-logo-duotone"></iconify-icon>
-					</span>
-					<span class="menu-text">PAGES</span>
-					<span class="menu-caret"><b class="caret"></b></span>
+						<span class="menu-icon">
+							<iconify-icon icon="ph:open-ai-logo-duotone"></iconify-icon>
+						</span>
+						<span class="menu-text">PAGES</span>
+						<span class="menu-caret"><b class="caret"></b></span>
 					</a>
 					<div class="menu-submenu">
 					<div class="menu-item ">
-					<a href="page_products.html" class="menu-link">
-					<span class="menu-text">PRODUCTS</span>
-					</a>
+						<a href="page_products.html" class="menu-link">
+							<span class="menu-text">PRODUCTS</span>
+						</a>
 					</div>
 					<div class="menu-item ">
-					<a href="page_product_details.html" class="menu-link">
-					<span class="menu-text">PRODUCT DETAILS</span>
-					</a>
+						<a href="page_product_details.html" class="menu-link">
+							<span class="menu-text">PRODUCT DETAILS</span>
+						</a>
 					</div>
 					<div class="menu-item ">
-					<a href="page_orders.html" class="menu-link">
-					<span class="menu-text">ORDERS</span>
-					</a>
+						<a href="page_orders.html" class="menu-link">
+							<span class="menu-text">ORDERS</span>
+						</a>
 					</div>
 					<div class="menu-item ">
-					<a href="page_order_details.html" class="menu-link">
-					<span class="menu-text">ORDER DETAILS</span>
-					</a>
+						<a href="page_order_details.html" class="menu-link">
+							<span class="menu-text">ORDER DETAILS</span>
+						</a>
 					</div>
 					
 					<div class="menu-item ">
-					<a href="page_coming_soon.html" class="menu-link">
-					<span class="menu-text">COMING SOON PAGE</span>
-					</a>
+						<a href="page_coming_soon.html" class="menu-link">
+							<span class="menu-text">COMING SOON PAGE</span>
+						</a>
 					</div>
 					<div class="menu-item ">
-					<a href="page_register.html" class="menu-link">
-					<span class="menu-text">REGISTER</span>
-					</a>
+						<a href="page_register.html" class="menu-link">
+							<span class="menu-text">REGISTER</span>
+						</a>
 					</div>
 					<div class="menu-item ">
-					<a href="page_data_management.html" class="menu-link">
-					<span class="menu-text">DATA MANAGEMENT</span>
-					</a>
-					</div>
+						<a href="page_data_management.html" class="menu-link">
+							<span class="menu-text">DATA MANAGEMENT</span>
+						</a>
+						</div>
 					<div class="menu-item ">
 						<a href="page_pricing.html" class="menu-link"><span class="menu-text">PRICING PAGE</span></a>
 					</div>
@@ -406,9 +413,10 @@
 
 	{% comment %} <script src="{ static 'assets/js/vendor.min.js' %}" type="text/javascript"></script> {% endcomment %}
 	<script src="{% static 'assets/js/app.min.js' %}" type="text/javascript"></script>
+	
 	<script src="{% static 'assets/plugins/%40highlightjs/cdn-assets/highlight.min.js' %}" type="text/javascript"></script>
-
 	<script src="{% static 'assets/js/demo/highlightjs.demo.js' %}" type="text/javascript"></script>
+	
 	<script src="{% static 'assets/plugins/datatables.net/js/dataTables.min.js' %} " type="text/javascript"></script>
 	<script src="{% static 'assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js' %}" type="text/javascript"></script>
 	<script src="{% static 'assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js' %}" type="text/javascript"></script>

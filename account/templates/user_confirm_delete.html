@@ -1,12 +1,8 @@
 {% extends "magasin/base.html" %}
 {% block title %}Liste des utilisateurs{% endblock %}
-
 {% block main_content %}
 
-
 <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
-
-
 <div id="content" class="app-content">
     <div class="container">
         <div class="row justify-content-center">
@@ -56,18 +52,16 @@
                                         <div class="flex-fill">
                                             <div class="text-white text-opacity-50"><a href="{% url "user_create" %}" class="btn btn-outline-light  btn-block" style="border-radius: 8px;"><i class="fa fa-reply"></i> RETOUR</a></div>
                                         </div>
-                                        <dir></dir>
-                                        <button type="submit" class="btn btn-outline-light  btn-block" style="border-radius: 8px;" onclick="return confirm('Etes-vous sûre de vouloir supprimer le compte de {{ user.username|upper }}? car si vous supprimer toutes les informations liées seront perdues')">SUPPRIMER <i class="fa fa-trash"></i></button>
+                                        <button type="submit" class="btn btn-outline-light  btn-block" style="border-radius: 8px;" onclick="return confirm('Etes-vous sûre de vouloir supprimer le compte de {{ user.username|upper }}? car si vous supprimer toutes les informations liées seront perdues')">SUPPRIMER <i class="fa fa-fw fa-trash"></i></button>
                                         
                                         {% comment %} <input type="submit" value="Supprimer" onclick="return confirm('Etes-vous sûre de vouloir supprimer les informations concernant {{ vehicule.marque|upper }} - {{ vehicule.immatriculation|upper }}? car si vous supprimer toutes les informations liées seront perdues')" style="box-shadow: 0 0 3px 0 rgb(75, 75, 75); height:35px; width:100px; border-radius:8px; border-color: rgb(250, 186, 186);background:rgb(182, 1, 1); color:aliceblue"> {% endcomment %}
                                     </div>
                                 
                                 
-                                     </div>
                                     </div>
-
-                                </form>
-                    </div>
+                                </div>
+                            </form>
+                        </div>
             
                         <div class="col-xl-3">
                             <nav id="sidebar-bootstrap" class="navbar navbar-sticky d-none d-xl-block">
@@ -81,13 +75,5 @@
             </div>
         </div>
     </div>
-
-
-    
-</div>
-
-
-
-    
-    
+</div>  
 {% endblock  %}

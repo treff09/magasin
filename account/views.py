@@ -71,6 +71,7 @@ def user_delete(request, pk):
         return redirect('user_create')
     return render(request, 'user_confirm_delete.html', {'user': user})
 
+
 def login_view(request):
     if request.user.is_authenticated:
         user = request.user
@@ -84,29 +85,33 @@ def login_view(request):
             return redirect('livraison')
         else:
             messages.success(request, "Bienvenue administrateur")
-            return redirect('adminmagasin')  
+            return redirect('adminmagasin') 
+        
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if user.groups.filter(name='Caissiers').exists():
-                return redirect('caissier_dashboard')
-            elif user.groups.filter(name='Accueillants').exists():
-                messages.success(request, "Bienvenue au service accueil")
-                return redirect('accueillant_dashboard')
-            elif user.groups.filter(name='Livraisons').exists():
-                messages.success(request, "Bienvenue au service livraison")
-                return redirect('livraison_dashboard')
+        try:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                if user.groups.filter(name='Caissiers').exists():
+                    return redirect('caissier_dashboard')
+                elif user.groups.filter(name='Accueillants').exists():
+                    messages.success(request, "Bienvenue au service accueil")
+                    return redirect('accueillant_dashboard')
+                elif user.groups.filter(name='Livraisons').exists():
+                    messages.success(request, "Bienvenue au service livraison")
+                    return redirect('livraison_dashboard')
+                elif user.groups.filter(name='adminmagasin').exists():
+                    messages.success(request, "Bienvenue administrateur")
+                    return redirect('adminmagasin') 
+                else:
+                    return redirect('login')
             else:
-                messages.success(request, "Bienvenue administrateur")
-                return redirect('adminmagasin')  
-        else:
-            return render(request, 'logins.html', {'error': 'Nom utilisateur ou mot de passe incorrecte'})
-    else:
-        return render(request, 'logins.html')
-    
+                messages.error(request, f"Nom d'utilisateur {username} ou mot de passe {password} incorrecte")
+        except:
+            messages.error(request, "Information de connexion invalides!!!")
+    return render(request, "logins.html")
     
     
 def logout_view(request):
