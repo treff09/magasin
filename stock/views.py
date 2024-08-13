@@ -192,6 +192,9 @@ def valider_paiement(request, ticket_id):
             commande.paye = True
             reste = float(montant) - float(commande.total)
             commande.utilisateur = request.user
+            commande.montant_paye=float(montant)
+            commande.montant_reste=reste
+            commande.paye
             commande.save()
             ticket.utilise = True
             ticket.save()
@@ -246,3 +249,38 @@ def livraison_dashboard(request):
     # Filtrer les paniers dont le statut 'valide' est True
     livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True) 
     return render(request, 'livraison_dashboard.html', {'livraison_en_attente': livraison_en_attente})
+
+
+import qrcode
+import io
+import base64
+from django.shortcuts import render, get_object_or_404
+from .models import Commande
+
+def generate_receipt(request, commande_id):
+    # Récupérer la commande basée sur l'ID
+    commande = get_object_or_404(Commande, id=commande_id)
+
+    # Calculer le montant restant (s'il n'est pas déjà calculé)
+    if commande.total and commande.montant_paye:
+        commande.montant_reste = commande.total - commande.montant_paye
+
+    # Générer un QR code basé sur l'ID de la commande ou d'autres informations
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr_data = f"Commande #{commande.numero_commande} - Total: {commande.total} Fcfa - Date : {commande.date_creation}"
+    qr.add_data(qr_data)
+    qr.make(fit=True)
+
+    # Convertir le QR code en image et l'encoder en base64
+    img = qr.make_image(fill='black', back_color='white')
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG")
+    img_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    # Rendre la page du reçu avec QR code
+    return render(request, 'reçu.html', {'commande': commande, 'qr_code_img': img_str})

@@ -47,6 +47,8 @@ class Commande(models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=2)
     date_creation = models.DateTimeField(auto_now_add=True)
     paye = models.BooleanField(default=False)
+    montant_paye=models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    montant_reste=models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commandes_validees', null=True, blank=True)
 
 class Ticket(models.Model):

@@ -17,4 +17,5 @@ urlpatterns = [
     
     path('', login_view, name='login'),
     path('logout/', logout_view, name='deconnexion'),
+    
 ]
