@@ -1,6 +1,5 @@
 {% extends "magasin/base.html" %}
 {% block title %}Liste des utilisateurs{% endblock %}
-
 {% block main_content %}
 
 <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
@@ -16,102 +15,61 @@
 <div class="row">
 
 <div class="col-xl-12">
-
-
-    
-    
         <div class="modal modal-cover fade" id="modalCoverExample">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Nouveau utilisateur</h3>
+                        <h3 class="modal-title">NOUVEAU UTILISATEUR</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    
-
                     <div class="modal-body"><hr>
                     <a style="text-decoration:none" class="text-center">Information de connexion</a> 
                     <hr>
                         <div class="card-body">
                             <form class="was-validated" method="post">
                                 {% csrf_token %}
-                                {{ user_form.as_p }}
-                                {{ profile_form.as_p }}
                                 <div class="row mb-n3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="validationValidInput" class="form-label">Valid input</label>
-                                        <input type="text" class="form-control is-valid" id="validationValidInput" required>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                         </div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationInvalidInput" class="form-label">Invalid input</label>
-                                        <input type="text" class="form-control is-invalid" id="validationInvalidInput" value required>
-                                        <div class="invalid-feedback" id="validationInvalidInputFeedback">
-                                            Please provide a name
-                                        </div>
+                                        <label for="validationValidInput" class="form-label">Nom utilisateur</label>
+                                        {{ user_form.username }}
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="validationInvalidInputGroup" class="form-label">Input group</label>
+                                        <label for="validationValidInput" class="form-label">Nom</label>
+                                        {{ user_form.first_name }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationValidInput" class="form-label">Prenoms</label>
+                                        {{ user_form.last_name }}
+                                        
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationInvalidInputGroup" class="form-label">Email</label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text">@</span>
-                                            <input type="text" class="form-control is-invalid" id="validationInvalidInputGroup" required>
-                                        <div class="invalid-feedback">
-                                        Please choose a username.
+                                            {{ user_form.email }}
+                                        </div>
                                     </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="validationSelectInvalid" class="form-label">Select dropdown</label>
-                                        <select class="form-select is-invalid" id="validationSelectInvalid" required>
-                                            <option selected disabled value>Choose...</option>
-                                            <option>...</option>
-                                        </select>
-                                    <div class="invalid-feedback">
-                                        Please select a valid state.
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationValidInput" class="form-label">Mot de passe</label>
+                                        {{ user_form.password }}
                                     </div>
-                                </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationValidInput" class="form-label">Confirme mot de passe</label>
+                                        {{ user_form.confirm_password }}
+                                    </div>
                                 </div>
                                 </div>
                             
-                            <hr>
-                                <a style="text-decoration:none" class="text-center">Information Profil</a> 
-                            <hr>
-                            
-                                <div class="row mb-n3">
-                                <div class="col-md-6 mb-5 position-relative">
-                                <label for="validationTooltip01">Tooltip valid</label>
-                                <input type="text" class="form-control" id="validationTooltip01" required>
-                                <div class="valid-tooltip">
-                                Looks good!
-                                </div>
-                                </div>
-                                <div class="col-md-6 mb-5 position-relative">
-                                <label for="validationTooltip02">Tooltip invalid</label>
-                                <div class="input-group">
-                                <div class="input-group-text">@</div>
-                                <input type="text" class="form-control" id="validationTooltip02" required>
-                                <div class="invalid-tooltip">
-                                Field is required
-                                </div>
-                                </div>
-                                </div>
-
-                                <div class="col-md-6 mb-5 position-relative">
-                                    <label for="validationTooltip03">Tooltip dropdown</label>
-                                        <select class="form-select" id="validationTooltip03" required>
-                                            <option selected disabled value>Choose...</option>
-                                            <option>...</option>
-                                        </select>
-                                    <div class="invalid-tooltip">
-                                    Please select a valid state.
-                                    </div>
+                                <hr>
+                                    <a style="text-decoration:none" class="text-center">Information Profil</a> 
+                                <hr>
+                                <div class="col-md-12 mb-3">
+                                    <label for="validationSelectInvalid" class="form-label">Role</label>
+                                    {{ profile_form.role }}
                                 </div>
                                 <div class="col-md-12 mb-5 p-2 position-relative text-center">
-                                    <button type="button" class="btn btn-outline-light btn-lg btn-block" style="border-radius: 8px;">Enrégistrer</button>
+                                    <button type="submit" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Enrégistrer</button>
                                 </div>
                                 </div>
                             </form>
@@ -121,20 +79,19 @@
             </div>
         </div>
 
-
-
-
 <h1 class="page-header">
     {% if messages %}
         {% for msg in messages %}
-          {% if msg.tags == 'error' %}
+          {% if msg == 'error' %}
             <small id="message" class="alert alert-danger alert-dismissible fade show" role="alert">{{msg}}</small>
           {% else %}
             <small id="message" class="alert alert-success alert-dismissible fade show" role="alert">{{msg}}</small>
           {% endif %}
         {% endfor %}
     {% endif %}
-
+</h1>
+<h1 class="page-header">
+    Listes des utilisateurs
 </h1>
 <hr class="mb-4 opacity-3" />
 
@@ -152,11 +109,11 @@
             <thead>
                 <tr>
                 <th></th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Profile</th>
-                <th>Start Date</th>
+                <th>Nom utilisateur</th>
+                <th>Nom</th>
+                <th>Prenoms</th>
+                <th>Role</th>
+                <th>Email</th>
                 <th>Action</th>
                 </tr>
             </thead>
@@ -165,13 +122,16 @@
                     <tr>
                         <td>-</td>
                         <td><a href="{% url 'user_detail' user.pk %}">{{ user.username }} </a></td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
                         <td>{{ user.profile.role }}</td>
-                        <td>2024/04/25</td>
+                        <td>{{user.email}}</td>
                         <td>
                             <a href="{% url 'user_update' user.pk %}"><i class="fa fa-edit"></i></a>
+                            
                             <a href="{% url 'user_delete' user.pk %}"><i class="fa fa-trash"></i></a>
+
+                            {% comment %} <a href="{% url "user_delete" user.pk %}" onclick="return  confirm('Etes-vous sûre de vouloir supprimer le compte de {{user.username|upper}}? car si vous supprimer toutes les informations liées seront perdues')">Click</a> {% endcomment %}
                         </td>
                     </tr>
                 {% endfor%}

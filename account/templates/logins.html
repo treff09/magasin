@@ -36,15 +36,8 @@
 						</lord-icon>
 					</header>
 				</h1>
-				{% if error %}
-					<div id="message" class="card-footer text-center alert-danger">
-						<span class="alert alert text-danger" >{{error}}</span>
-					</div>
-				{% else %}
-					<div id="message" class="card-footer text-center alert-success">
-						<span class="alert alert text-success" >{{error}}</span>
-					</div>
-				{% endif %}
+
+				
 				<form method="post" name="login_form">
 					{% csrf_token %}
 					<div class="mb-4">
@@ -58,12 +51,25 @@
 						</div>
 						<input style="border-radius: 8px;" type="password" name="password" class="form-control form-control-lg fs-14px" value placeholder="magasin1235..." />
 					</div>
+					<div class="mb-4">
+						<div class="d-flex">
+							{% if messages %}
+                			    {% for msg in messages %}
+                			      {% if msg == 'error' %}
+                			        <small id="message" class="alert alert-danger alert-dismissible fade show w-100 text-center" role="alert">{{msg}}</small>
+                			      {% else %}
+                			        <small id="message" class="alert alert-success alert-dismissible fade show w-100 text-center" role="alert">{{msg}}</small>
+                			      {% endif %}
+                			    {% endfor %}
+                			{% endif %}
+						</div>
+					</div>
 					<div class="mb-4 text-center" style="display: flex; text-align:center; margin-left: 30%;">
 						<button type="submit" class="text-center btn btn-outline-light btn-lg d-block w-50 mb-3" style="border-radius: 20px;">CONNEXION</button>
 					</div>
 					
 					<div class="text-center text-body text-opacity-50">
-						Pas de compte? <a href="page_register.html">S'inscrire</a>.
+						Pas de compte? <a href="#">S'inscrire</a>.
 					</div>
 				</form>
 			</div>
