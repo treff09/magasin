@@ -210,30 +210,30 @@
 				<div class="menu-header">TABLEAU DE BORD</div>
 					<div class="menu-item active">
 						<a href="{% url 'adminmagasin' %}" class="menu-link">
-							<span class="menu-icon"><iconify-icon icon="ph:chart-bar-duotone"></iconify-icon></span>
+							<span class="menu-icon"><iconify-icon icon="fluent-mdl2:b-i-dashboard"></iconify-icon></span>
 							<span class="menu-text">ADMINISTRATEUR</span>
 						</a>
 					</div>
 					<div class="menu-item ">
-						<a href="analytics.html" class="menu-link">
+						<a href="{% url "piece_list_accueil" %}" class="menu-link">
 							<span class="menu-icon">
-								<iconify-icon icon="ph:chart-bar-duotone"></iconify-icon>
-							</span>
-							<span class="menu-text">CAISSIERE</span>
-						</a>
-					</div>
-					<div class="menu-item ">
-						<a href="analytics.html" class="menu-link">
-							<span class="menu-icon">
-								<iconify-icon icon="ph:chart-bar-duotone"></iconify-icon>
+								<iconify-icon icon="bi:person-workspace"></iconify-icon>
 							</span>
 							<span class="menu-text">ACCUEIL</span>
 						</a>
 					</div>
 					<div class="menu-item ">
-						<a href="analytics.html" class="menu-link">
+						<a href="{% url "caisseDashboard" %}" class="menu-link">
 							<span class="menu-icon">
-								<iconify-icon icon="ph:chart-bar-duotone"></iconify-icon>
+								<iconify-icon icon="clarity:wallet-line"></iconify-icon>
+							</span>
+							<span class="menu-text">CAISSIERE</span>
+						</a>
+					</div>
+					<div class="menu-item ">
+						<a href="{% url "livraison_dashboard" %}" class="menu-link">
+							<span class="menu-icon">
+								<iconify-icon icon="fluent-emoji-high-contrast:delivery-truck"></iconify-icon>
 							</span>
 							<span class="menu-text">LIVRAISON</span>
 						</a>

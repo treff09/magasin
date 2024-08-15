@@ -98,7 +98,7 @@ def login_view(request):
                     return redirect('caissier_dashboard')
                 elif user.groups.filter(name='Accueillants').exists():
                     messages.success(request, "Bienvenue au service accueil")
-                    return redirect('accueillant_dashboard')
+                    return redirect('piece_list_accueil')
                 elif user.groups.filter(name='Livraisons').exists():
                     messages.success(request, "Bienvenue au service livraison")
                     return redirect('livraison_dashboard')
@@ -108,7 +108,7 @@ def login_view(request):
                 else:
                     return redirect('login')
             else:
-                messages.error(request, f"Nom d'utilisateur {username} ou mot de passe {password} incorrecte")
+                messages.error(request, f"Nom d'utilisateur ou mot de passe incorrecte")
         except:
             messages.error(request, "Information de connexion invalides!!!")
     return render(request, "logins.html")

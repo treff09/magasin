@@ -236,19 +236,18 @@ def accueil(request):
 
 @user_passes_test(is_caissier)
 def caisseDashboard(request):
-    
     paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
     context =  {
         'paniers_non_valides': paniers_non_valides,
     }
-    return render(request, 'caissier_dashboard.html', context)
+    return render(request, 'caissiere_valition_paiement.html', context)
 
 
 @user_passes_test(is_liveur)
 def livraison_dashboard(request):
     # Filtrer les paniers dont le statut 'valide' est True
     livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True) 
-    return render(request, 'livraison_dashboard.html', {'livraison_en_attente': livraison_en_attente})
+    return render(request, 'livraison.html', {'livraison_en_attente': livraison_en_attente})
 
 
 import qrcode

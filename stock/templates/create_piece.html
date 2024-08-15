@@ -1,4 +1,4 @@
-{% extends "magasin/base.html" %}
+{% extends "base.html" %}
 {% block title %}Liste des utilisateurs{% endblock %}
 {% block main_content %}
 
@@ -15,11 +15,11 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h3 class="modal-title">AJOUTER PIECE</h3>
+                                        <h3 class="modal-title">AJOUTER UNE PIECE</h3>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body"><hr>
-                                    <a style="text-decoration:none" class="text-center"></a> 
+                                    <a style="text-decoration:none" class="text-center"><SMall>Entrer correctement les informations de la pièce</SMall></a> 
                                     <hr>
                                         <div class="card-body">
                                             <form class="was-validated" method="post">
@@ -89,7 +89,7 @@
                                     <div class="card-header-btn">
                                         <a href="#" data-bs-target="#modalCoverExample" class="btn btn-theme" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
                                     </div>
-                                    Ajouter un nouveau Employers
+                                    Ajouter une nouvelle pièce
                                 </div>
                                 <div class="card-body">
                                     <table id="datatableDefault" width="100%" class="table text-nowrap">
@@ -115,6 +115,8 @@
                                                     <td>
                                                         {% if piece.quantite < 10 %}
                                                             <a style="text-decoration:none" class="text-danger">{{piece.quantite}}</a>
+                                                        {% elif piece.quantite == 10%}
+                                                            <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a>
                                                         {% else %}
                                                             <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a>
                                                         {% endif %}

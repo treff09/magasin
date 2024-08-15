@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin_magasin/', admin_magasin, name='adminmagasin'),
     path('b/', base, name='bb'),
     #piece
-    path('piece/', piece_list, name='piece_list'),#VUE ACCEUILLANT
+    path('piece_accueil/', piece_list, name='piece_list_accueil'),#VUE ACCEUILLANT
     path('piece/<int:pk>/',piece_detail, name='piece_detail'),
     path('piece/new/',piece_create, name='piece_create'),
     path('piece/<int:pk>/edit/',piece_update, name='piece_update'),
