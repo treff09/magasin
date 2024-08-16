@@ -30,9 +30,8 @@
                                                 <td>-</td>
                                                 <td>{{ panier.ticket }}</td>
                                                 <td>{{ panier.date_creation }}</td>
-                                                
                                                 <td  class='text-center'>
-                                                    <a href="{% url 'valider_livraison' panier.ticket %}" onclick="return confirm('Êtes-vous sûr de vouloir valider cette livraison ?');">Valider</a>
+                                                    <a style="text-decoration: none;" href="{% url 'valider_livraison' panier.ticket %}" onclick="return confirm('Êtes-vous sûr de vouloir valider cette livraison ?');">Livrer</a>
                                                 </td>
                                             </tr>
                                         {% endwith %}

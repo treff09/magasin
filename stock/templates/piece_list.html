@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% block title %}DASHBOARD{% endblock  %}
+{% block title %}Dashboard Accueil{% endblock  %}
 {% block main_content %}
 <div id="app" class="app app-content-full-height app-without-header">
 	<div id="content" class="app-content p-0">
@@ -99,7 +99,15 @@
 													<td>{{ piece.numero_piece }}</td>
 													<td>{{ piece.designation }}</td>
 													<td>{{ piece.type_voiture }}</td>
-													<td>{{ piece.quantite }}</td>
+													<td>
+														{% if piece.quantite < 10 %}
+                                                            <a style="text-decoration:none" class="text-danger">{{piece.quantite}}</a>
+                                                        {% elif piece.quantite == 10%}
+                                                            <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a>
+                                                        {% else %}
+                                                            <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a>
+                                                        {% endif %}
+													</td>
 													<td>{{ piece.prix_unitaire }}</td>
 													<td class="text-center"><a href="{% url 'ajouter_au_panier' piece.id %}"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="nav-icon" title="Ajouter au panier" style="font-size: 18px;"></iconify-icon></a></td>
 												</tr>

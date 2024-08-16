@@ -52,7 +52,7 @@ def ajouter_au_panier(request, piece_id):
     if not created:
         panier_item.quantite += 1
         panier_item.save()
-    return redirect('piece_list')
+    return redirect('piece_list_accueil')
 
 def retirer_du_cart(request, piece_id):
     # Récupérer la pièce et l'élément du panier correspondant
@@ -66,7 +66,7 @@ def retirer_du_cart(request, piece_id):
         panier_item.save()
     else:
         panier_item.delete()
-    return redirect('piece_list')
+    return redirect('piece_list_accueil')
 
 # Redirect to the page showing both list and cart
 @user_passes_test(is_accueillant)

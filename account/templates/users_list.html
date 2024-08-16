@@ -1,180 +1,135 @@
-{% extends "base.html" %}
-{% block title %}Liste des utilisateurs{% endblock %}
-{% block main_content %}
+{% extends "base.html" %} {% block title %}Liste des utilisateurs{% endblock %} {% block main_content %}
 
 <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
 
 <div id="content" class="app-content">
-
-<div class="container">
-
-<div class="row justify-content-center">
-
-<div class="col-xl-12">
-
-<div class="row">
-
-<div class="col-xl-12">
-        <div class="modal modal-cover fade" id="modalCoverExample">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title">NOUVEAU UTILISATEUR</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body"><hr>
-                    <a style="text-decoration:none" class="text-center">Information de connexion</a> 
-                    <hr>
-                        <div class="card-body">
-                            <form class="was-validated" method="post">
-                                {% csrf_token %}
-                                <div class="row mb-n3">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationValidInput" class="form-label">Nom utilisateur</label>
-                                        {{ user_form.username }}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-12">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="modal modal-cover fade" id="modalCoverExample">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">NOUVEAU UTILISATEUR</h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationValidInput" class="form-label">Nom</label>
-                                        {{ user_form.first_name }}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationValidInput" class="form-label">Prenoms</label>
-                                        {{ user_form.last_name }}
-                                        
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationInvalidInputGroup" class="form-label">Email</label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text">@</span>
-                                            {{ user_form.email }}
+                                    <div class="modal-body">
+                                        <hr>
+                                        <a style="text-decoration:none" class="text-center">Information de connexion</a>
+                                        <hr>
+                                        <div class="card-body">
+                                            <form class="was-validated" method="post">
+                                                {% csrf_token %}
+                                                <div class="row mb-n3">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="validationValidInput" class="form-label">Nom utilisateur</label> {{ user_form.username }}
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="validationValidInput" class="form-label">Nom</label> {{ user_form.first_name }}
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="validationValidInput" class="form-label">Prenoms</label> {{ user_form.last_name }}
+
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="validationInvalidInputGroup" class="form-label">Email</label>
+                                                        <div class="input-group has-validation">
+                                                            <span class="input-group-text">@</span> {{ user_form.email }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="validationValidInput" class="form-label">Mot de passe</label> {{ user_form.password }}
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="validationValidInput" class="form-label">Confirme mot de passe</label> {{ user_form.confirm_password }}
+                                                    </div>
+                                                </div>
+                                        </div>
+
+                                        <hr>
+                                        <a style="text-decoration:none" class="text-center">Information Profil</a>
+                                        <hr>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="validationSelectInvalid" class="form-label">Role</label> {{ profile_form.role }}
+                                        </div>
+                                        <div class="col-md-12 mb-5 p-2 position-relative text-center">
+                                            <button type="submit" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Enrégistrer</button>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationValidInput" class="form-label">Mot de passe</label>
-                                        {{ user_form.password }}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="validationValidInput" class="form-label">Confirme mot de passe</label>
-                                        {{ user_form.confirm_password }}
-                                    </div>
+                                    </form>
                                 </div>
-                                </div>
-                            
-                                <hr>
-                                    <a style="text-decoration:none" class="text-center">Information Profil</a> 
-                                <hr>
-                                <div class="col-md-12 mb-3">
-                                    <label for="validationSelectInvalid" class="form-label">Role</label>
-                                    {{ profile_form.role }}
-                                </div>
-                                <div class="col-md-12 mb-5 p-2 position-relative text-center">
-                                    <button type="submit" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Enrégistrer</button>
-                                </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
+                    </div>
+                </div>
+
+                <h1 class="page-header">
+                    {% if messages %} {% for msg in messages %} {% if msg == 'error' %}
+                    <small id="message" class="alert alert-danger alert-dismissible fade show" role="alert">{{msg}}</small> {% else %}
+                    <small id="message" class="alert alert-success alert-dismissible fade show" role="alert">{{msg}}</small> {% endif %} {% endfor %} {% endif %}
+                </h1>
+                <h1 class="page-header">
+                    Listes des utilisateurs
+                </h1>
+                <hr class="mb-4 opacity-3" />
+
+                <div id="datatable" class="mb-5">
+                    <div class="card">
+                        <div class="card-header with-btn">
+                            Employers
+                            <div class="card-header-btn">
+                                <a href="#" data-bs-target="#modalCoverExample" class="btn btn-theme" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
+                            </div>
+                            Ajouter un nouveau Employers
+                        </div>
+                        <div class="card-body">
+                            <table id="datatableDefault" width="100%" class="table text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th class="text-theme"></th>
+                                        <th class="text-theme">Nom utilisateur</th>
+                                        <th class="text-theme">Nom</th>
+                                        <th class="text-theme">Prénoms</th>
+                                        <th class="text-theme">Role</th>
+                                        <th class="text-theme">Email</th>
+                                        <th class="text-theme">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                    <tr>
+                                        <td>-</td>
+                                        <td><a style="text-decoration:none" href="{% url 'user_detail' user.pk %}">{{ user.username }} </a></td>
+                                        <td>{{user.first_name}}</td>
+                                        <td>{{user.last_name}}</td>
+                                        <td>{{ user.profile.role }}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>
+                                            <a href="{% url 'user_update' user.pk %}"><i class="fa fa-edit"></i></a>
+
+                                            <a href="{% url 'user_delete' user.pk %}"><i class="fa fa-trash"></i></a> {% comment %} <a href="{% url " user_delete " user.pk %}" onclick="return  confirm('Etes-vous sûre de vouloir supprimer le compte de {{user.username|upper}}? car si vous supprimer toutes les informations liées seront perdues')">Click</a>                                            {% endcomment %}
+                                        </td>
+                                    </tr>
+                                    {% endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-
-<h1 class="page-header">
-    {% if messages %}
-        {% for msg in messages %}
-          {% if msg == 'error' %}
-            <small id="message" class="alert alert-danger alert-dismissible fade show" role="alert">{{msg}}</small>
-          {% else %}
-            <small id="message" class="alert alert-success alert-dismissible fade show" role="alert">{{msg}}</small>
-          {% endif %}
-        {% endfor %}
-    {% endif %}
-</h1>
-<h1 class="page-header">
-    Listes des utilisateurs
-</h1>
-<hr class="mb-4 opacity-3" />
-
-<div id="datatable" class="mb-5">
-<div class="card">
-    <div class="card-header with-btn">
-        Employers
-        <div class="card-header-btn">
-            <a href="#" data-bs-target="#modalCoverExample" class="btn btn-theme" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
-        </div>
-        Ajouter un nouveau Employers
     </div>
-    <div class="card-body">
-        <table id="datatableDefault" width="100%" class="table text-nowrap">
-            <thead>
-                <tr>
-                <th></th>
-                <th>Nom utilisateur</th>
-                <th>Nom</th>
-                <th>Prenoms</th>
-                <th>Role</th>
-                <th>Email</th>
-                <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                    <tr>
-                        <td>-</td>
-                        <td><a href="{% url 'user_detail' user.pk %}">{{ user.username }} </a></td>
-                        <td>{{user.first_name}}</td>
-                        <td>{{user.last_name}}</td>
-                        <td>{{ user.profile.role }}</td>
-                        <td>{{user.email}}</td>
-                        <td>
-                            <a href="{% url 'user_update' user.pk %}"><i class="fa fa-edit"></i></a>
-                            
-                            <a href="{% url 'user_delete' user.pk %}"><i class="fa fa-trash"></i></a>
-
-                            {% comment %} <a href="{% url "user_delete" user.pk %}" onclick="return  confirm('Etes-vous sûre de vouloir supprimer le compte de {{user.username|upper}}? car si vous supprimer toutes les informations liées seront perdues')">Click</a> {% endcomment %}
-                        </td>
-                    </tr>
-                {% endfor%}
-            </tbody>
-        </table>
-    </div>
-<div class="hljs-container">
-<pre><code class="xml" data-url="assets/data/table-plugins/code-1.json"></code></pre>
 </div>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
 <a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
-<iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
+    <iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
 </a>
-
 
 </body>
 
 </html>
 
-{% endblock  %}
-
+{% endblock %}
