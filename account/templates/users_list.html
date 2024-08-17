@@ -67,9 +67,15 @@
                 </div>
 
                 <h1 class="page-header">
-                    {% if messages %} {% for msg in messages %} {% if msg == 'error' %}
-                    <small id="message" class="alert alert-danger alert-dismissible fade show" role="alert">{{msg}}</small> {% else %}
-                    <small id="message" class="alert alert-success alert-dismissible fade show" role="alert">{{msg}}</small> {% endif %} {% endfor %} {% endif %}
+                    {% if messages %}
+                        {% for msg in messages %} 
+                            {% if msg == 'error' %}
+                                <small id="message" class="alert alert-danger alert-dismissible fade show" role="alert">{{msg}}</small> 
+                             {% else %}
+                                <small id="message" class="alert alert-success alert-dismissible fade show" role="alert">{{msg}}</small> 
+                            {% endif %} 
+                        {% endfor %} 
+                    {% endif %}
                 </h1>
                 <h1 class="page-header">
                     Listes des utilisateurs
