@@ -1,271 +1,277 @@
-
-{% extends "base.html" %}
-{% block title %}Dashboard Accueil{% endblock  %}
-{% block main_content %}
+ {% extends "base.html" %} {% block title %}Dashboard Accueil{% endblock %} {% block main_content %}
 <div id="app" class="app app-content-full-height app-without-header">
-	<div id="content" class="app-content p-0">
-		<div class="pos pos-with-menu pos-with-sidebar" id="pos">
-			<div class="pos-container">
-				<div class="pos-content">
-					<div class="pos-content-container h-100">
-						<div class="row g-3">
-							<div class="mb-5">
-								<div class="card">
-									<div class="row g-2">
-										<div class="col-xl-3 col-lg-4 col-6">
-											<div class="card h-100">
-												<div class="card-header">VENTE JOURNALIERE</div>
-												<div class="card-body">
-													<div class="h4 fw-100 text-theme mb-1">1.000.000</div>
-													<p class="text-white fs-10px mb-0">
-														Pieces vendues: 300
-													</p>
-													<p class="fs-9px mb-0 text-white text-opacity-50">
-													updated 1 min ago
-													</p>
-												</div>
-											</div>
-										</div>
-										<div class="col-xl-3 col-lg-4 col-6">
-											<div class="card h-100">
-												<div class="card-header">VENTE MENSUELLE</div>
-												<div class="card-body">
-													<div class="h4 fw-100 text-theme mb-1">5.000.000</div>
-													<p class="text-white fs-10px mb-0">
-														Pieces vendues: 1500
-													</p>
-													<p class="fs-9px mb-0 text-white text-opacity-50">
-													updated 1 min ago
-													</p>
-												</div>
-											</div>
-										</div>
-										<div class="col-xl-3 col-lg-4 col-6">
-											<div class="card h-100">
-												<div class="card-header">VENTE TOTALE</div>
-												<div class="card-body">
-													<div class="h4 fw-100 text-theme mb-1">17.000.000</div>
-													<p class="text-white fs-10px mb-0">
-														Pieces vendues: 15000
-													</p>
-													<p class="fs-9px mb-0 text-white text-opacity-50">
-													updated 1 min ago
-													</p>
-												</div>
-											</div>
-										</div>
-										<div class="col-xl-3 col-lg-4 col-6">
-											<div class="card h-100">
-												<div class="card-header">TOTALE DES PIECES</div>
-													<div class="card-body">
-													<div class="h4 fw-100 text-theme mb-1">3000</div>
-													<p class="text-white fs-10px mb-0">
-														Evaluation: 40.000.000
-													</p>
-													<p class="fs-9px mb-0 text-white text-opacity-50">
-														updated 1 min ago
-													</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					
-						<div class="row g-3">
-							<div id="datatable" class="mb-5">
-								<div class="card">
-									<div class="card-header with-btn">
-										PIECES
-									</div>
-									<div class="card-body">
-										<table id="datatableDefault" width="100%" class="table text-nowrap" >
-											<thead>
-												<tr>
-													<th>-</th>
-													<th class="text-theme">N°Pieces</th>
-													<th class="text-theme">Désignation</th>
-													<th class="text-theme">Véhicule</th>
-													<th class="text-theme">Quantité en stock</th>
-													<th class="text-theme">Prix unitaire</th>
-													<th class="text-theme" >Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												{% for piece in pieces %}
-												<tr>
-													<td>-</td>
-													<td>{{ piece.numero_piece }}</td>
-													<td>{{ piece.designation }}</td>
-													<td>{{ piece.type_voiture }}</td>
-													<td>
-														{% if piece.quantite < 10 %}
-                                                            <a style="text-decoration:none" class="text-danger">{{piece.quantite}}</a>
+    <div id="content" class="app-content p-0">
+        <div class="pos pos-with-menu pos-with-sidebar" id="pos">
+            <div class="pos-container">
+                <div class="pos-content">
+                    <div class="pos-content-container h-100">
+                        <div class="row g-3">
+                            <div class="mb-5">
+                                <div class="card">
+                                    <div class="row g-2">
+                                        <div class="col-xl-3 col-lg-4 col-6">
+                                            <div class="card h-100">
+                                                <div class="card-header">VENTE JOURNALIERE</div>
+                                                <div class="card-body">
+                                                    <div class="h4 fw-100 text-theme mb-1">1.000.000</div>
+                                                    <p class="text-white fs-10px mb-0">
+                                                        Pieces vendues: 300
+                                                    </p>
+                                                    <p class="fs-9px mb-0 text-white text-opacity-50">
+                                                        updated 1 min ago
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-6">
+                                            <div class="card h-100">
+                                                <div class="card-header">VENTE MENSUELLE</div>
+                                                <div class="card-body">
+                                                    <div class="h4 fw-100 text-theme mb-1">5.000.000</div>
+                                                    <p class="text-white fs-10px mb-0">
+                                                        Pieces vendues: 1500
+                                                    </p>
+                                                    <p class="fs-9px mb-0 text-white text-opacity-50">
+                                                        updated 1 min ago
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-6">
+                                            <div class="card h-100">
+                                                <div class="card-header">VENTE TOTALE</div>
+                                                <div class="card-body">
+                                                    <div class="h4 fw-100 text-theme mb-1">17.000.000</div>
+                                                    <p class="text-white fs-10px mb-0">
+                                                        Pieces vendues: 15000
+                                                    </p>
+                                                    <p class="fs-9px mb-0 text-white text-opacity-50">
+                                                        updated 1 min ago
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-6">
+                                            <div class="card h-100">
+                                                <div class="card-header">TOTALE DES PIECES</div>
+                                                <div class="card-body">
+                                                    <div class="h4 fw-100 text-theme mb-1">3000</div>
+                                                    <p class="text-white fs-10px mb-0">
+                                                        Evaluation: 40.000.000
+                                                    </p>
+                                                    <p class="fs-9px mb-0 text-white text-opacity-50">
+                                                        updated 1 min ago
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div id="datatable" class="mb-5">
+                                <div class="card">
+                                    <div class="card-header with-btn">
+                                        PIECES
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="datatableDefault" width="100%" class="table text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>-</th>
+                                                    <th class="text-theme">N°Pieces</th>
+                                                    <th class="text-theme">Désignation</th>
+                                                    <th class="text-theme">Véhicule</th>
+                                                    <th class="text-theme">Quantité en stock</th>
+                                                    <th class="text-theme">Prix unitaire</th>
+                                                    <th class="text-theme">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for piece in pieces %}
+                                                <tr>
+                                                    <td>-</td>
+                                                    <td>{{ piece.numero_piece }}</td>
+                                                    <td>{{ piece.designation }}</td>
+                                                    <td>{{ piece.type_voiture }}</td>
+                                                    <td>
+                                                        {% if piece.quantite < 10 %} 
+															<a style="text-decoration:none" class="text-danger">{{piece.quantite}}</a>
                                                         {% elif piece.quantite == 10%}
-                                                            <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a>
-                                                        {% else %}
-                                                            <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a>
-                                                        {% endif %}
-													</td>
-													<td>{{ piece.prix_unitaire }}</td>
-													<td class="text-center"><a href="{% url 'ajouter_au_panier' piece.id %}"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="nav-icon" title="Ajouter au panier" style="font-size: 18px;"></iconify-icon></a></td>
-												</tr>
-												{% endfor%}
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="pos-sidebar" id="pos-sidebar">
-						<div class="h-100 d-flex flex-column p-0">
-							<div class="pos-sidebar-header mb-2px">
-								<div class="back-btn">
-									<button type="button" data-toggle-class="pos-mobile-sidebar-toggled" data-toggle-target="#pos" class="btn">
+                                                            <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a> 
+														{% else %}
+                                                            <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a> 
+														{% endif %}
+                                                    </td>
+                                                    <td>{{ piece.prix_unitaire }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{% url 'ajouter_au_panier' piece.id %}">
+                                                            <iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="nav-icon" title="Ajouter au panier" style="font-size: 18px;"></iconify-icon>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor%}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pos-sidebar" id="pos-sidebar">
+                    <div class="h-100 d-flex flex-column p-0">
+                        <div class="pos-sidebar-header mb-2px">
+                            <div class="back-btn">
+                                <button type="button" data-toggle-class="pos-mobile-sidebar-toggled" data-toggle-target="#pos" class="btn">
 									<i class="fa fa-chevron-left"></i>
 									</button>
-									</div>
-								<div class="icon"><iconify-icon icon="material-symbols-light:table-restaurant-sharp"></iconify-icon></div>
-								<div class="title">Table 01</div>
-								<div class="order">Order: <span class="fw-semibold text-white">#0056</span></div>
-							</div>
-						
-							<div class="pos-sidebar-nav fs-10px">
-								<ul class="nav nav-tabs nav-fill">
-									{% if panier_items %}
-										<li class="nav-item">
-											<a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">TOTAL ARTICLE ({{panier_items.count}})</a>
-										</li>
-									{% else %}
-										<li class="nav-item">
-											<a class="nav-link fw-semibold" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">TOTAL ARTICLE (0)</a>
-										</li>
-									{% endif %}
-								</ul>
-							</div>
-						
-						
-							<div class="pos-sidebar-body tab-content mb-2px" data-scrollbar="true" data-height="100%">
-								<form method="post" action="{% url 'valider_panier' %}">
-									<div class="tab-pane fade h-100 show active" id="newOrderTab">
-										{% csrf_token %}
-										{% for item in panier_items %}
-											<div class="pos-order">
-												<div class="pos-order-product">
-													{% comment %} <div class="img" style="background-image: url(assets/img/pos/product-1.jpg)"></div> {% endcomment %}
-													<div class="flex-1">
-														<div class="fw-semibold text-white">{{item.piece.designation}}</div>
-														<div class="mb-1">{{item.piece.prix_unitaire}}</div>
-														<div class="fs-10px lh-sm mb-3">
-														- size: large<br/>
-														- spicy: medium
-														</div>
-														<div class="d-flex">
-															<a id="retirer" href="{% url 'retirer_du_panier' item.piece.id %}" class="btn-retirer btn btn-secondary btn-sm px-2px" data-piece-id="{{ item.piece.id }}"><iconify-icon icon="material-symbols-light:check-indeterminate-small" class="d-block fs-20px my-n1"></iconify-icon></a>
-															<input id="quantite_piece" type="text" class="form-control w-30px px-0 form-control-sm mx-2 bg-white bg-opacity-25 text-center" name="quantite_{{ item.piece.id }}" value="{{ item.quantite }}" disabled/>
-															<a id="ajouter" href="{% url 'ajouter_au_panier' item.piece.id %}" class="btn-ajouter btn btn-secondary btn-sm px-2px " data-piece-id="{{ item.piece.id }}"><iconify-icon icon="material-symbols-light:add" class="d-block fs-20px my-n1"></iconify-icon></a>
-														</div>
-													</div>
-												</div>
-												<div class="pos-order-price d-flex flex-column">
-													<div class="flex-1 h6 mb-0">{{ item.total }}</div>
-													<div class="text-end">
-														<a href="{% url 'supprimer_du_panier' item.id %}" class="btn btn-theme-label-when-light btn-sm px-2px" onclick="return confirm('Etes-vous sûr de vouloir retirer cet article?')" class="btn btn-danger" title="Retirer"><iconify-icon icon="material-symbols-light:delete-outline-sharp" class="d-block fs-20px my-n1"></iconify-icon></a>
-													</div>
-												</div>
-											</div>
-										{% endfor %}
-										</div>
-									</div>
-									
-									<div class="pos-sidebar-footer">
-										<div class="d-flex align-items-center mb-2">
-											<div>Subtotal</div>
-											<div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ sous_total }}</div>
-										</div>
-										<div class="d-flex align-items-center">
-											<div>Remise (%) </div>
-											<div class="flex-1 text-end h6 mb-2 display-flex-4"> <input style="width: 100%; border-radius:8px" type="number" name="remise" class="form-control" id="exampleFormControlInput1" min="0" placeholder="%"></div>
-										</div>
-										<hr class="my-3" />
-										<div class="d-flex align-items-center mb-2">
-											<div>Total</div>
-											<div id="#total-general" class="flex-1 text-end h4 mb-0">{{ sous_total }}</div>
-										</div>
-										<div class="mt-3">
-											<div class="d-flex">
-												<a href="#" class="btn btn-secondary btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
-													<iconify-icon icon="material-symbols-light:sensors" class="fs-24px d-flex justify-content-center" ></iconify-icon>
-													<span>SERVICE</span>
-												</a>
-												<a href="#" class="btn btn-secondary  btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
-													<iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
-													<span class="fw-semibold">BILL</span>
-												</a>
-												<a href="#" class="btn btn-secondary btn-sm flex-fill d-flex flex-column align-items-center justify-content-center" style="border-radius: 30px;" data-bs-toggle="modal" data-bs-target="#modalPosItem">
-													<iconify-icon icon="material-symbols-light:send" class="fs-24px d-flex justify-content-center"></iconify-icon>
-													<span class="fw-semibold">SOUMETTRE</span>
-												</a>
-											</div>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<a href="#" class="pos-mobile-sidebar-toggler" data-toggle-class="pos-mobile-sidebar-toggled" data-toggle-target="#pos">
-					<i class="fa fa-shopping-bag"></i>
-					<span class="badge">
+                            </div>
+                            <div class="icon">
+                                <iconify-icon icon="material-symbols-light:table-restaurant-sharp"></iconify-icon>
+                            </div>
+                            <div class="title">Table 01</div>
+                            <div class="order">Order: <span class="fw-semibold text-white">#0056</span></div>
+                        </div>
+
+                        <div class="pos-sidebar-nav fs-10px">
+                            <ul class="nav nav-tabs nav-fill">
+                                {% if panier_items %}
+                                <li class="nav-item">
+                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">TOTAL ARTICLE ({{panier_items.count}})</a>
+                                </li>
+                                {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link fw-semibold" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">TOTAL ARTICLE (0)</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+
+
+                        <div class="pos-sidebar-body tab-content mb-2px" data-scrollbar="true" data-height="100%">
+                            <form method="post" action="{% url 'valider_panier' %}">
+                                <div class="tab-pane fade h-100 show active" id="newOrderTab">
+                                    {% csrf_token %} {% for item in panier_items %}
+                                    <div class="pos-order">
+                                        <div class="pos-order-product">
+                                            {% comment %}
+                                            <div class="img" style="background-image: url(assets/img/pos/product-1.jpg)"></div> {% endcomment %}
+                                            <div class="flex-1">
+                                                <div class="fw-semibold text-white">{{item.piece.designation}}</div>
+                                                <div class="mb-1">{{item.piece.prix_unitaire}}</div>
+                                                <div class="fs-10px lh-sm mb-3">
+                                                    - size: large<br/> - spicy: medium
+                                                </div>
+                                                <div class="d-flex">
+                                                    <a id="retirer" href="{% url 'retirer_du_panier' item.piece.id %}" class="btn-retirer btn btn-secondary btn-sm px-2px" data-piece-id="{{ item.piece.id }}">
+                                                        <iconify-icon icon="material-symbols-light:check-indeterminate-small" class="d-block fs-20px my-n1"></iconify-icon>
+                                                    </a>
+                                                    <input id="quantite_piece" type="text" class="form-control w-30px px-0 form-control-sm mx-2 bg-white bg-opacity-25 text-center" name="quantite_{{ item.piece.id }}" value="{{ item.quantite }}" disabled/>
+                                                    <a id="ajouter" href="{% url 'ajouter_au_panier' item.piece.id %}" class="btn-ajouter btn btn-secondary btn-sm px-2px " data-piece-id="{{ item.piece.id }}">
+                                                        <iconify-icon icon="material-symbols-light:add" class="d-block fs-20px my-n1"></iconify-icon>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pos-order-price d-flex flex-column">
+                                            <div class="flex-1 h6 mb-0">{{ item.total }}</div>
+                                            <div class="text-end">
+                                                <a href="{% url 'supprimer_du_panier' item.id %}" class="btn btn-theme-label-when-light btn-sm px-2px" onclick="return confirm('Etes-vous sûr de vouloir retirer cet article?')" class="btn btn-danger" title="Retirer">
+                                                    <iconify-icon icon="material-symbols-light:delete-outline-sharp" class="d-block fs-20px my-n1"></iconify-icon>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                        </div>
+
+                        <div class="pos-sidebar-footer">
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Subtotal</div>
+                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ sous_total }}</div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div>Remise (%) </div>
+                                <div class="flex-1 text-end h6 mb-2 display-flex-4"> <input style="width: 100%; border-radius:8px" type="number" name="remise" class="form-control" id="exampleFormControlInput1" min="0" placeholder="%"></div>
+                            </div>
+                            <hr class="my-3" />
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Total</div>
+                                <div id="#total-general" class="flex-1 text-end h4 mb-0">{{ sous_total }}</div>
+                            </div>
+                            <div class="mt-3">
+                                <div class="d-flex">
+                                    <a href="#" class="btn btn-secondary btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
+                                        <iconify-icon icon="material-symbols-light:sensors" class="fs-24px d-flex justify-content-center"></iconify-icon>
+                                        <span>SERVICE</span>
+                                    </a>
+                                    <a href="#" class="btn btn-secondary  btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
+                                        <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
+                                        <span class="fw-semibold">BILL</span>
+                                    </a>
+                                    <button type="submit" class="btn btn-secondary btn-sm flex-fill d-flex flex-column align-items-center justify-content-center">Valider</button>
+
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="pos-mobile-sidebar-toggler" data-toggle-class="pos-mobile-sidebar-toggled" data-toggle-target="#pos">
+            <i class="fa fa-shopping-bag"></i>
+            <span class="badge">
 						{% if panier_items %}
 							{{panier_items.count}}
 						{% else %}
 							0
 						{% endif %}
 					</span>
-				</a>
-			</div>
-			<a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
-				<iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
-			</a>
-		</div>
+        </a>
+    </div>
+    <a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
+        <iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
+    </a>
+</div>
 
 
-		<div class="modal modal-cover fade" id="modalPosItem">
-            <div class="modal-dialog">
-                <div class="modal-content border-0">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Articles</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body modal-pos-product-info">
-                        <div class="card-body fw-semibold">
-                            <form class="was-validated" method="post">
-                                {% csrf_token %}
-                                <div class="row mb-n3">
-                                    
-                                </div>
-                            
-                                <hr>
-                                    <a style="text-decoration:none" class="text-center">Information Profil</a> 
-                                <hr>
-                                <div class="col-md-12 mb-3">
-                                </div>
-                                <div class="col-md-12 mb-5 p-2 position-relative text-center">
-                                    <button type="submit" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Enrégistrer</button>
-                                </div>
-                                </div>
-                            </form>
+<div class="modal modal-cover fade" id="modalPosItem">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h3 class="modal-title">Articles</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body modal-pos-product-info">
+                <div class="card-body fw-semibold">
+                    <form class="was-validated" method="post">
+                        {% csrf_token %}
+                        <div class="row mb-n3">
+
                         </div>
-                    </div>
+
+                        <hr>
+                        <a style="text-decoration:none" class="text-center">Information Profil</a>
+                        <hr>
+                        <div class="col-md-12 mb-3">
+                        </div>
+                        <div class="col-md-12 mb-5 p-2 position-relative text-center">
+                            <button type="submit" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Enrégistrer</button>
+                        </div>
                 </div>
+                </form>
             </div>
         </div>
+    </div>
+</div>
+</div>
 
-	</div>
+</div>
 </div>
 
 {% endblock %}

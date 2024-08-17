@@ -34,6 +34,7 @@ class Panier(models.Model):
     utilisateur = models.ForeignKey(User, on_delete=models.CASCADE)
     valide = models.BooleanField(default=False)
     panier_paye = models.BooleanField(default=False)
+    # date_creation = models.DateTimeField(auto_now_add=True)
     ticket = models.CharField(max_length=100, null=True, blank=True)
 
 class PanierItem(models.Model):
