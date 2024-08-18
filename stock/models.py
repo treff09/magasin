@@ -58,3 +58,4 @@ class Ticket(models.Model):
     date_creation = models.DateTimeField(auto_now_add=True)
     utilise = models.BooleanField(default=False)
     utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='livraisons_effectuees', null=True, blank=True)
+

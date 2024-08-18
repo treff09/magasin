@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import path
-from .views import  user_detail, user_create, user_update, user_delete
+from .views import  ForgotPasswordView, RequestEmailView, VerifyOtpView, opt, user_detail, user_create, user_update, user_delete
 from .views import login_view,logout_view
 from django.contrib.auth.decorators import login_required
 
@@ -17,5 +17,13 @@ urlpatterns = [
     
     path('', login_view, name='login'),
     path('logout/', logout_view, name='deconnexion'),
+    #mot de passe oublé 
+      #les vue a renseigner
+    path('forgotpass/', ForgotPasswordView.as_view(), name='forgot'),
+    path('otp/', opt.as_view(), name='opt'),
+
+    #fonction phare
+    path('request-email/', RequestEmailView.as_view(), name='request_email'),
+    path('verify-otp/', VerifyOtpView.as_view(), name='verify_otp'),
     
 ]
