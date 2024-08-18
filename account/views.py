@@ -143,9 +143,9 @@ class ForgotPasswordView(View):
         return render(request, 'forgot_password.html')
 
 
-class opt(View):
-    def get(self, request):
-        return render(request, 'verify_otp.html')
+# class opt(View):
+#     def get(self, request):
+#         return render(request, 'verify_otp.html')
 # Vue pour traiter la demande de réinitialisation de mot de passe
 class RequestEmailView(View):
     def post(self, request):
@@ -233,3 +233,36 @@ class VerifyOtpView(View):
         
         except PWD_FORGET.DoesNotExist:
             return HttpResponse('OTP non valide.', status=400)
+
+class OptValid(View):
+    def get(self, request):
+        return render(request, 'Opt_Valid.html')
+
+    def post(self, request):
+        otp = request.POST.get('otp')
+        try :
+            reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
+            context = {'otp': otp}
+            if reset_request :
+                return render(request, "verify_otp.html",context)
+        except PWD_FORGET.DoesNotExist:
+                return HttpResponse('OTP non valide.', status=400)
+        
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView
+from django.urls import reverse_lazy
+from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class PasswordChangeView(LoginRequiredMixin, BasePasswordChangeView):
+    form_class = PasswordChangeForm
+    template_name = 'password_change_form.html'
+    success_url = reverse_lazy('password_change_done')
+
+    def get(self, request, *args, **kwargs):
+        form = self.get_form()
+        return render(request, self.template_name, {'form': form})
+
+class PasswordChangeDoneView(View):
+    def get(self, request):
+         return render(request, 'password_change_done.html')
