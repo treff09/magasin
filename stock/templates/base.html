@@ -181,7 +181,7 @@
 					<div class="dropdown-menu dropdown-menu-end me-lg-3 fs-10px fade">
 						<h6 class="dropdown-header">{{ user.profile.role }}</h6>
 						<a class="dropdown-item" href="{% url "user_detail" user.pk %}">Profile</a>
-						<a class="dropdown-item" href="settings.html">Modifier mot de passe</a>
+						<a class="dropdown-item" href="{% url 'password_change' %}">Modifier mot de passe</a>
 					{% comment %} <a class="dropdown-item" href="calendar.html">CALENDER SETTINGS</a> {% endcomment %}
 					<div class="dropdown-divider"></div>
 					{% comment %} <a class="dropdown-item" href="helper.html">HELP & SUPPORT</a> {% endcomment %}
