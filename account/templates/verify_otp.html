@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modification de mot de passe</title>
+</head>
+<body>
+    <h1>Modification de mot de passe</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <label for="new_password">Nouveau mot de passe:</label>
+        <input type="password" id="new_password" name="new_password" required>
+        <br>
+        <label for="confirm_password">Confirmer le mot de passe:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        <br>
+        <button type="submit">Réinitialiser le mot de passe</button>
+    </form>
+</body>
+</html>

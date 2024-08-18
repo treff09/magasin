@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}DASHBOARD{% endblock  %}
+{% block main_content %}
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+	<div id="content" class="app-content p-3">
+		<div class="row g-2">
+			<div class="col-xl-8">
+				<div class="card h-100">
+					<div class="card-header with-btn">
+						EVOLUTION DES VENTES
+					</div>
+					<div class="card-body p-0  ">
+						<div class="row gx-0">
+							<div class="col-lg-12 position-relative">
+								<div class="card-body">
+									<table id="datatableDefault" width="100%" class="table " >
+                                        <thead>
+                                            <tr>
+                                                <th>-</th>
+                                                <th class="text-theme">N°Pieces</th>
+                                                <th class="text-theme">Désignation</th>
+                                                <th class="text-theme">Véhicule</th>
+                                                <th class="text-theme">Quantité en stock</th>
+                                                <th class="text-theme">Prix unitaire</th>
+                                                <th class="text-theme" >Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for piece in pieces %}
+                                            <tr>
+                                                <td>-</td>
+                                                <td>{{ piece.numero_piece }}</td>
+                                                <td>{{ piece.designation }}</td>
+                                                <td>{{ piece.type_voiture }}</td>
+                                                <td>{{ piece.quantite }}</td>
+                                                <td>{{ piece.prix_unitaire }}</td>
+                                                <td class="text-center"><a href="{% url 'ajouter_au_panier' piece.id %}"><iconify-icon icon="material-symbols-light:shopping-cart-checkout-sharp" class="nav-icon" title="Ajouter au panier" style="font-size: 18px;"></iconify-icon></a></td>
+                                            </tr>
+                                            {% endfor%}
+                                        </tbody>
+                                    </table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xl-4">
+				<div class="row gy-2">
+					<div class="col-lg-12">
+						<div class="card h-100">
+							<div class="card-header with-btn">NOMBRE DE PIECE VENDUE PAR CATEGORIE DE VEHICULE</div>
+							<div class="card-body">
+								<div class="row mb-3 fs-10px pt-1px">
+									<div class="col-4">
+										<div class="d-flex flex-column justify-content-center text-center">
+											<div class="w-40px mx-auto">
+												<div data-render="apexchart" data-type="donut" data-height="40"></div></div>
+												<div class="mt-2">ALTO</div>
+												<div class="text-white">459</div>
+											</div>
+										</div>
+									
+									
+								<div class="col-4">
+									<div class="d-flex flex-column justify-content-center text-center">
+										<div class="w-40px mx-auto"><div data-render="apexchart" data-type="donut" data-height="40"></div></div>
+										<div class="mt-2">SUZIKI</div>
+										<div class="text-white mt-0">20</div>
+									</div>
+								</div>
+							
+							
+							<div class="col-4">
+							<div class="d-flex flex-column justify-content-center text-center">
+							<div class="w-40px mx-auto"><div data-render="apexchart" data-type="donut" data-height="40"></div></div>
+							<div class="mt-2">EXPRESSO</div>
+							<div class="text-white mt-0">200</div>
+							</div>
+							</div>
+						
+							</div>
+						
+							<hr class="my-2" />
+							<table class="w-100 text-truncate fs-10px table-py-1px">
+								<thead>
+								<tr class="text-white">
+								<th width="35%">Libelle.</th>
+								<th width="30%">CATEGORIE</th>
+								<th width="25%">SEVERITY</th>
+								<th width="10%">TOTAL</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+								<td>IDS</td>
+								<td>Malware</td>
+								<td>High</td>
+								<td>150</td>
+								</tr>
+								<tr>
+								<td>IPS</td>
+								<td>Phishing</td>
+								<td>Medium</td>
+								<td>90</td>
+								</tr>
+								<tr>
+								<td>FIREWALL</td>
+								<td>DDoS</td>
+								<td>Critical</td>
+								<td>45</td>
+								</tr>
+								<tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<td>ENDPOINT</td>
+								<td>XSS</td>
+								<td>High</td>
+								<td>30</td>
+								</tr>
+								<tr>
+								<td>IDS</td>
+								<td>SQL Injection</td>
+								<td>Low</td>
+								<td>75</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+{% endblock  %}

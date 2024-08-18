@@ -1,4 +1,4 @@
-{% extends "magasin/base.html" %}
+{% extends "base.html" %}
 {% block title %}Liste des utilisateurs{% endblock %}
 {% block main_content %}
 
@@ -9,71 +9,61 @@
             <div class="col-xl-10">
                 <div class="row">
                     <div class="col-xl-9">
-                        <div id="general" class="mb-5">
-                            <h4 class="d-flex align-items-center mb-1"><i class="fa fa-5px fa-user-circle"></i>  SUPPRESION D'UN COMPTE UTILISATEUR </h4>
+                        <div id="validation" class="mb-5">
+                            <h4><i class="fa fa-10px fa-user-circle"></i>  </h4>
                             <div class="card">
-                                <form method="post">
-                                    {% csrf_token %}
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="flex-fill">
-                                            <div class="text-white text-opacity-50">Nom utilisateur</div>
-                                            <div class="text-white">{{user.username}}</div>
-                                        </div>  
-                                    </div>
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="flex-fill">
-                                            <div class="text-white text-opacity-50">Nom</div>
-                                            <div class="text-white">{{user.first_name}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="flex-fill">
-                                            <div class="text-white text-opacity-50">Nom</div>
-                                            <div class="text-white">{{user.last_name}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="flex-fill">
-                                            <div class="text-white text-opacity-50">Email address</div>
-                                            <div class="text-white">{{user.email}}</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="flex-fill">
-                                            <div class="text-white text-opacity-50">Role</div>
-                                            <div class="text-white">{{user.profile.role}}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-body d-flex align-items-center"></div>
-
-                                    <div class="card-body d-flex align-items-center">
-                                        <div class="flex-fill">
-                                            <div class="text-white text-opacity-50"><a href="{% url "user_create" %}" class="btn btn-outline-light  btn-block" style="border-radius: 8px;"><i class="fa fa-reply"></i> RETOUR</a></div>
-                                        </div>
-                                        <button type="submit" class="btn btn-outline-light  btn-block" style="border-radius: 8px;" onclick="return confirm('Etes-vous sûre de vouloir supprimer le compte de {{ user.username|upper }}? car si vous supprimer toutes les informations liées seront perdues')">SUPPRIMER <i class="fa fa-fw fa-trash"></i></button>
+                                <div class="card-header with-btn">SUPPRESION D'UN COMPTE UTILISATEUR </div>
+                            
+                                <div class="card-body">
+                                    <form method="post" class="was-validated">
+                                        {% csrf_token %}
+                                        <div class="row mb-n3">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Nom utilisateur</label>
+                                                <input type="text" class="form-control is-valid" id="validationValidInput" value="{{user.username}}" disabled>
+                                            </div>
                                         
-                                        {% comment %} <input type="submit" value="Supprimer" onclick="return confirm('Etes-vous sûre de vouloir supprimer les informations concernant {{ vehicule.marque|upper }} - {{ vehicule.immatriculation|upper }}? car si vous supprimer toutes les informations liées seront perdues')" style="box-shadow: 0 0 3px 0 rgb(75, 75, 75); height:35px; width:100px; border-radius:8px; border-color: rgb(250, 186, 186);background:rgb(182, 1, 1); color:aliceblue"> {% endcomment %}
-                                    </div>
-                                
-                                
-                                    </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Nom</label>
+                                                <input type="text" class="form-control is-valid" id="validationValidInput" value="{{user.first_name}}" disabled>
+                                            </div>
+                                        
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Prénoms utilisateur</label>
+                                                <input type="text" class="form-control is-valid" id="validationValidInput" value="{{user.last_name}}" disabled>
+                                            </div>
+                                        
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">E-mail</label>
+                                                <input type="text" class="form-control is-valid" id="validationValidInput" value="{{user.email}}" disabled>
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                            </div>
+                                            <div class="mb-3 d-flex align-items-center">
+                                                <div class="flex-fill">
+                                                    <div class="text-white text-opacity-50"><a href="{% url "user_create" %}" class="btn btn-outline-light  btn-block" style="border-radius: 8px;"><i class="fa fa-reply"></i></a></div>
+                                                </div>
+                                                <button type="submit" class="btn btn-outline-light  btn-block" style="border-radius: 8px;" onclick="return confirm('Etes-vous sûre de vouloir supprimer le compte de {{ user.username|upper }}? car si vous supprimer toutes les informations liées seront perdues')"><i class="fa fa-fw fa-trash"></i></button>
+                
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
                         </div>
+                    </div>
             
-                        <div class="col-xl-3">
-                            <nav id="sidebar-bootstrap" class="navbar navbar-sticky d-none d-xl-block">
-                                <nav class="nav">
-                                    <a class="nav-link" href="#general" data-bs-toggle="scroll-to">Information Générale</a>
-                                </nav>
+                    <div class="col-xl-3">
+                        <nav id="sidebar-bootstrap" class="navbar navbar-sticky d-none d-xl-block">
+                            <nav class="nav">
+                                <a class="nav-link text-theme" href="#general" data-bs-toggle="scroll-to">Profile: {{user.profile.role}}</a>
                             </nav>
-                        </div>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>  
+</div>
+ 
 {% endblock  %}

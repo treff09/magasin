@@ -1,6 +1,4 @@
-{% extends "magasin/base.html" %}
-{% block title %}Liste des utilisateurs{% endblock %}
-{% block main_content %}
+{% extends "base.html" %} {% block title %}Liste des utilisateurs{% endblock %} {% block main_content %}
 
 
 <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
@@ -15,86 +13,74 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h3 class="modal-title">AJOUTER PIECE</h3>
+                                        <h3 class="modal-title">AJOUTER UNE PIECE</h3>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
-                                    <div class="modal-body"><hr>
-                                    <a style="text-decoration:none" class="text-center"></a> 
-                                    <hr>
+                                    <div class="modal-body">
+                                        <hr>
+                                        <a style="text-decoration:none" class="text-center"><SMall>Entrer correctement les informations de la pièce</SMall></a>
+                                        <hr>
                                         <div class="card-body">
                                             <form class="was-validated" method="post">
                                                 {% csrf_token %}
                                                 <div class="row mb-3">
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="validationValidInput" class="form-label">Categorie véhicule</label>
-                                                        {{ form.type_voiture }}
+                                                        <label for="validationValidInput" class="form-label">Categorie véhicule</label> {{ form.type_voiture }}
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="validationValidInput" class="form-label">N° Piece</label>
-                                                        {{ form.numero_piece }}
+                                                        <label for="validationValidInput" class="form-label">N° Piece</label> {{ form.numero_piece }}
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="validationValidInput" class="form-label">Désignation</label>
-                                                        {{ form.designation }}
+                                                        <label for="validationValidInput" class="form-label">Désignation</label> {{ form.designation }}
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="validationValidInput" class="form-label">Prix unitaire</label>
-                                                        {{ form.prix_unitaire }}
+                                                        <label for="validationValidInput" class="form-label">Prix unitaire</label> {{ form.prix_unitaire }}
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="validationValidInput" class="form-label">Quantité</label>
-                                                        {{ form.quantite }}
+                                                        <label for="validationValidInput" class="form-label">Quantité</label> {{ form.quantite }}
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="validationValidInput" class="form-label">Emplacement</label>
-                                                        {{ form.emplacement }}
+                                                        <label for="validationValidInput" class="form-label">Emplacement</label> {{ form.emplacement }}
                                                     </div>
                                                     <div class="col-md-12 mb-3">
-                                                        <label for="validationValidInput" class="form-label">Fournisseur</label>
-                                                        {{ form.fournisseur }}
+                                                        <label for="validationValidInput" class="form-label">Fournisseur</label> {{ form.fournisseur }}
                                                     </div>
                                                 </div>
-                                                </div>
-                                                
-                                                <div class="col-md-12 mb-5 p-2 position-relative text-center">
-                                                    <button type="submit" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Enrégistrer</button>
-                                                </div>
-                                            </form>
                                         </div>
+
+                                        <div class="col-md-12 mb-5 p-2 position-relative text-center">
+                                            <button type="submit" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Enrégistrer</button>
+                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            
-                        <h1 class="page-header">
-                            {% if messages %}
-                                {% for msg in messages %}
-                                  {% if msg == 'error' %}
-                                    <small id="message" class="alert alert-danger alert-dismissible fade show" role="alert">{{msg}}</small>
-                                  {% else %}
-                                    <small id="message" class="alert alert-success alert-dismissible fade show" role="alert">{{msg}}</small>
-                                  {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </h1>
-                        <h1 class="page-header">
-                            Pieces en stock
-                        </h1>
-                        
-                        <hr class="mb-4 opacity-3"/>
+                    </div>
 
-                        <div id="datatable" class="mb-5">
-                            <div class="card">
-                                <div class="card-header with-btn">
-                                    <div class="card-header-btn">
-                                        <a href="#" data-bs-target="#modalCoverExample" class="btn btn-theme" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
-                                    </div>
-                                    Ajouter un nouveau Employers
+                    <h1 class="page-header">
+                        {% if messages %} {% for msg in messages %} {% if msg == 'error' %}
+                        <small id="message" class="alert alert-danger alert-dismissible fade show" role="alert">{{msg}}</small> {% else %}
+                        <small id="message" class="alert alert-success alert-dismissible fade show" role="alert">{{msg}}</small> {% endif %} {% endfor %} {% endif %}
+                    </h1>
+                    <h1 class="page-header">
+                        Pieces en stock
+                    </h1>
+
+                    <hr class="mb-4 opacity-3" />
+
+                    <div id="datatable" class="mb-5">
+                        <div class="card">
+                            <div class="card-header with-btn">
+                                <div class="card-header-btn">
+                                    <a href="#" data-bs-target="#modalCoverExample" class="btn btn-theme" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
                                 </div>
-                                <div class="card-body">
-                                    <table id="datatableDefault" width="100%" class="table text-nowrap">
-                                        <thead>
-                                            <tr>
+                                Ajouter une nouvelle pièce
+                            </div>
+                            <div class="card-body">
+                                <table id="datatableDefault" width="100%" class="table text-nowrap">
+                                    <thead>
+                                        <tr>
                                             <th></th>
                                             <th>N°Pieces</th>
                                             <th>Designation</th>
@@ -103,41 +89,39 @@
                                             <th>Indicateur</th>
                                             <th>Prix unitaire</th>
                                             <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for piece in stocks %}
-                                                <tr>
-                                                    <td>-</td>
-                                                    <td><a style="text-decoration:none" href="#">{{ piece.numero_piece }} </a></td>
-                                                    <td>{{piece.designation}}</td>
-                                                    <td>{{piece.type_voiture}}</td>
-                                                    <td>
-                                                        {% if piece.quantite < 10 %}
-                                                            <a style="text-decoration:none" class="text-danger">{{piece.quantite}}</a>
-                                                        {% else %}
-                                                            <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>
-                                                        {% if piece.quantite > 10 %}
-                                                            <i class="bi bi-arrow-up-right text-theme"></i>
-                                                        {% elif piece.quantite == 10 %}
-                                                            <i class="bi bi-dash text-warning"></i>
-                                                        {% else %}
-                                                            <i class="bi bi-arrow-down-right text-danger"></i>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>{{piece.prix_unitaire}}</td>
-                                                    <td>
-                                                        <a href="{% url 'piece_update' piece.pk %}"><i class="fa fa-edit"></i></a>
-                                                        <a href="{% url 'piece_delete' piece.pk %}"><i class="fa fa-trash"></i></a>
-                                                    </td>
-                                                </tr>
-                                            {% endfor%}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for piece in stocks %}
+                                        <tr>
+                                            <td>-</td>
+                                            <td><a style="text-decoration:none" href="#">{{ piece.numero_piece }} </a></td>
+                                            <td>{{piece.designation}}</td>
+                                            <td>{{piece.type_voiture}}</td>
+                                            <td>
+                                                {% if piece.quantite < 10 %} 
+                                                    <a style="text-decoration:none" class="text-danger">{{piece.quantite}}</a>
+                                                {% elif piece.quantite == 10 %}
+                                                    <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a> 
+                                                {% else %}
+                                                    <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a> 
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if piece.quantite > 10 %}
+                                                <i class="bi bi-arrow-up-right text-theme"></i> {% elif piece.quantite == 10 %}
+                                                <i class="bi bi-dash text-warning"></i> {% else %}
+                                                <i class="bi bi-arrow-down-right text-danger"></i> {% endif %}
+                                            </td>
+                                            <td>{{piece.prix_unitaire}}</td>
+                                            <td>
+                                                <a href="{% url 'piece_update' piece.pk %}"><i class="fa fa-edit"></i></a>
+                                                <a href="{% url 'piece_delete' piece.pk %}"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor%}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -147,17 +131,8 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
 <a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
-<iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
+    <iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
 </a>
 
 

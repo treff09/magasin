@@ -52,7 +52,7 @@ def ajouter_au_panier(request, piece_id):
     if not created:
         panier_item.quantite += 1
         panier_item.save()
-    return redirect('piece_list')
+    return redirect('piece_list_accueil')
 
 def retirer_du_cart(request, piece_id):
     # Récupérer la pièce et l'élément du panier correspondant
@@ -66,28 +66,40 @@ def retirer_du_cart(request, piece_id):
         panier_item.save()
     else:
         panier_item.delete()
-    return redirect('piece_list')
+    return redirect('piece_list_accueil')
 
 # Redirect to the page showing both list and cart
 @user_passes_test(is_accueillant)
 def valider_panier(request):
-    panier = Panier.objects.get(utilisateur=request.user, valide=False)
-    if request.method == 'POST':
-        # Handle quantity updates
-        for item in panier.panieritem_set.all():
-            quantite = int(request.POST.get(f'quantite_{item.piece.id}', 0))
-            item.quantite = quantite
-            item.save()
+    panier = get_object_or_404(Panier, utilisateur=request.user, valide=False)
+    # Calculer le total du panier
+    total = sum(item.piece.prix_unitaire * item.quantite for item in PanierItem.objects.filter(panier=panier))
+    # Créer une nouvelle commande pour le panier
+    commande = Commande.objects.create(
+        panier=panier,
+        numero_commande='CMD' + str(panier.id) + '-' + str(Commande.objects.filter(panier=panier).count() + 1),
+        total=total,
+        utilisateur=request.user
+    )
+    
+    # Créer un ticket pour la nouvelle commande
+    ticket = Ticket.objects.create(
+        numero='TKT' + str(commande.id),
+        commande=commande
+    )
+    
+    # Vider le panier
+    PanierItem.objects.filter(panier=panier).delete()
+    
+    # Marquer le panier comme validé
+    panier.valide = True
+    numero=f"TKT{str(commande.id)}"
+    numero=str(numero)
+    panier.ticket =numero
+    panier.save()
 
-        # Handle validation and save panier
-        remise = request.POST.get('remise', 0)
-        panier.valide = True
-        panier.save()
-        return redirect('piece_list')  # Redirect to a confirmation page
-    context = {
-        'panier': panier,
-    }
-    return render(request, 'piece_list.html', context)
+    messages.success(request, f"Panier validé avec succès. Votre numéro de ticket est {ticket.numero}.")
+    return redirect('piece_list_accueil')
 
 
 @user_passes_test(is_accueillant)
@@ -206,15 +218,15 @@ def valider_paiement(request, ticket_id):
                 piece.quantite -= item.quantite
                 piece.save()
             messages.success(request, f"Paiement validé. Utilisez le numéro {ticket.numero} pour récupérer vos articles.")
-            return redirect('caissier_accueil')
+            return redirect('caisseDashboard')
         else:
             messages.error(request, "Le montant payé ne correspond pas au total de la commande.")
     
     return render(request, 'valider_paiement.html', {'ticket': ticket, 'commande': commande})
 
-@user_passes_test(is_caissier)
-def caissier_accueil(request):
-    return render(request, 'caissier_accueil.html')
+# @user_passes_test(is_caissier)
+# def caissier_accueil(request):
+#     return render(request, 'caissier_accueil.html')
 
 @user_passes_test(is_liveur)
 def valider_livraison(request, ticket_id):
@@ -236,19 +248,18 @@ def accueil(request):
 
 @user_passes_test(is_caissier)
 def caisseDashboard(request):
-    
     paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
     context =  {
         'paniers_non_valides': paniers_non_valides,
     }
-    return render(request, 'caissier_dashboard.html', context)
+    return render(request, 'caissiere_valition_paiement.html', context)
 
 
 @user_passes_test(is_liveur)
 def livraison_dashboard(request):
     # Filtrer les paniers dont le statut 'valide' est True
     livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True) 
-    return render(request, 'livraison_dashboard.html', {'livraison_en_attente': livraison_en_attente})
+    return render(request, 'livraison.html', {'livraison_en_attente': livraison_en_attente})
 
 
 import qrcode
