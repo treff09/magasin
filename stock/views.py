@@ -235,7 +235,7 @@ def valider_livraison(request, ticket_id):
         ticket.utilisateur = request.user
         ticket.save()
         messages.success(request, f"Livraison validée pour le ticket {ticket.numero}.")
-        return redirect('livraison_accueil')
+        return redirect('livraison_dashboard')
     return render(request, 'valider_livraison.html', {'ticket': ticket})
 
 @user_passes_test(is_liveur)
