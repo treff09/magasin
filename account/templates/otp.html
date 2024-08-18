@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>MAGASIN | Login</title>
+    <title>OTP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content />
     <meta name="author" content />
@@ -29,39 +29,37 @@
                 <h1 class="text-center">
                     <header>
                         <script src="https://cdn.lordicon.com/lordicon.js"></script>
-                        <lord-icon src="https://cdn.lordicon.com/hrjifpbq.json" trigger="hover" colors="primary:#ffffff" style="width:40px;height:40px">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/lomfljuq.json"
+                            trigger="hover"
+                            colors="primary:#ffffff"
+                            style="width:40px;height:40px">
                         </lord-icon>
                     </header>
                 </h1>
 
-
                 <form method="post" name="login_form">
                     {% csrf_token %}
                     <div class="mb-4">
-                        <label class="form-label">Nom utilisateur</label>
-                        <input style="border-radius: 8px;" type="text" name="username" class="form-control form-control-lg fs-14px" value placeholder="username@..." />
+                        <label class="form-label">OTP</label>
+                        <input style="border-radius: 8px;" type="text" id="otp" name="otp" required class="form-control form-control-lg fs-14px" value placeholder="1243..." />
                     </div>
                     <div class="mb-4">
                         <div class="d-flex">
-                            <label class="form-label">Mot de passe</label>
-                            <a href="{% url 'forgot' %}" class="ms-auto text-body text-opacity-50">Forgot password?</a>
-                        </div>
-                        <input style="border-radius: 8px;" type="password" name="password" class="form-control form-control-lg fs-14px" value placeholder="magasin1235..." />
-                    </div>
-                    <div class="mb-4">
-                        <div class="d-flex">
-                            {% if messages %} {% for msg in messages %} {% if msg == 'error' %}
-                            <small id="message" class="alert alert-danger alert-dismissible fade show w-100 text-center" role="alert">{{msg}}</small> {% else %}
-                            <small id="message" class="alert alert-success alert-dismissible fade show w-100 text-center" role="alert">{{msg}}</small> {% endif %} {% endfor %} {% endif %}
+                            {% if messages %} 
+                                {% for msg in messages %} 
+                                    <small id="message" class="alert alert-success alert-dismissible fade show w-100 text-center" role="alert">{{msg}}</small> 
+                                {% endfor %} 
+                            {% endif %}
                         </div>
                     </div>
                     <div class="mb-4 text-center" style="display: flex; text-align:center; margin-left: 30%;">
-                        <button type="submit" class="text-center btn btn-outline-light btn-lg d-block w-50 mb-3" style="border-radius: 20px;">CONNEXION</button>
+                        <button type="submit" class="text-center btn btn-outline-light btn-lg d-block w-50 mb-3" style="border-radius: 20px;">Enregistrer</button>
                     </div>
 
-                    <div class="text-center text-body text-opacity-50">
-                        Pas de compte? <a href="#">S'inscrire</a>.
-                    </div>
+                    {% comment %} <div class="text-center text-body text-opacity-50">
+                        <i class='fa fa-reply'></i>  <a href="{% url "login" %}">Retour</a>.
+                    </div> {% endcomment %}
                 </form>
             </div>
         </div>

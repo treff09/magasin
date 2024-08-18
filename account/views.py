@@ -140,12 +140,14 @@ from django.utils import timezone
 # Vue pour afficher le formulaire de saisie de l'email
 class ForgotPasswordView(View):
     def get(self, request):
-        return render(request, 'forgot_password.html')
+        return render(request, 'forgot_passwords.html')
 
 
 class opt(View):
     def get(self, request):
-        return render(request, 'verify_otp.html')
+        return render(request, 'otp.html')
+    
+    
 # Vue pour traiter la demande de réinitialisation de mot de passe
 class RequestEmailView(View):
     def post(self, request):
@@ -200,19 +202,16 @@ class RequestEmailView(View):
 
 # Vue pour vérifier l'OTP envoyé par email
 User = get_user_model()
-
 class VerifyOtpView(View):
     def get(self, request):
-        return render(request, 'verify_otp.html')
-
+        return render(request, 'otp.html')
     def post(self, request):
         otp = request.POST.get('otp')
         new_password = request.POST.get('new_password')
         confirm_password = request.POST.get('confirm_password')
-
+        
         if new_password != confirm_password:
             return HttpResponse('Les mots de passe ne correspondent pas.', status=400)
-        
         try:
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
             
