@@ -24,8 +24,8 @@ RUN apk add --update --no-cache --virtual .tmp-build-deps \
 # Définir l'utilisateur non-root
 USER django-user
 
-# Exposer le port 8001
-EXPOSE 8001
+# Exposer le port 3000 (port par défaut de Vercel)
+EXPOSE 3000
 
 # Commande par défaut pour démarrer l'application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8001"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:3000"]
