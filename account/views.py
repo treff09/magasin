@@ -209,13 +209,20 @@ class VerifyOtpView(View):
         otp = request.POST.get('otp')
         new_password = request.POST.get('new_password')
         confirm_password = request.POST.get('confirm_password')
+        print(f"-----------------------------------")
+        print(f"otp : {otp}")
+        print(f"new_password : {new_password}")
+        print(f"confirm_password : {confirm_password}")
+        print(f"-----------------------------------")
 
         if new_password != confirm_password:
             return HttpResponse('Les mots de passe ne correspondent pas.', status=400)
         
         try:
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
-            
+            print(f"-----------------------------------")
+            print(f"verification : {reset_request}")
+            print(f"-----------------------------------")
             # Vérifiez si l'OTP a expiré
             if (timezone.now() - reset_request.creat_at).total_seconds() > 120:  # 2 minutes
                 return HttpResponse('OTP expiré.', status=400)
@@ -242,6 +249,9 @@ class OptValid(View):
         otp = request.POST.get('otp')
         try :
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
+            print(f"-----------------------------------")
+            print(f"verification : {reset_request}")
+            print(f"-----------------------------------")
             context = {'otp': otp}
             if reset_request :
                 return render(request, "verify_otp.html",context)

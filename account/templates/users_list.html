@@ -108,13 +108,13 @@
                                     {% for user in users %}
                                     <tr>
                                         <td>-</td>
-                                        <td><a style="text-decoration:none" href="{% url 'user_detail' user.pk %}">{{ user.username }} </a></td>
+                                        <td>{{ user.username }}</td>
                                         <td>{{user.first_name}}</td>
                                         <td>{{user.last_name}}</td>
                                         <td>{{ user.profile.role }}</td>
                                         <td>{{user.email}}</td>
                                         <td>
-                                            <a href="{% url 'user_update' user.pk %}"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'user_detail' user.pk %}"><i class="fa fa-eye"></i></a>
 
                                             <a href="{% url 'user_delete' user.pk %}"><i class="fa fa-trash"></i></a> {% comment %} <a href="{% url " user_delete " user.pk %}" onclick="return  confirm('Etes-vous sûre de vouloir supprimer le compte de {{user.username|upper}}? car si vous supprimer toutes les informations liées seront perdues')">Click</a>                                            {% endcomment %}
                                         </td>
