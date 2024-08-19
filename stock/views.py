@@ -274,7 +274,7 @@ def generate_receipt(request, commande_id):
 
     # Calculer le montant restant (s'il n'est pas déjà calculé)
     if commande.total and commande.montant_paye:
-        commande.montant_reste = commande.total - commande.montant_paye
+        commande.montant_reste =  commande.montant_paye - commande.total 
 
     # Générer un QR code basé sur l'ID de la commande ou d'autres informations
     qr = qrcode.QRCode(
