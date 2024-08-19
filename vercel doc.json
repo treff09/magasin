@@ -1,13 +1,15 @@
 {
-    "builds":[{
-        "src": "magazin_piece/wsg.py",
-        "use":"@vercel/python",
-        "config":{ "maxLambdaSize":"15mb","runtime":"python3.10" }
-    }],
-    "routes":[
-            {
-            "src": "/(.*)",
-            "dest":"magazin_piece/wsgi.py"
-            }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "Dockerfile",
+      "use": "@vercel/docker"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
 }
