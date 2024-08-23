@@ -22,3 +22,19 @@ class AjouterAuPanierForm(forms.Form):
     pieces = forms.ModelMultipleChoiceField(queryset=Piece.objects.all(), widget=forms.CheckboxSelectMultiple)
     quantites = forms.CharField(widget=forms.HiddenInput)
 
+
+
+# class RemiseForm(forms.Form):
+#     remise = forms.DecimalField(
+#         max_digits=5, 
+#         decimal_places=2, 
+#         min_value=0, 
+#         max_value=100,
+#         label="Remise (%)",
+#         widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Entrez la remise en %'})
+#     )
+
+
+
+
+
