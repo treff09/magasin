@@ -18,7 +18,7 @@ from django.core.mail import EmailMultiAlternatives
 def is_admin_magasin(user):
     return user.is_authenticated and user.groups.filter(name='AdminMagasin').exists()
 
-@user_passes_test(is_admin_magasin)
+# @user_passes_test(is_admin_magasin)
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
     return render(request, 'profile.html', {'user': user})
@@ -248,20 +248,36 @@ class OptValid(View):
         except PWD_FORGET.DoesNotExist:
                 return HttpResponse('OTP non valide.', status=400)
         
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView
+from .forms import ChangePasswordForm
+from django.contrib.auth.views import PasswordChangeView 
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class PasswordChangeView(LoginRequiredMixin, BasePasswordChangeView):
-    form_class = PasswordChangeForm
-    template_name = 'password_change_form.html'
-    success_url = reverse_lazy('password_change_done')
-
+class PasswordChangeView(PasswordChangeView):
+    form_class = ChangePasswordForm
+    template_name = 'change_password.html'
+    success_message = "Mot de passe réinitialisé avec succès👍✓✓"
+    error_message = "Erreur de saisie ���� ✘✘"
+    success_url = reverse_lazy('password_change')
+    def form_valid(self, form):
+        reponse = super().form_valid(form)
+        messages.success(self.request, self.success_message)
+        return reponse
+    def form_invalid(self, form):
+        reponse = super().form_invalid(form)
+        messages.error(self.request, self.error_message)
+        return reponse 
     def get(self, request, *args, **kwargs):
         form = self.get_form()
         return render(request, self.template_name, {'form': form})
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     user_group = self.request.user.groups.first()
+    #     context['user_group'] = user_group.name if user_group else None
+    #     return context
+
 
 class PasswordChangeDoneView(View):
     def get(self, request):

@@ -13,7 +13,7 @@ urlpatterns = [
     path('piece/<int:pk>/edit/',piece_update, name='piece_update'),
     path('piece/<int:pk>/delete/', piece_delete, name='piece_delete'),
     #panier
-   path('panier/ajouter/<int:piece_id>/', ajouter_au_panier, name='ajouter_au_panier'),
+    path('panier/ajouter/<int:piece_id>/', ajouter_au_panier, name='ajouter_au_panier'),
     path('panier/', panier, name='panier'),
     path('panier/valider/', valider_panier, name='valider_panier'),
     path('panier/supprimer/<int:item_id>/', supprimer_du_panier, name='supprimer_du_panier'),

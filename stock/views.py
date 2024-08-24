@@ -127,8 +127,8 @@ def supprimer_du_panier(request, item_id):
     panier_item = get_object_or_404(PanierItem, id=item_id, panier=panier)
     # Remove item from the cart
     panier_item.delete()
-    
-    return redirect('piece_list')
+    return redirect('piece_list_accueil')
+
 @user_passes_test(is_admin_magasin)
 def piece_detail(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
