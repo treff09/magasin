@@ -209,6 +209,7 @@ def valider_paiement(request, ticket_id):
             commande.paye
             commande.save()
             ticket.utilise = True
+            ticket.utilisateur = request.user
             ticket.save()
             panier.panier_paye=True
             panier.save()
@@ -231,11 +232,13 @@ def valider_paiement(request, ticket_id):
 @user_passes_test(is_liveur)
 def valider_livraison(request, ticket_id):
     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=True)
+    
     if request.method == 'POST':
-        ticket.utilisateur = request.user
-        ticket.save()
+        panier_non_livre = Panier.objects.filter(ticket=ticket.numero).first()
+        panier_non_livre.panier_livre = True
+        panier_non_livre.save()
         messages.success(request, f"Livraison validée pour le ticket {ticket.numero}.")
-        return redirect('livraison_accueil')
+        return redirect('livraison_dashboard')
     return render(request, 'valider_livraison.html', {'ticket': ticket})
 
 @user_passes_test(is_liveur)
@@ -248,7 +251,7 @@ def accueil(request):
 
 @user_passes_test(is_caissier)
 def caisseDashboard(request):
-    paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
+    paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False,panier_livre=False)
     context =  {
         'paniers_non_valides': paniers_non_valides,
     }
@@ -258,7 +261,7 @@ def caisseDashboard(request):
 @user_passes_test(is_liveur)
 def livraison_dashboard(request):
     # Filtrer les paniers dont le statut 'valide' est True
-    livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True) 
+    livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True,panier_livre=False) 
     return render(request, 'livraison.html', {'livraison_en_attente': livraison_en_attente})
 
 
