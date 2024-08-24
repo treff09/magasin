@@ -89,7 +89,7 @@ def valider_panier(request):
     )
     
     # Vider le panier
-    PanierItem.objects.filter(panier=panier).delete()
+    #PanierItem.objects.filter(panier=panier).delete()
     
     # Marquer le panier comme validé
     panier.valide = True
@@ -168,8 +168,15 @@ from django.db import transaction
 @user_passes_test(is_accueillant)
 def panier(request):
     panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
-    panier_items = PanierItem.objects.filter(panier=panier)
-    # Calculate totals
+    
+    if created:
+        # Si un nouveau panier est créé, aucun panier_item existant n'est associé
+        panier_items = []
+    else:
+        # Sinon, nous obtenons les items associés au panier existant
+        panier_items = PanierItem.objects.filter(panier=panier)
+
+    # Calculer les totaux
     for item in panier_items:
         item.total = item.piece.prix_unitaire * item.quantite
     sous_total = sum(item.total for item in panier_items)
@@ -179,11 +186,11 @@ def panier(request):
             quantite = int(request.POST.get(f'quantite_{item.piece.id}', 0))
             item.quantite = quantite
             item.save()
-            
+        
         remise = request.POST.get('remise', 0)
         panier.valide = True
         panier.save()
-        return redirect('piece_list')  
+        return redirect('piece_list')
 
     context = {
         'panier_items': panier_items,
@@ -191,6 +198,7 @@ def panier(request):
         'sous_total': sous_total,
     }
     return render(request, 'panier.html', context)
+
 
 
 @user_passes_test(is_caissier)
