@@ -132,8 +132,8 @@
                             <div class="icon">
                                 <iconify-icon icon="material-symbols-light:table-restaurant-sharp"></iconify-icon>
                             </div>
-                            <div class="title">Table 01</div>
-                            <div class="order">Order: <span class="fw-semibold text-white">#0056</span></div>
+                            <div class="title">T</div>
+                            <div class="order">Order: <span class="fw-semibold text-white">#</span></div>
                         </div>
 
                         <div class="pos-sidebar-nav fs-10px">
@@ -154,7 +154,8 @@
                         <div class="pos-sidebar-body tab-content mb-2px" data-scrollbar="true" data-height="100%">
                             <form method="post" action="{% url 'valider_panier' %}">
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
-                                    {% csrf_token %} {% for item in panier_items %}
+                                    {% csrf_token %} 
+                                    {% for item in panier_items %}
                                     <div class="pos-order">
                                         <div class="pos-order-product">
                                             {% comment %}
@@ -196,7 +197,9 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <div>Remise (%) </div>
-                                <div class="flex-1 text-end h6 mb-2 display-flex-4"> <input style="width: 100%; border-radius:8px" type="number" name="remise" class="form-control" id="exampleFormControlInput1" min="0" placeholder="%"></div>
+                                <div class="flex-1 text-end h6 mb-2 display-flex-4">
+                                    <input style="width: 100%; border-radius:8px" step="0.01" type="number" name="remise" class="form-control" id="remise"  min="0" required>
+                                </div>
                             </div>
                             <hr class="my-3" />
                             <div class="d-flex align-items-center mb-2">
@@ -213,7 +216,10 @@
                                         <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
                                         <span class="fw-semibold">BILL</span>
                                     </a>
-                                    <button type="submit" class="btn btn-secondary btn-sm flex-fill d-flex flex-column align-items-center justify-content-center">Valider</button>
+                                    <button type="submit" class="btn btn-secondary btn-sm flex-fill d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
+                                        
+                                        <iconify-icon icon="bi:cart-check-fill" class="fs-24px d-flex justify-content-center text-theme"></iconify-icon>
+                                    </button>
 
                                 </div>
                             </div>

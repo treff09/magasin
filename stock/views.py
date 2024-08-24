@@ -68,20 +68,39 @@ def retirer_du_cart(request, piece_id):
         panier_item.delete()
     return redirect('piece_list_accueil')
 
-# Redirect to the page showing both list and cart
+from decimal import Decimal, InvalidOperation# Redirect to the page showing both list and cart
 @user_passes_test(is_accueillant)
 def valider_panier(request):
     panier = get_object_or_404(Panier, utilisateur=request.user, valide=False)
     # Calculer le total du panier
     total = sum(item.piece.prix_unitaire * item.quantite for item in PanierItem.objects.filter(panier=panier))
     # Créer une nouvelle commande pour le panier
+    remise = request.POST.get('remise')
+    # if remise is not None:
+    try:
+        remise = Decimal(remise) if remise else Decimal('0')
+    except (ValueError, InvalidOperation):
+        remise = Decimal('0')
+        
+    if remise > 0:
+        remise = Decimal(remise)
+        montant_remise = (remise / Decimal('100')) * total
+        total_apres_remise = total - montant_remise
+        print("remise",remise, "---------", montant_remise,"T=",total ,"----aprm-----", total_apres_remise)
+    else:
+        total_apres_remise = total
+        print("---------", "---------", total_apres_remise)
+        
+    # Créer une nouvelle commande pour le panier
     commande = Commande.objects.create(
         panier=panier,
         numero_commande='CMD' + str(panier.id) + '-' + str(Commande.objects.filter(panier=panier).count() + 1),
-        total=total,
+        total=total_apres_remise,
         utilisateur=request.user
     )
-    
+    print('')
+    print('---------commande-----------',commande.numero_commande,commande.total)
+    print('')
     # Créer un ticket pour la nouvelle commande
     ticket = Ticket.objects.create(
         numero='TKT' + str(commande.id),
@@ -108,8 +127,8 @@ def supprimer_du_panier(request, item_id):
     panier_item = get_object_or_404(PanierItem, id=item_id, panier=panier)
     # Remove item from the cart
     panier_item.delete()
-    
-    return redirect('piece_list')
+    return redirect('piece_list_accueil')
+
 @user_passes_test(is_admin_magasin)
 def piece_detail(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
@@ -186,12 +205,10 @@ def panier(request):
             quantite = int(request.POST.get(f'quantite_{item.piece.id}', 0))
             item.quantite = quantite
             item.save()
-        
         remise = request.POST.get('remise', 0)
         panier.valide = True
         panier.save()
-        return redirect('piece_list')
-
+        return redirect('piece_list') 
     context = {
         'panier_items': panier_items,
         'panier': panier,
@@ -203,11 +220,13 @@ def panier(request):
 
 @user_passes_test(is_caissier)
 def valider_paiement(request, ticket_id):
+    paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=False)
     commande = ticket.commande
     panier = commande.panier
     if request.method == 'POST':
         montant = request.POST.get('montant')
+        
         if float(montant) >= commande.total:
             commande.paye = True
             reste = float(montant) - float(commande.total)
@@ -228,10 +247,19 @@ def valider_paiement(request, ticket_id):
                 piece.save()
             messages.success(request, f"Paiement validé. Utilisez le numéro {ticket.numero} pour récupérer vos articles.")
             return redirect('caisseDashboard')
+        
         else:
             messages.error(request, "Le montant payé ne correspond pas au total de la commande.")
-    
-    return render(request, 'valider_paiement.html', {'ticket': ticket, 'commande': commande})
+    # Passer les items du panier au template
+    panier_items = PanierItem.objects.filter(panier=panier)
+    context = {
+        'ticket': ticket,
+        'commande': commande,
+        'paniers_non_valides': paniers_non_valides,
+        'panier_items': panier_items,
+    }
+    print(commande.panier,'\n')
+    return render(request, 'caissiere_validation_paiement.html', context)
 
 # @user_passes_test(is_caissier)
 # def caissier_accueil(request):
@@ -263,7 +291,7 @@ def caisseDashboard(request):
     context =  {
         'paniers_non_valides': paniers_non_valides,
     }
-    return render(request, 'caissiere_valition_paiement.html', context)
+    return render(request, 'caissiere_validation_paiement.html', context)
 
 
 @user_passes_test(is_liveur)
@@ -285,7 +313,7 @@ def generate_receipt(request, commande_id):
 
     # Calculer le montant restant (s'il n'est pas déjà calculé)
     if commande.total and commande.montant_paye:
-        commande.montant_reste = commande.total - commande.montant_paye
+        commande.montant_reste =  commande.montant_paye - commande.total 
 
     # Générer un QR code basé sur l'ID de la commande ou d'autres informations
     qr = qrcode.QRCode(

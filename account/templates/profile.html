@@ -7,27 +7,23 @@
 
         <div class="profile-sidebar">
             <div class="desktop-sticky-top small">
-                <i class="fa fa-5x fa-user-circle"></i> <u class="text-theme" style="text-decoration: none;">{{user.username|upper}}</u>
+                <i class="fa fa-5x fa-user-circle"></i> 
                 <h4 class="mb-0"></h4>
-
+                <u class="text-theme" style="text-decoration: none;">{{user.username|upper}}</u>
                 <hr class="my-4" />
-                <a href="{% url 'user_create' %}" class="btn btn-outline-light" style="border-radius: 10px;"><i class='fa fa-reply'></i></a>
+                {% if user.is_admin_magasin %}
+                    <a href="{% url 'user_create' %}" class="btn btn-outline-light" style="border-radius: 10px;"><i class='fa fa-reply'></i></a>
+                {% endif %}
             </div>
         </div>
 
         <div class="profile-content">
             <div class="row">
                 <div class="col-xl-8">
-                    <ul class="profile-tab nav nav-tabs nav-tabs-v2 mb-3">
-
-                    </ul>
-
+                    <h1 class="page-header">Profil</h1>
+                    <ul class="profile-tab nav nav-tabs nav-tabs-v2 mb-3"></ul>
                     <div class="tab-content p-0">
                         <div class="tab-pane fade show active" id="profile-post">
-
-
-
-
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
@@ -97,6 +93,7 @@
                             </div>
                             <div class="row gx-0">
                                 <div class="card-body p-0">
+<<<<<<< HEAD
                                 <a href="{% url 'password_change' %} " class="list-group-item list-group-action text-center px-3 py-2 ">
                                         <i class='fa fa-key'></i> change mot de passe
                                     </a>
@@ -107,6 +104,19 @@
                                         <i class='fa fa-reply'></i> Retour
                                     </a>
                                     
+=======
+                                    <a href="{% url 'password_change' %} " class="list-group-item list-group-action px-3 py-2 ">
+                                        <i class='fa fa-user-circle text-flex-right'></i> Profil
+                                    </a>
+                                    <a href="{% url 'password_change' %} " class="list-group-item list-group-action px-3 py-2 ">
+                                        <i class='fa fa-key'></i> Change mot de passe
+                                    </a>
+                                    {% if user.is_admin_magasin %}
+                                        <a href="{% url 'user_create' %} " class="list-group-item list-group-action text-center px-3 py-2 ">
+                                            <i class='fa fa-reply'></i> Retour
+                                        </a>
+                                    {% endif %}
+>>>>>>> dev_atsin
                                 </div>
                             </div>
                         </div>
