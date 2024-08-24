@@ -203,7 +203,7 @@ User = get_user_model()
 
 class VerifyOtpView(View):
     def get(self, request):
-        return render(request, 'verify_otp.html')
+        return render(request, 'reinitializ_password.html')
 
     def post(self, request):
         otp = request.POST.get('otp')
@@ -236,15 +236,14 @@ class VerifyOtpView(View):
 
 class OptValid(View):
     def get(self, request):
-        return render(request, 'Opt_Valid.html')
-
+        return render(request, 'Opt.html')
     def post(self, request):
         otp = request.POST.get('otp')
         try :
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
             context = {'otp': otp}
             if reset_request :
-                return render(request, "verify_otp.html",context)
+                return render(request, "reinitializ_password.html",context)
         except PWD_FORGET.DoesNotExist:
                 return HttpResponse('OTP non valide.', status=400)
         
