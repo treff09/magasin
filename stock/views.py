@@ -218,6 +218,7 @@ def valider_paiement(request, ticket_id):
     panier = commande.panier
     if request.method == 'POST':
         montant = request.POST.get('montant')
+        
         if float(montant) >= commande.total:
             commande.paye = True
             reste = float(montant) - float(commande.total)
@@ -235,18 +236,20 @@ def valider_paiement(request, ticket_id):
                 piece = item.piece
                 piece.quantite -= item.quantite
                 piece.save()
-                print("--------------------------------", item)
             messages.success(request, f"Paiement validé. Utilisez le numéro {ticket.numero} pour récupérer vos articles.")
             return redirect('caisseDashboard')
+        
         else:
             messages.error(request, "Le montant payé ne correspond pas au total de la commande.")
     # Passer les items du panier au template
+    panier_items = PanierItem.objects.filter(panier=panier)
     context = {
         'ticket': ticket,
         'commande': commande,
         'paniers_non_valides': paniers_non_valides,
+        'panier_items': panier_items,
     }
-    print(commande.panier)
+    print(commande.panier,'\n')
     return render(request, 'caissiere_validation_paiement.html', context)
 
 # @user_passes_test(is_caissier)

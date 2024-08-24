@@ -149,7 +149,7 @@
                         </div>
 
                         <div class="pos-sidebar-body tab-content mb-2px" data-scrollbar="true" data-height="100%">
-                            <form method="post" action="{% url 'valider_panier' %}">
+                            <form method="post">
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
                                     {% csrf_token %} 
 									{% for item in panier_items %}
