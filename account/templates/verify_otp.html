@@ -7,6 +7,9 @@
     <h1>Modification de mot de passe</h1>
     <form method="post">
         {% csrf_token %}
+        <label for="otp">OTP:</label>
+        <input type="text" id="otp" name="otp" value="{{ otp }}" required>
+        <br>
         <label for="new_password">Nouveau mot de passe:</label>
         <input type="password" id="new_password" name="new_password" required>
         <br>
