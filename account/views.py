@@ -17,6 +17,7 @@ from django.core.mail import EmailMultiAlternatives
 
 def is_admin_magasin(user):
     return user.is_authenticated and user.groups.filter(name='AdminMagasin').exists()
+    
 
 # @user_passes_test(is_admin_magasin)
 def user_detail(request, pk):
