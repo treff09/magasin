@@ -17,6 +17,7 @@ from django.core.mail import EmailMultiAlternatives
 
 def is_admin_magasin(user):
     return user.is_authenticated and user.groups.filter(name='AdminMagasin').exists()
+    
 
 # @user_passes_test(is_admin_magasin)
 def user_detail(request, pk):
@@ -128,7 +129,7 @@ def logout_view(request):
     return redirect("login")
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views import View
@@ -194,9 +195,10 @@ class RequestEmailView(View):
             email_message.attach_alternative(html_content, 'text/html')
             email_message.send()
 
-            return HttpResponse('OTP envoyé par email.')
+            return redirect("otp")
         except User.DoesNotExist:
-            return HttpResponse('Utilisateur non trouvé.', status=404)
+            messages.error(request, "Utilisateur non trouvé.")
+            return  render(request, "forgot_password.html")
 
 # Vue pour vérifier l'OTP envoyé par email
 User = get_user_model()
@@ -206,33 +208,37 @@ class VerifyOtpView(View):
         return render(request, 'reinitializ_password.html')
 
     def post(self, request):
-        otp = request.POST.get('otp')
+        otp = request.session.get('otp')
         new_password = request.POST.get('new_password')
         confirm_password = request.POST.get('confirm_password')
 
+        if not otp or not new_password or not confirm_password:
+            return JsonResponse({'error': 'Tous les champs sont obligatoires.'}, status=400)
+
         if new_password != confirm_password:
-            return HttpResponse('Les mots de passe ne correspondent pas.', status=400)
-        
+             messages.error(request, "Les mots de passe ne correspondent pas.")
+             return  render(request, "reinitializ_password.html")
+
         try:
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
-            
+
             # Vérifiez si l'OTP a expiré
             if (timezone.now() - reset_request.creat_at).total_seconds() > 120:  # 2 minutes
-                return HttpResponse('OTP expiré.', status=400)
-            
+                return JsonResponse({'error': 'OTP expiré.'}, status=400)
+
             # Marquer l'OTP comme utilisé
             reset_request.status = '1'
             reset_request.save()
-            
+
             # Réinitialiser le mot de passe
             user = reset_request.user_id
             user.password = make_password(new_password)
             user.save()
-            
-            return HttpResponse('Mot de passe réinitialisé avec succès.')
-        
+
+            return JsonResponse({'success': 'Mot de passe réinitialisé avec succès.'})
+
         except PWD_FORGET.DoesNotExist:
-            return HttpResponse('OTP non valide.', status=400)
+            return JsonResponse({'error': 'OTP non valide.'}, status=400)
 
 class OptValid(View):
     def get(self, request):
@@ -241,11 +247,17 @@ class OptValid(View):
         otp = request.POST.get('otp')
         try :
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
-            context = {'otp': otp}
+            print(f"-----------------------------------")
+            print(f"verification : {reset_request}")
+            print(f"-----------------------------------")
+            request.session['otp'] = otp
             if reset_request :
-                return render(request, "reinitializ_password.html",context)
+                return redirect("verify_otp")
         except PWD_FORGET.DoesNotExist:
-                return HttpResponse('OTP non valide.', status=400)
+                 messages.error(request, "OTP non valide.")
+                 return  render(request, "opt.html")
+               
+              
         
 from .forms import ChangePasswordForm
 from django.contrib.auth.views import PasswordChangeView 

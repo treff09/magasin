@@ -36,11 +36,13 @@ class Panier(models.Model):
     panier_paye = models.BooleanField(default=False)
     # date_creation = models.DateTimeField(auto_now_add=True)
     ticket = models.CharField(max_length=100, null=True, blank=True)
+    panier_livre = models.BooleanField(default=False)
 
 class PanierItem(models.Model):
     panier = models.ForeignKey(Panier, on_delete=models.CASCADE,related_name='panier_items')
     piece = models.ForeignKey(Piece, on_delete=models.CASCADE)
     quantite = models.PositiveIntegerField(default=1)
+
 
 class Commande(models.Model):
     panier = models.ForeignKey(Panier, on_delete=models.CASCADE, related_name='commands')

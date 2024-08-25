@@ -2,9 +2,6 @@ asgiref==3.7.2
 certifi==2024.2.2
 charset-normalizer==3.3.2
 colorama==0.4.6
-decouple==0.0.7
-distlib==0.3.8
-Django==5.0.3
 django-cors-headers==4.3.1
 django-filter==24.2
 django-jazzmin==3.0.0
