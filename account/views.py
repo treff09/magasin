@@ -233,8 +233,14 @@ class VerifyOtpView(View):
             user.password = make_password(new_password)
             user.save()
 <<<<<<< HEAD
+<<<<<<< HEAD
             return JsonResponse({'success': 'Mot de passe réinitialisé avec succès.'})
 =======
+=======
+
+            messages.error(request, 'Mot de passe réinitialisé avec succès.')
+            return  render(request, "logins.html")
+>>>>>>> a75edca5 (ajout de remise dans ma caisse)
 
             messages.error(request, 'Mot de passe réinitialisé avec succès.')
             return  render(request, "logins.html")
