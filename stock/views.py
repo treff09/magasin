@@ -76,6 +76,7 @@ def valider_panier(request):
     total = sum(item.piece.prix_unitaire * item.quantite for item in PanierItem.objects.filter(panier=panier))
     # Créer une nouvelle commande pour le panier
     remise = request.POST.get('remise')
+    
     # if remise is not None:
     try:
         remise = Decimal(remise) if remise else Decimal('0')
@@ -96,7 +97,9 @@ def valider_panier(request):
         panier=panier,
         numero_commande='CMD' + str(panier.id) + '-' + str(Commande.objects.filter(panier=panier).count() + 1),
         total=total_apres_remise,
-        utilisateur=request.user
+        utilisateur=request.user,
+        remise=remise,
+        total_sans_remise=total
     )
     print('')
     print('---------commande-----------',commande.numero_commande,commande.total)

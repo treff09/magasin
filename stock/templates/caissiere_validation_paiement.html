@@ -100,7 +100,7 @@
                                                 </tr>
                                                 {% endwith %} {% empty %}
                                                 <tr>
-                                                    <td colspan="7">Aucune pièce disponible.{{paniers_non_valides}}</td>
+                                                    <td colspan="7">Aucune pièce disponible.{{ paniers_non_valides|default:0 }}</td>
                                                 </tr>
                                                 {% endfor%}
                                             </tbody>
@@ -138,7 +138,13 @@
                             <ul class="nav nav-tabs nav-fill">
                                 {% if commande %}
                                 <li class="nav-item">
-                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total à payer : {{ commande.total }}</a>
+                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total sans remise : {{ commande.total_sans_remise }} Fcfa</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">REMISE : {{ commande.remise }}  %</a>
+                                </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total à payer : {{ commande.total }} Fcfa</a>
                                 </li>
                                 {% else %}
                                 <li class="nav-item">
@@ -159,11 +165,11 @@
                                                 <div class="row">
                                                     <div class="col-7">
                                                         <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
-                                                        <div class="mb-1">$12.99</div>
-                                                        <div class="small">- size: large</div>
+                                                        {% comment %} <div class="mb-1">{{ item.quantite }}</div>
+                                                        <div class="small">- size: large</div> {% endcomment %}
                                                     </div>
-                                                    <div class="col-2">x1</div>
-                                                    <div class="col-3 fw-semibold text-white">$12.99</div>
+                                                    <div class="col-2">x{{ item.quantite }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{item.piece.prix_unitaire}}</div>
                                                 </div>
                                             </div>
                                         </div>
