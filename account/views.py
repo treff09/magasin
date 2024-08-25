@@ -196,7 +196,8 @@ class RequestEmailView(View):
 
             return redirect("otp")
         except User.DoesNotExist:
-            return HttpResponse('Utilisateur non trouvé.', status=404)
+            messages.error(request, "Utilisateur non trouvé.")
+            return  render(request, "forgot_password.html")
 
 # Vue pour vérifier l'OTP envoyé par email
 User = get_user_model()
@@ -214,7 +215,8 @@ class VerifyOtpView(View):
             return JsonResponse({'error': 'Tous les champs sont obligatoires.'}, status=400)
 
         if new_password != confirm_password:
-            return JsonResponse({'error': 'Les mots de passe ne correspondent pas.'}, status=400)
+             messages.error(request, "Les mots de passe ne correspondent pas.")
+             return  render(request, "reinitializ_password.html")
 
         try:
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
@@ -251,7 +253,10 @@ class OptValid(View):
             if reset_request :
                 return redirect("verify_otp")
         except PWD_FORGET.DoesNotExist:
-                return HttpResponse('OTP non valide.', status=400)
+                 messages.error(request, "OTP non valide.")
+                 return  render(request, "opt.html")
+               
+              
         
 from .forms import ChangePasswordForm
 from django.contrib.auth.views import PasswordChangeView 
