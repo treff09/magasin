@@ -95,8 +95,6 @@ def valider_panier(request):
         panier=panier,
         numero_commande='CMD' + str(panier.id) + '-' + str(Commande.objects.filter(panier=panier).count() + 1),
         total=total_apres_remise,
-        remise=remise,
-        utilisateur=request.user
         utilisateur=request.user,
         remise=remise,
         total_sans_remise=total)
