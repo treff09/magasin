@@ -87,21 +87,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for panier in paniers_non_valides %} {% with panier.ticket_set.first as ticket %}
-                                                <tr>
-                                                    <td>-</td>
-                                                    <td>{{ panier.ticket }}</td>
-                                                    {% if panier.panier_paye == False %}
-                                                    <td class="text-center">
-                                                        <iconify-icon icon="bi:check-circle-fill" class='text-danger'></iconify-icon>
-                                                    </td>
-                                                    {% endif %}
-                                                    <td class="text-center"><a class="text-warning" href="{% url 'valider_paiement' panier.ticket %}">Valider</a></td>
-                                                </tr>
-                                                {% endwith %} {% empty %}
-                                                <tr>
-                                                    <td colspan="7">Aucune pièce disponible.{{paniers_non_valides}}</td>
-                                                </tr>
+                                                {% for panier in paniers_non_valides %} 
+                                                    {% with panier.ticket_set.first as ticket %}
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>{{ panier.ticket }}</td>
+                                                            {% if panier.panier_paye == False %}
+                                                            <td class="text-center">
+                                                                <iconify-icon icon="bi:check-circle-fill" class='text-danger'></iconify-icon>
+                                                            </td>
+                                                            {% endif %}
+                                                            <td class="text-center"><a class="text-warning" href="{% url 'valider_paiement' panier.ticket %}">Valider</a></td>
+                                                        </tr>
+                                                    {% endwith %} 
+                                                    {% empty %}
+                                                    <tr>
+                                                        <td colspan="7">Aucune pièce disponible.{{paniers_non_valides}}</td>
+                                                    </tr>
                                                 {% endfor%}
                                             </tbody>
                                         </table>
@@ -152,18 +154,19 @@
                             <form method="post">
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
                                     {% csrf_token %} 
-									{% for item in panier_items %}
+									{% for item in paniers_items %}
                                     <div class="pos-order py-3">
                                         <div class="pos-order-product">
                                             <div class="flex-1">
                                                 <div class="row">
                                                     <div class="col-7">
                                                         <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
-                                                        <div class="mb-1">$12.99</div>
-                                                        <div class="small">- size: large</div>
+                                                        <div class="mb-1">- Quantité:{{ item.quantite }}</div>
+                                                        <div class="small">- Véhicule: {{ item.piece.type_voiture }}</div>
                                                     </div>
-                                                    <div class="col-2">x1</div>
-                                                    <div class="col-3 fw-semibold text-white">$12.99</div>
+                                                    <div class="col-2">x{{ item.quantite }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{ item.piece.prix_unitaire }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{ item.remise }}</div>
                                                 </div>
                                             </div>
                                         </div>
