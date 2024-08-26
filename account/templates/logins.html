@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>MAGASIN | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content />
+    <meta name="author" content />
+
+    <link href="{% static 'assets/css/vendor.min.css' %}	" rel="stylesheet" />
+    <link href="{% static 'assets/css/app.min.css' %}	" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <div id="loader" class="app-loader">
+        <div class="d-flex align-items-center">
+            <div class="app-loader-circle"></div>
+            <div class="app-loader-text">LOADING...</div>
+        </div>
+    </div>
+
+    <div id="app" class="app app-full-height app-without-header">
+        <div class="login">
+            <div class="login-content">
+                <h1 class="text-center">
+                    <header>
+                        <script src="https://cdn.lordicon.com/lordicon.js"></script>
+                        <lord-icon src="https://cdn.lordicon.com/hrjifpbq.json" trigger="hover" colors="primary:#ffffff" style="width:40px;height:40px">
+                        </lord-icon>
+                    </header>
+                </h1>
+
+
+                <form method="post" name="login_form">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="form-label">Nom utilisateur</label>
+                        <input style="border-radius: 8px;" type="text" name="username" class="form-control form-control-lg fs-14px" value placeholder="username@..." />
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex">
+                            <label class="form-label">Mot de passe</label>
+                            <a href="{% url 'forgot' %}" class="ms-auto text-body text-opacity-50">Forgot password?</a>
+                        </div>
+                        <input style="border-radius: 8px;" type="password" name="password" class="form-control form-control-lg fs-14px" value placeholder="magasin1235..." />
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex">
+                            {% if messages %} {% for msg in messages %} {% if msg == 'error' %}
+                            <small id="message" class="alert alert-danger alert-dismissible fade show w-100 text-center" role="alert">{{msg}}</small> {% else %}
+                            <small id="message" class="alert alert-success alert-dismissible fade show w-100 text-center" role="alert">{{msg}}</small> {% endif %} {% endfor %} {% endif %}
+                        </div>
+                    </div>
+                    <div class="mb-4 text-center" style="display: flex; text-align:center; margin-left: 30%;">
+                        <button type="submit" class="text-center btn btn-outline-light btn-lg d-block w-50 mb-3" style="border-radius: 20px;">CONNEXION</button>
+                    </div>
+
+                    {% comment %} <div class="text-center text-body text-opacity-50">
+                        Pas de compte? <a href="#">S'inscrire</a>.
+                    </div> {% endcomment %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        setTimeout(function() {
+            $('#message').fadeOut('slow')
+        }, 3000);
+    </script>
+    <script src="{% static 'assets/magas/code/2.1.0/iconify-icon.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/js/vendor.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/js/app.min.js' %} " type="text/javascript"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3Q0VGQKY3" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-Y3Q0VGQKY3');
+    </script>
+
+    <script>
+        setTimeout(function() {
+            $('#message').fadeOut('slow')
+        }, 3000);
+    </script>
+    <script src="{% static 'assets/magas/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js' %}" data-cf-settings="atsin|49" defer></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8ad979ff9b3db91a","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"4db8c6ef997743fda032d4f73cfeff63","b":1}'
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

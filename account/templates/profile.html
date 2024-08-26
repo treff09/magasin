@@ -1,0 +1,136 @@
+{% extends "base.html" %} {% block title %}Liste des utilisateurs{% endblock %} {% block main_content %}
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+<div id="content" class="app-content p-0">
+
+    <div class="profile">
+
+        <div class="profile-sidebar">
+            <div class="desktop-sticky-top small">
+                <i class="fa fa-5x fa-user-circle"></i> 
+                <h4 class="mb-0"></h4>
+                <u class="text-theme" style="text-decoration: none;">{{user.username|upper}}</u>
+                <hr class="my-4" />
+                {% if user.is_admin_magasin %}
+                    <a href="{% url 'user_create' %}" class="btn btn-outline-light" style="border-radius: 10px;"><i class='fa fa-reply'></i></a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="row">
+                <div class="col-xl-8">
+                    <h1 class="page-header">Profil</h1>
+                    <ul class="profile-tab nav nav-tabs nav-tabs-v2 mb-3"></ul>
+                    <div class="tab-content p-0">
+                        <div class="tab-pane fade show active" id="profile-post">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-fill ps-2">
+                                            <div class="position-relative d-flex align-items-center">
+                                                <input type="text" class="form-control text-center text-theme" value='Noms: {{user.first_name}}' disabled>
+                                                <div class="position-absolute end-0 text-center">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-fill ps-2">
+                                            <div class="position-relative d-flex align-items-center">
+                                                <input type="text" class="form-control text-center text-theme" value="Prenoms: {{user.last_name}}" />
+                                                <div class="position-absolute end-0 text-center"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="flex-fill ps-3">
+                                        </div>
+                                    </div>
+                                    <div class="profile-img-list mb-1"></div>
+                                    <div class="row mb-n3 pb-1">
+                                        <div class="col">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-fill ps-2">
+                                            <div class="position-relative d-flex align-items-center">
+                                                <input type="text" class="form-control text-center text-theme" value="Email: {{user.email}}" />
+                                                <div class="position-absolute end-0 text-center">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4">
+                    <div class="desktop-sticky-top d-none d-lg-block">
+                        <div class="fw-500 px-0 d-flex text-white my-3">
+                            <span class="flex-fill">Profile</span>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body px-3 py-2">
+                                <div><small class="text-white text-opacity-50 text-theme"> {{user.profile.role}}</small></div>
+                            </div>
+                            <div class="row gx-0">
+                                <div class="card-body p-0">
+<<<<<<< HEAD
+                                <a href="{% url 'password_change' %} " class="list-group-item list-group-action text-center px-3 py-2 ">
+                                        <i class='fa fa-key'></i> change mot de passe
+                                    </a>
+                                    <a href="{% url 'user_update' user.pk %}" class="list-group-item list-group-action text-center px-3 py-2 " >
+                                        <i class='fa fa-edit'></i> Modification
+                                    </a>
+                                    <a href="{% url 'user_create' %} " class="list-group-item list-group-action text-center px-3 py-2 ">
+                                        <i class='fa fa-reply'></i> Retour
+                                    </a>
+                                    
+=======
+                                    <a href="{% url 'password_change' %} " class="list-group-item list-group-action px-3 py-2 ">
+                                        <i class='fa fa-user-circle text-flex-right'></i> Profil
+                                    </a>
+                                    <a href="{% url 'password_change' %} " class="list-group-item list-group-action px-3 py-2 ">
+                                        <i class='fa fa-key'></i> Change mot de passe
+                                    </a>
+                                    {% if user.is_admin_magasin %}
+                                        <a href="{% url 'user_create' %} " class="list-group-item list-group-action text-center px-3 py-2 ">
+                                            <i class='fa fa-reply'></i> Retour
+                                        </a>
+                                    {% endif %}
+>>>>>>> dev_atsin
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<a href="# " data-toggle="scroll-to-top " class="btn-scroll-top fade ">
+    <iconify-icon icon="material-symbols-light:keyboard-arrow-up "></iconify-icon>
+</a>
+
+{% endblock %}

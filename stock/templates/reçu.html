@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Reçu de Commande #{{ commande.numero_commande }}</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            width: 100px; /* Ajuster la taille du logo si nécessaire */
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .receipt-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+           
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fafafa;
+        }
+
+        .total-row {
+            font-weight: bold;
+            background-color: #f5f5f5;
+        }
+
+        .thanks-message {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .qr-code {
+            display: block;
+            margin: 0 auto;
+            width: 150px;
+            height: 150px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="header">
+            <img src="{% static 'pb.png' %}" alt="Logo">
+            <h1>Reçu de Commande #{{ commande.numero_commande }}</h1>
+        </div>
+        <table>
+            <tr>
+                <th>Date</th>
+                <td>{{ commande.date_creation }}</td>
+            </tr>
+            <tr>
+                <th>Client</th>
+                <td>{{ commande.utilisateur.username }}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ commande.total }} Fcfa</td>
+            </tr>
+            <tr>
+                <th>Montant Payé</th>
+                <td>{{ commande.montant_paye }} Fcfa</td>
+            </tr>
+            <tr>
+                <th>Montant Restant</th>
+                <td>{{ commande.montant_reste }} Fcfa</td>
+            </tr>
+            <tr class="total-row">
+                <th>Statut</th>
+                <td>{% if commande.paye %} Payé {% else %} Non payé {% endif %}</td>
+            </tr>
+        </table>
+
+        <p class="thanks-message">Merci pour votre achat !</p>
+        
+        <img src="data:image/png;base64,{{ qr_code_img }}" alt="QR Code" class="qr-code" />
+    </div>
+</body>
+</html>

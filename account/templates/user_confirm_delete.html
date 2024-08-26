@@ -1,15 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Confirmation de suppression</title>
-</head>
-<body>
-    <h1>Confirmation de suppression</h1>
-    <form method="post">
-        {% csrf_token %}
-        <p>Êtes-vous sûr de vouloir supprimer "{{ user.username }}" ?</p>
-        <button type="submit">Confirmer</button>
-    </form>
-    <a href="{% url 'user_list' %}">Annuler</a>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Liste des utilisateurs{% endblock %}
+{% block main_content %}
+
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+<div id="content" class="app-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="row">
+                    <div class="col-xl-9">
+                        <div id="validation" class="mb-5">
+                            <h4><i class="fa fa-10px fa-user-circle"></i>  </h4>
+                            <div class="card">
+                                <div class="card-header with-btn">SUPPRESION D'UN COMPTE UTILISATEUR </div>
+                            
+                                <div class="card-body">
+                                    <form method="post" class="was-validated">
+                                        {% csrf_token %}
+                                        <div class="row mb-n3">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Nom utilisateur</label>
+                                                <input type="text" class="form-control is-valid" id="validationValidInput" value="{{user.username}}" disabled>
+                                            </div>
+                                        
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Nom</label>
+                                                <input type="text" class="form-control is-valid" id="validationValidInput" value="{{user.first_name}}" disabled>
+                                            </div>
+                                        
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Prénoms utilisateur</label>
+                                                <input type="text" class="form-control is-valid" id="validationValidInput" value="{{user.last_name}}" disabled>
+                                            </div>
+                                        
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">E-mail</label>
+                                                <input type="text" class="form-control is-valid" id="validationValidInput" value="{{user.email}}" disabled>
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                            </div>
+                                            <div class="mb-3 d-flex align-items-center">
+                                                <div class="flex-fill">
+                                                    <div class="text-white text-opacity-50"><a href="{% url "user_create" %}" class="btn btn-outline-light  btn-block" style="border-radius: 8px;"><i class="fa fa-reply"></i></a></div>
+                                                </div>
+                                                <button type="submit" class="btn btn-outline-light  btn-block" style="border-radius: 8px;" onclick="return confirm('Etes-vous sûre de vouloir supprimer le compte de {{ user.username|upper }}? car si vous supprimer toutes les informations liées seront perdues')"><i class="fa fa-fw fa-trash"></i></button>
+                
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-xl-3">
+                        <nav id="sidebar-bootstrap" class="navbar navbar-sticky d-none d-xl-block">
+                            <nav class="nav">
+                                <a class="nav-link text-theme" href="#general" data-bs-toggle="scroll-to">Profile: {{user.profile.role}}</a>
+                            </nav>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+{% endblock  %}
