@@ -47,12 +47,17 @@ class PanierItem(models.Model):
 class Commande(models.Model):
     panier = models.ForeignKey(Panier, on_delete=models.CASCADE, related_name='commands')
     numero_commande = models.CharField(max_length=100)
+    total_sans_remise = models.DecimalField(max_digits=10, decimal_places=2)
     total = models.DecimalField(max_digits=10, decimal_places=2)# Nouveau champ pour la remise
     date_creation = models.DateTimeField(auto_now_add=True)
     paye = models.BooleanField(default=False)
     montant_paye=models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     montant_reste=models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+<<<<<<< HEAD
     remise = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+=======
+    remise =models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
     utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commandes_validees', null=True, blank=True)
 
 class Ticket(models.Model):

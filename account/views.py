@@ -85,7 +85,7 @@ def login_view(request):
     if request.user.is_authenticated:
         user = request.user
         if user.groups.filter(name='Caissiers').exists():
-            return redirect('caissier_accueil')
+            return redirect('caisseDashboard')
         elif user.groups.filter(name='Accueillants').exists():
             messages.success(request, "Bienvenue au service accueil")
             return redirect('piece')
@@ -232,9 +232,17 @@ class VerifyOtpView(View):
             user = reset_request.user_id
             user.password = make_password(new_password)
             user.save()
+<<<<<<< HEAD
             return JsonResponse({'success': 'Mot de passe réinitialisé avec succès.'})
+=======
+
+            messages.error(request, 'Mot de passe réinitialisé avec succès.')
+            return  render(request, "logins.html")
+
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
         except PWD_FORGET.DoesNotExist:
-            return JsonResponse({'error': 'OTP non valide.'}, status=400)
+            messages.error(request, 'OTP non valide.')
+            return  render(request, "opt.html")
 
 class OptValid(View):
     def get(self, request):

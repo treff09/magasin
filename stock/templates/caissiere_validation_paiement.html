@@ -87,6 +87,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+<<<<<<< HEAD
                                                 {% for panier in paniers_non_valides %} 
                                                     {% with panier.ticket_set.first as ticket %}
                                                         <tr>
@@ -104,6 +105,23 @@
                                                     <tr>
                                                         <td colspan="7">Aucune pièce disponible.{{paniers_non_valides}}</td>
                                                     </tr>
+=======
+                                                {% for panier in paniers_non_valides %} {% with panier.ticket_set.first as ticket %}
+                                                <tr>
+                                                    <td>-</td>
+                                                    <td>{{ panier.ticket }}</td>
+                                                    {% if panier.panier_paye == False %}
+                                                    <td class="text-center">
+                                                        <iconify-icon icon="bi:check-circle-fill" class='text-danger'></iconify-icon>
+                                                    </td>
+                                                    {% endif %}
+                                                    <td class="text-center"><a class="text-warning" href="{% url 'valider_paiement' panier.ticket %}">Valider</a></td>
+                                                </tr>
+                                                {% endwith %} {% empty %}
+                                                <tr>
+                                                    <td colspan="7">Aucune pièce disponible.{{ paniers_non_valides|default:0 }}</td>
+                                                </tr>
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
                                                 {% endfor%}
                                             </tbody>
                                         </table>
@@ -140,7 +158,13 @@
                             <ul class="nav nav-tabs nav-fill">
                                 {% if commande %}
                                 <li class="nav-item">
-                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total à payer : {{ commande.total }}</a>
+                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total sans remise : {{ commande.total_sans_remise }} Fcfa</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">REMISE : {{ commande.remise }}  %</a>
+                                </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total à payer : {{ commande.total }} Fcfa</a>
                                 </li>
                                 {% else %}
                                 <li class="nav-item">
@@ -161,12 +185,20 @@
                                                 <div class="row">
                                                     <div class="col-7">
                                                         <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
+<<<<<<< HEAD
                                                         <div class="mb-1">- Quantité:{{ item.quantite }}</div>
                                                         <div class="small">- Véhicule: {{ item.piece.type_voiture }}</div>
                                                     </div>
                                                     <div class="col-2">x{{ item.quantite }}</div>
                                                     <div class="col-3 fw-semibold text-white">{{ item.piece.prix_unitaire }}</div>
                                                     <div class="col-3 fw-semibold text-white">{{ item.remise }}</div>
+=======
+                                                        {% comment %} <div class="mb-1">{{ item.quantite }}</div>
+                                                        <div class="small">- size: large</div> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-2">x{{ item.quantite }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{item.piece.prix_unitaire}}</div>
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
                                                 </div>
                                             </div>
                                         </div>
