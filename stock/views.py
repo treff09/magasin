@@ -76,6 +76,7 @@ def valider_panier(request):
     total = sum(item.piece.prix_unitaire * item.quantite for item in PanierItem.objects.filter(panier=panier))
     # Créer une nouvelle commande pour le panier
     remise = request.POST.get('remise')
+    
     # if remise is not None:
     try:
         remise = Decimal(remise) if remise else Decimal('0')
@@ -96,7 +97,9 @@ def valider_panier(request):
         panier=panier,
         numero_commande='CMD' + str(panier.id) + '-' + str(Commande.objects.filter(panier=panier).count() + 1),
         total=total_apres_remise,
-        utilisateur=request.user
+        utilisateur=request.user,
+        remise=remise,
+        total_sans_remise=total
     )
     print('')
     print('---------commande-----------',commande.numero_commande,commande.total)
@@ -108,7 +111,7 @@ def valider_panier(request):
     )
     
     # Vider le panier
-    PanierItem.objects.filter(panier=panier).delete()
+    #PanierItem.objects.filter(panier=panier).delete()
     
     # Marquer le panier comme validé
     panier.valide = True
@@ -187,8 +190,15 @@ from django.db import transaction
 @user_passes_test(is_accueillant)
 def panier(request):
     panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
-    panier_items = PanierItem.objects.filter(panier=panier)
-    # Calculate totals
+    
+    if created:
+        # Si un nouveau panier est créé, aucun panier_item existant n'est associé
+        panier_items = []
+    else:
+        # Sinon, nous obtenons les items associés au panier existant
+        panier_items = PanierItem.objects.filter(panier=panier)
+
+    # Calculer les totaux
     for item in panier_items:
         item.total = item.piece.prix_unitaire * item.quantite
     sous_total = sum(item.total for item in panier_items)
@@ -210,6 +220,7 @@ def panier(request):
     return render(request, 'panier.html', context)
 
 
+
 @user_passes_test(is_caissier)
 def valider_paiement(request, ticket_id):
     paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
@@ -228,6 +239,7 @@ def valider_paiement(request, ticket_id):
             commande.paye
             commande.save()
             ticket.utilise = True
+            ticket.utilisateur = request.user
             ticket.save()
             panier.panier_paye=True
             panier.save()
@@ -259,9 +271,11 @@ def valider_paiement(request, ticket_id):
 @user_passes_test(is_liveur)
 def valider_livraison(request, ticket_id):
     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=True)
+    
     if request.method == 'POST':
-        ticket.utilisateur = request.user
-        ticket.save()
+        panier_non_livre = Panier.objects.filter(ticket=ticket.numero).first()
+        panier_non_livre.panier_livre = True
+        panier_non_livre.save()
         messages.success(request, f"Livraison validée pour le ticket {ticket.numero}.")
         return redirect('livraison_dashboard')
     return render(request, 'valider_livraison.html', {'ticket': ticket})
@@ -276,7 +290,7 @@ def accueil(request):
 
 @user_passes_test(is_caissier)
 def caisseDashboard(request):
-    paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
+    paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False,panier_livre=False)
     context =  {
         'paniers_non_valides': paniers_non_valides,
     }
@@ -286,7 +300,7 @@ def caisseDashboard(request):
 @user_passes_test(is_liveur)
 def livraison_dashboard(request):
     # Filtrer les paniers dont le statut 'valide' est True
-    livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True) 
+    livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True,panier_livre=False) 
     return render(request, 'livraison.html', {'livraison_en_attente': livraison_en_attente})
 
 
