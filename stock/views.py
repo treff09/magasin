@@ -109,10 +109,6 @@ def valider_panier(request):
         numero='TKT' + str(commande.id),
         commande=commande
     )
-    
-    # Vider le panier
-    #PanierItem.objects.filter(panier=panier).delete()
-    
     # Marquer le panier comme validé
     panier.valide = True
     numero=f"TKT{str(commande.id)}"
@@ -190,7 +186,6 @@ from django.db import transaction
 @user_passes_test(is_accueillant)
 def panier(request):
     panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
-    
     if created:
         # Si un nouveau panier est créé, aucun panier_item existant n'est associé
         panier_items = []
@@ -221,7 +216,7 @@ def panier(request):
 
 
 
-@user_passes_test(is_caissier)
+@user_passes_test(is_caissier, is_admin_magasin)
 def valider_paiement(request, ticket_id):
     paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=False)
