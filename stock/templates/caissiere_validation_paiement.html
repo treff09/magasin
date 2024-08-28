@@ -87,6 +87,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+<<<<<<< HEAD
+                                                {% for panier in paniers_non_valides %} 
+                                                    {% with panier.ticket_set.first as ticket %}
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>{{ panier.ticket }}</td>
+                                                            {% if panier.panier_paye == False %}
+                                                            <td class="text-center">
+                                                                <iconify-icon icon="bi:check-circle-fill" class='text-danger'></iconify-icon>
+                                                            </td>
+                                                            {% endif %}
+                                                            <td class="text-center"><a class="text-warning" href="{% url 'valider_paiement' panier.ticket %}">Valider</a></td>
+                                                        </tr>
+                                                    {% endwith %} 
+                                                    {% empty %}
+                                                    <tr>
+                                                        <td colspan="7">Aucune pièce disponible.{{paniers_non_valides}}</td>
+                                                    </tr>
+=======
                                                 {% for panier in paniers_non_valides %} {% with panier.ticket_set.first as ticket %}
                                                 <tr>
                                                     <td>-</td>
@@ -98,10 +117,15 @@
                                                     {% endif %}
                                                     <td class="text-center"><a class="text-warning" href="{% url 'valider_paiement' panier.ticket %}">Valider</a></td>
                                                 </tr>
-                                                {% endwith %} {% empty %}
+                                                {% endwith %} 
+                                                {% empty %}
                                                 <tr>
-                                                    <td colspan="7">Aucune pièce disponible.{{ paniers_non_valides|default:0 }}</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
                                                 </tr>
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
                                                 {% endfor%}
                                             </tbody>
                                         </table>
@@ -136,7 +160,7 @@
 
                         <div class="pos-sidebar-nav fs-10px">
                             <ul class="nav nav-tabs nav-fill">
-                                {% if commande %}
+                                {% comment %} {% if commande %}
                                 <li class="nav-item">
                                     <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total sans remise : {{ commande.total_sans_remise }} Fcfa</a>
                                 </li>
@@ -150,7 +174,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link fw-semibold" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">Montant total à payer : 0</a>
                                 </li>
-                                {% endif %}
+                                {% endif %} {% endcomment %}
                             </ul>
                         </div>
 
@@ -158,38 +182,111 @@
                             <form method="post">
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
                                     {% csrf_token %} 
+<<<<<<< HEAD
 									{% for item in panier_items %}
+                                        <div class="pos-order py-3">
+                                            <div class="pos-order-product">
+                                                <div class="flex-1">
+                                                    <div class="row">
+                                                        <div class="col-5">
+                                                            <div class="fw-semibold text-white">Article</div>
+                                                            <div class="fw-semibold text-white">-{{ item.piece.designation }}</div>
+                                                            {% comment %} <div class="mb-1">{{ item.quantite }}</div> {% endcomment %}
+                                                            <div class="small">-Véhicule: {{ item.piece.type_voiture.type_voiture }}</div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="fw-semibold text-white">Qte</div>
+                                                            {{ item.quantite }}
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="fw-semibold text-white">Montant</div>
+                                                            {{item.piece.prix_unitaire}}
+                                                        </div>
+                                                    </div>
+=======
+									{% for item in paniers_items %}
                                     <div class="pos-order py-3">
                                         <div class="pos-order-product">
                                             <div class="flex-1">
                                                 <div class="row">
                                                     <div class="col-7">
                                                         <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                                        <div class="mb-1">- Quantité:{{ item.quantite }}</div>
+                                                        <div class="small">- Véhicule: {{ item.piece.type_voiture }}</div>
+                                                    </div>
+                                                    <div class="col-2">x{{ item.quantite }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{ item.piece.prix_unitaire }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{ item.remise }}</div>
+=======
                                                         {% comment %} <div class="mb-1">{{ item.quantite }}</div>
                                                         <div class="small">- size: large</div> {% endcomment %}
                                                     </div>
                                                     <div class="col-2">x{{ item.quantite }}</div>
                                                     <div class="col-3 fw-semibold text-white">{{item.piece.prix_unitaire}}</div>
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
+=======
+                                                        {% comment %} <div class="mb-1">{{ item.quantite }}</div>
+                                                        <div class="small">- size: large</div> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-2">x{{ item.quantite }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{item.piece.prix_unitaire}}</div>
+>>>>>>> a75edca5 (ajout de remise dans ma caisse)
+>>>>>>> origin/dev_atsin
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 									{% endfor %}
                                 </div>
                         </div>
                         <div class="pos-sidebar-footer">
-                            {% comment %}
-                            <div class="d-flex align-items-center mb-2">
-                                <div>Subtotaler</div>
-                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ sous_total }}</div>
-                            </div> {% endcomment %}
-                            <div class="d-flex align-items-center row ">
-								<div class="col-md-3 mb-3">Montant</div>
-                                <div class="flex-1 text-end h6 mb-2 col-md-9">
-									<input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                            {% if commande %}
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Motant TTC</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.total_sans_remise }} frs</div>
                                 </div>
-                            </div>
-                            <hr class="my-3" /> {% comment %}
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Remise</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.remise }} %</div>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Motant à payer</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.total }} frs</div>
+                                </div>
+                                <div class="d-flex align-items-center row ">
+							    	<div class="col-md-3 mb-3">Montant</div>
+                                    <div class="flex-1 text-end h6 mb-2 col-md-9">
+							    		<input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Motant TTC</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">0 frs</div>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Remise</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">0.0 %</div>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Motant à payer</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">0 frs</div>
+                                </div>
+                                <div class="d-flex align-items-center row ">
+							    	<div class="col-md-3 mb-3">Montant</div>
+                                    <div class="flex-1 text-end h6 mb-2 col-md-9">
+							    		<input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+
+                            
+
+
+                            <hr class="my-3" /> 
+                            {% comment %}
                             <div class="d-flex align-items-center mb-2">
                                 <div>Total</div>
                                 <div id="#total-general" class="flex-1 text-end h4 mb-0">{{ sous_total }}</div>
