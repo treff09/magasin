@@ -87,6 +87,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+<<<<<<< HEAD
+                                                {% for panier in paniers_non_valides %} 
+                                                    {% with panier.ticket_set.first as ticket %}
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>{{ panier.ticket }}</td>
+                                                            {% if panier.panier_paye == False %}
+                                                            <td class="text-center">
+                                                                <iconify-icon icon="bi:check-circle-fill" class='text-danger'></iconify-icon>
+                                                            </td>
+                                                            {% endif %}
+                                                            <td class="text-center"><a class="text-warning" href="{% url 'valider_paiement' panier.ticket %}">Valider</a></td>
+                                                        </tr>
+                                                    {% endwith %} 
+                                                    {% empty %}
+                                                    <tr>
+                                                        <td colspan="7">Aucune pièce disponible.{{paniers_non_valides}}</td>
+                                                    </tr>
+=======
                                                 {% for panier in paniers_non_valides %} {% with panier.ticket_set.first as ticket %}
                                                 <tr>
                                                     <td>-</td>
@@ -106,6 +125,7 @@
                                                 <td>-</td>
                                                 <td>-</td>
                                                 </tr>
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
                                                 {% endfor%}
                                             </tbody>
                                         </table>
@@ -162,6 +182,7 @@
                             <form method="post">
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
                                     {% csrf_token %} 
+<<<<<<< HEAD
 									{% for item in panier_items %}
                                         <div class="pos-order py-3">
                                             <div class="pos-order-product">
@@ -182,6 +203,37 @@
                                                             {{item.piece.prix_unitaire}}
                                                         </div>
                                                     </div>
+=======
+									{% for item in paniers_items %}
+                                    <div class="pos-order py-3">
+                                        <div class="pos-order-product">
+                                            <div class="flex-1">
+                                                <div class="row">
+                                                    <div class="col-7">
+                                                        <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                                        <div class="mb-1">- Quantité:{{ item.quantite }}</div>
+                                                        <div class="small">- Véhicule: {{ item.piece.type_voiture }}</div>
+                                                    </div>
+                                                    <div class="col-2">x{{ item.quantite }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{ item.piece.prix_unitaire }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{ item.remise }}</div>
+=======
+                                                        {% comment %} <div class="mb-1">{{ item.quantite }}</div>
+                                                        <div class="small">- size: large</div> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-2">x{{ item.quantite }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{item.piece.prix_unitaire}}</div>
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
+=======
+                                                        {% comment %} <div class="mb-1">{{ item.quantite }}</div>
+                                                        <div class="small">- size: large</div> {% endcomment %}
+                                                    </div>
+                                                    <div class="col-2">x{{ item.quantite }}</div>
+                                                    <div class="col-3 fw-semibold text-white">{{item.piece.prix_unitaire}}</div>
+>>>>>>> a75edca5 (ajout de remise dans ma caisse)
+>>>>>>> origin/dev_atsin
                                                 </div>
                                             </div>
                                         </div>
