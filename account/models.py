@@ -13,6 +13,6 @@ class Profile(models.Model):
 #mot de passe oublié
 class PWD_FORGET(models.Model):
     otp = models.IntegerField()
-    status = models.CharField(max_length=1)
+    status = models.CharField(max_length=1 ,default="0")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     creat_at = models.DateTimeField(auto_now_add=True)

@@ -204,21 +204,22 @@
             <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
                 <div class="menu">
                     <div class="menu-header">TABLEAU DE BORD</div>
-                    <div class="menu-item active">
-                        <a href="{% url 'adminmagasin' %}" class="menu-link">
-                            <span class="menu-icon"><iconify-icon icon="fluent-mdl2:b-i-dashboard"></iconify-icon></span>
-                            <span class="menu-text">ADMINISTRATEUR</span>
-                        </a>
-                    </div>
-                    <div class="menu-item ">
-                        <a href="{% url 'piece_list_accueil' %}" class="menu-link">
-                            <span class="menu-icon">
-								<iconify-icon icon="bi:person-workspace"></iconify-icon>
-							</span>
-                            <span class="menu-text">ACCUEIL</span>
-                        </a>
-                    </div>
-                    <div class="menu-item ">
+                    <div class="menu-item {% if request.resolver_match.url_name == 'adminmagasin' %}active{% endif %}">
+    <a href="{% url 'adminmagasin' %}" class="menu-link">
+        <span class="menu-icon"><iconify-icon icon="fluent-mdl2:b-i-dashboard"></iconify-icon></span>
+        <span class="menu-text">ADMINISTRATEUR</span>
+    </a>
+</div>
+<div class="menu-item {% if request.resolver_match.url_name == 'piece_list_accueil' %}active{% endif %}">
+    <a href="{% url 'piece_list_accueil' %}" class="menu-link">
+        <span class="menu-icon">
+            <iconify-icon icon="bi:person-workspace"></iconify-icon>
+        </span>
+        <span class="menu-text">ACCUEIL</span>
+    </a>
+</div>
+
+                    <div class="menu-item {% if request.resolver_match.url_name == 'caisseDashboard' %}active{% endif %} ">
                         <a href="{% url 'caisseDashboard' %}" class="menu-link">
                             <span class="menu-icon">
 								<iconify-icon icon="clarity:wallet-line"></iconify-icon>
@@ -226,7 +227,7 @@
                             <span class="menu-text">CAISSIERE</span>
                         </a>
                     </div>
-                    <div class="menu-item ">
+                    <div class="menu-item {% if request.resolver_match.url_name == 'livraison_dashboard' %}active{% endif %} ">
                         <a href="{% url 'livraison_dashboard' %}" class="menu-link">
                             <span class="menu-icon">
 								<iconify-icon icon="fluent-emoji-high-contrast:delivery-truck"></iconify-icon>
@@ -246,15 +247,15 @@
                             <span class="menu-caret"><b class="caret"></b></span>
                         </a>
                         <div class="menu-submenu">
-                            <div class="menu-item">
+                            <div class="menu-item {% if request.resolver_match.url_name == 'piece_create' %}active{% endif %}">
                                 <a href="{% url 'piece_create' %}" target="_blank" class="menu-link">
                                     <div class="menu-text">PIECES</div>
                                 </a>
                             </div>
 
-                            <div class="menu-item">
+                            <div class="menu-item {% if request.resolver_match.url_name == 'piece_create' %}active{% endif %}" >
                                 <a href="{% url 'piece_create' %}" target="_blank" class="menu-link">
-                                    <div class="menu-text">PIECE EN RUPTURE</div>
+                                    <div class="menu-text ">PIECE EN RUPTURE</div>
                                 </a>
                             </div>
                             <div class="menu-item">
@@ -344,13 +345,13 @@
                     </div>
 
                     <div class="menu-header">UTILISATEURS</div>
-                    <div class="menu-item ">
+                    <div class="menu-item {% if request.resolver_match.url_name == 'user_create' %}active{% endif %}">
                         <a href="{% url 'user_create' %}" class="menu-link">
                             <span class="menu-icon"><iconify-icon icon="ph:users"></iconify-icon></span>
                             <span class="menu-text">EMPLOYERS</span>
                         </a>
                     </div>
-                    <div class="menu-item ">
+                    <div class="menu-item {% if request.resolver_match.url_name == 'user_detail' %}active{% endif %}">
                         <a href="{% url 'user_detail' user.pk %} " class="menu-link ">
                             <span class="menu-icon "><iconify-icon icon="ph:user-focus-duotone "></iconify-icon></span>
                             <span class="menu-text ">PROFILE</span>
