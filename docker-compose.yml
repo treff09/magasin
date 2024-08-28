@@ -8,34 +8,10 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
+      - ./db.sqlite3:/app/db.sqlite3
     command: >
-      sh -c "python manage.py migrate && 
+      sh -c "python manage.py migrate &&
              python manage.py runserver 0.0.0.0:3000"
     working_dir: /app
     env_file: 
       - .env
-
-
-    # environment:
-    #   - EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-    #   - EMAIL_HOST=smtp.1and1.com
-    #   - EMAIL_HOST_USER=supports.it@ngser.com
-    #   - EMAIL_HOST_PASSWORD=Password@2024#
-    #   - EMAIL_USE_TLS=True
-    #   - EMAIL_USE_SSL=False
-    #   - EMAIL_PORT=25
-    #   - SECRET_KEY=django-insecure-$42x=wi4kyei(hzwcx@dpb^mipnv^u$^l!=dnz@+4ta7h34dpj
-      
-    #depends_on:
-    #  - db
-  #db:
-  #  image: postgres:13-alpine
-  #  volumes:
-  #    - dev-db-datax:/var/lib/postgresql/data
-  #  environment:
-  #    - POSTGRES_DB=devdb
-  #    - POSTGRES_USER=devuser
-  #    - POSTGRES_PASSWORD=changeme
-
-#volumes:
-#  dev-db-datax:
