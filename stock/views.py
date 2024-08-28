@@ -235,7 +235,7 @@ def valider_paiement(request, ticket_id):
             reste = float(montant) - float(commande.total)
             commande.utilisateur = request.user
             commande.montant_paye=float(montant)
-            commande.montant_reste=reste
+            commande.montant_reste= abs(reste)
             commande.paye
             commande.save()
             ticket.utilise = True
@@ -308,7 +308,7 @@ import qrcode
 import io
 import base64
 from django.shortcuts import render, get_object_or_404
-from .models import Commande
+from .models import Commande, PanierItem
 
 def generate_receipt(request, commande_id):
     # Récupérer la commande basée sur l'ID
@@ -316,14 +316,18 @@ def generate_receipt(request, commande_id):
 
     # Calculer le montant restant (s'il n'est pas déjà calculé)
     if commande.total and commande.montant_paye:
-        commande.montant_reste =  commande.montant_paye - commande.total 
+        commande.montant_reste = commande.montant_paye - commande.total 
 
-    # Générer un QR code basé sur l'ID de la commande ou d'autres informations
+    # Récupérer les pièces dans le panier de la commande
+    panier = commande.panier
+    panier_items = PanierItem.objects.filter(panier=panier)
+
+    # Générer un QR code avec une taille réduite
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
+        box_size=5,  # Réduit la taille des pixels du QR code
+        border=2,    # Réduit la largeur de la bordure
     )
     qr_data = f"Commande #{commande.numero_commande} - Total: {commande.total} Fcfa - Date : {commande.date_creation}"
     qr.add_data(qr_data)
@@ -335,5 +339,9 @@ def generate_receipt(request, commande_id):
     img.save(buffer, format="PNG")
     img_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
 
-    # Rendre la page du reçu avec QR code
-    return render(request, 'reçu.html', {'commande': commande, 'qr_code_img': img_str})
+    # Rendre la page du reçu avec QR code et détails des pièces
+    return render(request, 'reçu.html', {
+        'commande': commande,
+        'qr_code_img': img_str,
+        'panier_items': panier_items
+    })
