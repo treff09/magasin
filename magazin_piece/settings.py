@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-6dunc7u4a2^^4jb=uf%w3t4ax212-q3#@+2^(vom@#=@-4_(e3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-APP_NAME = os.environ.get("FLY_APP_NAME")
+
 ALLOWED_HOSTS = [
     'magasin-9j9q.onrender.com',
     'localhost',
