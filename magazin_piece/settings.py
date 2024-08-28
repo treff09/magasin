@@ -19,8 +19,10 @@ ALLOWED_HOSTS = [
     'magasin-1.onrender.com',
     'localhost',
     '127.0.0.1',
-    'https://magasin-1.onrender.com'
     # Ajoutez d'autres hôtes autorisés ici
+]
+CSRF_TRUSTED_ORIGINS = [
+    'https://magasin-1.onrender.com',
 ]
 
 # Application definition
