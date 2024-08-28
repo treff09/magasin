@@ -16,12 +16,10 @@ DEBUG = True
 
 
 ALLOWED_HOSTS = [
-    'magasin-9j9q.onrender.com',
+    'magasin-1.onrender.com',
     'localhost',
     '127.0.0.1',
-#     '100.20.92.101',
-# '44.225.181.72',
-# '44.227.217.144',
+    # Ajoutez d'autres hôtes autorisés ici
 ]
 
 # Application definition
