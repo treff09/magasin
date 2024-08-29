@@ -221,11 +221,9 @@ class VerifyOtpView(View):
 
         try:
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
-
             # Vérifiez si l'OTP a expiré
             if (timezone.now() - reset_request.creat_at).total_seconds() > 120:  # 2 minutes
                 return JsonResponse({'error': 'OTP expiré.'}, status=400)
-
             # Marquer l'OTP comme utilisé
             reset_request.status = '1'
             reset_request.save()
@@ -234,10 +232,20 @@ class VerifyOtpView(View):
             user = reset_request.user_id
             user.password = make_password(new_password)
             user.save()
+<<<<<<< HEAD
+<<<<<<< HEAD
+            return JsonResponse({'success': 'Mot de passe réinitialisé avec succès.'})
+=======
+=======
+
+            messages.error(request, 'Mot de passe réinitialisé avec succès.')
+            return  render(request, "logins.html")
+>>>>>>> a75edca5 (ajout de remise dans ma caisse)
 
             messages.error(request, 'Mot de passe réinitialisé avec succès.')
             return  render(request, "logins.html")
 
+>>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
         except PWD_FORGET.DoesNotExist:
             messages.error(request, 'OTP non valide.')
             return  render(request, "opt.html")
