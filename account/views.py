@@ -232,20 +232,14 @@ class VerifyOtpView(View):
             user = reset_request.user_id
             user.password = make_password(new_password)
             user.save()
-<<<<<<< HEAD
-<<<<<<< HEAD
             return JsonResponse({'success': 'Mot de passe réinitialisé avec succès.'})
-=======
-=======
-
-            messages.error(request, 'Mot de passe réinitialisé avec succès.')
-            return  render(request, "logins.html")
->>>>>>> a75edca5 (ajout de remise dans ma caisse)
 
             messages.error(request, 'Mot de passe réinitialisé avec succès.')
             return  render(request, "logins.html")
 
->>>>>>> a75edca57c091ff6bf37ea1ed2c247e79d686911
+            messages.error(request, 'Mot de passe réinitialisé avec succès.')
+            return  render(request, "logins.html")
+
         except PWD_FORGET.DoesNotExist:
             messages.error(request, 'OTP non valide.')
             return  render(request, "opt.html")
