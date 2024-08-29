@@ -1,11 +1,11 @@
 from django.urls import path
 
 
-from .views import caisseDashboard,livraison_accueil, piece_list, piece_detail, piece_create, piece_update, piece_delete,ajouter_au_panier, valider_livraison, valider_paiement, valider_panier,accueil,base,admin_magasin,livraison_dashboard,panier,supprimer_du_panier,retirer_du_cart,generate_receipt
+from .views import caisseDashboard,livraison_accueil, piece_list, piece_detail, piece_create, piece_update, piece_delete,ajouter_au_panier, valider_livraison, valider_paiement, valider_panier,accueil,base,Dashboard,livraison_dashboard,panier,supprimer_du_panier,retirer_du_cart,generate_receipt
 
 urlpatterns = [
     
-    path('admin_magasin/', admin_magasin, name='adminmagasin'),
+    path('admin_magasin/', Dashboard, name='adminmagasin'),
     #piece
     path('piece_accueil/', piece_list, name='piece_list_accueil'),
     path('piece/<int:pk>/',piece_detail, name='piece_detail'),

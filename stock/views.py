@@ -6,13 +6,62 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-
+from django.db.models import Sum, Count, F, DecimalField, ExpressionWrapper, Q
 
 def base(request):
     return render(request,'magasin/base.html',)
 login_required(login_url='login')
-def admin_magasin(request):
-    return render(request,'dash_admin_magasin.html',)
+def Dashboard(request):
+    total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
+    # Total inventaire
+    total_inventory_value = Piece.objects.aggregate(
+        total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField()))
+    )['total_value'] or 0
+    
+    
+    # Total Commandes
+    total_orders = Commande.objects.count()
+    # Total revenue Commandes
+    total_revenue = Commande.objects.aggregate(total=Sum('total'))['total'] or 0
+    # Total impayés
+    total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
+    # Nombre de tickets émis et utilisés
+    total_tickets_issued = Ticket.objects.count()
+    total_tickets_used = Ticket.objects.filter(utilise=True).count()
+    # Commandes entièrement payées et livrées
+    fully_paid_delivered_orders = Commande.objects.filter(paye=True, panier__panier_livre=True).count()
+    # Commandes en attente de paiement
+    pending_payment_orders = Commande.objects.filter(paye=False).count()
+    # Pièces dont le stock est faible
+    low_stock_pieces = Piece.objects.filter(quantite__lte=5).count()
+    # Total Paniers
+    total_paniers = Panier.objects.count()
+    # Paniers that are validated but not yet paid
+    validated_paniers = Panier.objects.filter(valide=True, panier_paye=False).count()
+
+    pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO']).count()
+    pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT']).count()
+    
+    context = {
+        'total_pieces': total_pieces,
+        'total_inventory_value': total_inventory_value,
+        'total_orders': total_orders,
+        'total_revenue': total_revenue,
+        'total_unpaid': total_unpaid,
+        'total_tickets_issued': total_tickets_issued,
+        'total_tickets_used': total_tickets_used,
+        'fully_paid_delivered_orders': fully_paid_delivered_orders,
+        'pending_payment_orders': pending_payment_orders,
+        'low_stock_pieces': low_stock_pieces,
+        'total_paniers': total_paniers,
+        'validated_paniers': validated_paniers,
+        'pieces_by_category_alto': pieces_by_category_alto,
+        'pieces_by_category_swift': pieces_by_category_swift,
+    }
+    print("------------------------------------")
+    print("<<",context,">>")
+    print("------------------------------------")
+    return render(request,'dashboard.html',context)
 
 
 def is_admin_magasin(user):
@@ -69,7 +118,7 @@ def retirer_du_cart(request, piece_id):
     return redirect('piece_list_accueil')
 
 from decimal import Decimal, InvalidOperation# Redirect to the page showing both list and cart
-@user_passes_test(is_accueillant)
+# @user_passes_test(is_accueillant)
 def valider_panier(request):
     panier = get_object_or_404(Panier, utilisateur=request.user, valide=False)
     # Calculer le total du panier
@@ -124,7 +173,7 @@ def valider_panier(request):
     return redirect('piece_list_accueil')
 
 
-@user_passes_test(is_accueillant)
+# @user_passes_test(is_accueillant)
 def supprimer_du_panier(request, item_id):
     panier = Panier.objects.get(utilisateur=request.user, valide=False)
     panier_item = get_object_or_404(PanierItem, id=item_id, panier=panier)
@@ -137,7 +186,7 @@ def piece_detail(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
     return render(request, 'piece_detail.html', {'piece': piece})
 
-@user_passes_test(is_admin_magasin)
+# @user_passes_test(is_admin_magasin)
 def piece_create(request):
     stock = Piece.objects.all()
     if request.method == 'POST':
@@ -175,7 +224,7 @@ def piece_update(request, pk):
     return render(request, 'create_piece.html', {'form': form})
 
 
-@user_passes_test(is_admin_magasin)
+# @user_passes_test(is_admin_magasin)
 def piece_delete(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
     if request.method == 'POST':
