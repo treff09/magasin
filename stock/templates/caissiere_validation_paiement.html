@@ -140,26 +140,12 @@
                         <div class="pos-sidebar-nav fs-10px">
                             <ul class="nav nav-tabs nav-fill">
                                 {% if panier_items %}
-                                <li class="nav-item">
-                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Total type piece : {{  panier_items.count }}</a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Total type pièce : {{  panier_items.count }}</a>
+                                    </li>
                                 {% endif %}
-                                {% comment %} {% if commande %}
-                                
-                                <li class="nav-item">
-                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">REMISE : {{ commande.remise }}  %</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total à payer : {{ commande.total }} Fcfa</a>
-                                </li>
-                                {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link fw-semibold" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">Montant total à payer : 0</a>
-                                </li>
-                                {% endif %} {% endcomment %}
                             </ul>
                         </div>
-
                         <div class="pos-sidebar-body tab-content mb-2px" data-scrollbar="true" data-height="100%">
                             <form method="post">
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
