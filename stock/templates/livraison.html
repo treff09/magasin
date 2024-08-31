@@ -18,7 +18,7 @@
                                         <tr>
                                             <th></th>
                                             <th class='text-theme'>N°Ticket</th>
-                                            <th class='text-center text-theme'>Date</th>
+                                            <th class='text-center text-theme'>Utiliser</th>
                                             <th class='text-center text-theme'>Action</th>
                                         </tr>
                                     </thead>
@@ -29,7 +29,11 @@
                                             <tr>
                                                 <td>-</td>
                                                 <td>{{ panier.ticket }}</td>
-                                                <td>{{ panier.date_creation }}</td>
+                                                <td class="text-center">
+													{% if panier.valide == True %}
+														<iconify-icon icon="bi:check-circle-fill" class='text-success'></iconify-icon>
+													{% endif %}
+												</td>
                                                 <td  class='text-center'>
                                                     <a style="text-decoration: none;" href="{% url 'valider_livraison' panier.ticket %}" onclick="return confirm('Êtes-vous sûr de vouloir valider cette livraison ?');">Livrer</a>
                                                 </td>

@@ -1,18 +1,470 @@
+from datetime import date, datetime, timedelta, timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import user_passes_test
 from .models import Categorie, Piece, Fournisseur, Panier, PanierItem, Commande, Ticket
-from .forms import AjouterAuPanierForm, PieceForm
+from .forms import AjouterAuPanierForm, PieceForm, DateForm
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.db.models import Sum, Count, F, DecimalField, ExpressionWrapper, Q
+from django.views.generic import ListView, DetailView,CreateView, DeleteView, UpdateView, TemplateView
+
+
 
 
 def base(request):
     return render(request,'magasin/base.html',)
 login_required(login_url='login')
-def admin_magasin(request):
-    return render(request,'dash_admin_magasin.html',)
+
+
+
+class DashboardView(TemplateView):
+     template_name = 'dashboard.html'
+     form_class = DateForm
+     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_group = self.request.user.groups.first()
+        context['user_group'] = user_group.name if user_group else None
+    
+        # AFFICHAGE DES DONNEES DU JOUR EN COURS
+        
+        total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
+        # Total inventaire
+        total_inventory_value = Piece.objects.aggregate(
+            total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField()))
+        )['total_value'] or 0
+
+        # Total Commandes
+        total_orders = Commande.objects.filter(date_creation=date.today()).count()
+        # Total revenue Commandes
+        total_revenue = Commande.objects.aggregate(total=Sum('total'))['total'] or 0
+        # Total impayés
+        total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
+        # Nombre de tickets émis et utilisés
+        total_tickets_issued = Ticket.objects.filter(date_creation=date.today()).count()
+
+        print("*****************************", total_tickets_issued,"*****************************")
+        total_tickets_used = Ticket.objects.filter(utilise=True, date_creation=date.today()).count()
+        # Commandes entièrement payées et livrées
+        fully_paid_delivered_orders = Commande.objects.filter(paye=True, panier__panier_livre=True,date_creation=date.today(),).count()
+        # Commandes en attente de paiement
+        pending_payment_orders = Commande.objects.filter(paye=False, date_creation=date.today()).count()
+        # Pièces dont le stock est faible
+        low_stock_pieces = Piece.objects.filter(quantite__lte=5).count()
+        # Total Paniers
+        # total_paniers = Panier.objects.all()
+        total_paniers = Panier.objects.filter(date_creation=date.today()).count()
+        #total_paniers = Panier.objects.filter(date_creation=date.today()).count()
+        # Paniers that are validated but not yet paid
+        validated_paniers = Panier.objects.filter(valide=True, panier_paye=False, date_creation=date.today()).count()
+        pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO'], date_creation=date.today(),).count()
+        pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT'], date_creation=date.today(),).count()
+       # ----------------------------------------------------------------------------#
+        # total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
+        # # Total inventaire
+        # total_inventory_value = Piece.objects.aggregate(
+        #     total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField()))
+        # )['total_value'] or 0
+        # # Total Commandes
+        # total_orders = Commande.objects.count()
+        # # Total revenue Commandes
+        # total_revenue = Commande.objects.aggregate(total=Sum('total'))['total'] or 0
+        # # Total impayés
+        # total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
+        # # Nombre de tickets émis et utilisés
+        # total_tickets_issued = Ticket.objects.count()
+        # total_tickets_used = Ticket.objects.filter(utilise=True).count()
+        # # Commandes entièrement payées et livrées
+        # fully_paid_delivered_orders = Commande.objects.filter(paye=True, panier__panier_livre=True).count()
+        # # Commandes en attente de paiement
+        # pending_payment_orders = Commande.objects.filter(paye=False).count()
+        # # Pièces dont le stock est faible
+        # low_stock_pieces = Piece.objects.filter(quantite__lte=5).count()
+        # # Total Paniers
+        # total_paniers = Panier.objects.count()
+        # # Paniers that are validated but not yet paid
+        # validated_paniers = Panier.objects.filter(valide=True, panier_paye=False).count()
+        # pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO']).count()
+        # pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT']).count()
+        
+        context = {
+        'total_pieces': total_pieces,
+        'total_inventory_value': total_inventory_value,
+        'total_orders': total_orders,
+        'total_revenue': total_revenue,
+        'total_unpaid': total_unpaid,
+        'total_tickets_issued': total_tickets_issued,
+        'total_tickets_used': total_tickets_used,
+        'fully_paid_delivered_orders': fully_paid_delivered_orders,
+        'pending_payment_orders': pending_payment_orders,
+        'low_stock_pieces': low_stock_pieces,
+        'total_paniers': total_paniers,
+        'validated_paniers': validated_paniers,
+        'pieces_by_category_alto': pieces_by_category_alto,
+        'pieces_by_category_swift': pieces_by_category_swift,
+        }
+
+        print("------------------------------------")
+        print("<<",context,">>")
+        return context
+        
+        
+        #Total_recettes = sum(recet.montant for recet in recette)
+        #Total_recette_format ='{:,}'.format(Total_recettes).replace('',' ')
+#
+        #recette_mois = Recette.objects.annotate(mois_de_recettes=ExtractMonth("date")).values("mois_de_recettes").annotate(total_recet=Sum("montant")).values("mois_de_recettes","total_recet").order_by('mois_de_recettes')
+        #charg_var_mois = ChargeVariable.objects.annotate(month_chvar=ExtractMonth("date")).values("month_chvar").annotate(total_chvar=Sum("montant")).values("month_chvar","total_chvar").order_by('month_chvar')
+#         month_piece =[]
+#         marg_par_mois = []
+#         for reccete, chargess in zip(recette_mois,charg_var_mois):
+#             month_recets = (calendar.month_name[reccete['mois_de_recettes']][:2])
+#             if month_recets:
+#                 month_recets = (calendar.month_name[reccete['mois_de_recettes']][:2])
+#             else:
+#                 month_recets = (calendar.month_name[reccete['mois_de_recettes']][:2])
+#             cumul_recettes = reccete['total_recet']
+#             cumul_charges = chargess['total_chvar'] if chargess['total_chvar'] else 0
+#             marge = cumul_recettes - cumul_charges
+#             if cumul_recettes==0:
+#                 taux =0
+#             else:
+#                 taux = round(((marge)*100/cumul_recettes),2)
+#         if marg_par_mois:
+#             marg_par_mois.append({'month_recets': month_recets, 'marge': marge,'taux':taux})
+#         else:
+#             marg_par_mois.append({})
+        
+# #-----------------------------------Pour Faire les filtre selon les dates entrées---------------------------------
+#         form = self.form_class(self.request.GET)
+#         if form.is_valid():
+#             date_debut = form.cleaned_data['date_debut'] 
+#             date_fin = form.cleaned_data['date_fin'] 
+            
+#             recettes = Recette.objects.filter(date__range=[date_debut, date_fin]).aggregate(Sum('montant'))['montant__sum'] 
+#             context['recettes_totales'] = recettes if recettes is not None else 0
+            
+#             piecs = Piece.objects.filter(date_achat__range=[date_debut, date_fin]).aggregate(Sum('cout'))['cout__sum'] 
+#             context['pieces_totales'] = piecs if piecs is not None else 0
+            
+#             charges_variables = ChargeVariable.objects.filter(date__range=[date_debut, date_fin]).aggregate(Sum('montant'))['montant__sum']
+#             context['charges_variables_totales'] = charges_variables if charges_variables is not None else 0
+            
+#             charges_fixe = ChargeFixe.objects.filter(date__range=[date_debut, date_fin]).aggregate(Sum('montant'))['montant__sum']
+#             context['charges_fixes_totales'] = charges_fixe if charges_fixe is not None else 0
+            
+#             context['charges_totales'] =charges_fixe + context['charges_variables_totales'] if charges_fixe is not None else 0
+
+#             context['marge_totale'] = recettes - context['charges_variables_totales'] if recettes is not None else 0
+
+#             taux_recette = Recette.objects.filter(date__range=[date_debut, date_fin]).aggregate(Sum('montant'))['montant__sum'] or 1
+#             taux_diviseur = context['recettes_totales'] - (context['charges_variables_totales'])
+            
+#             context['taux_vehi'] = round(taux_diviseur*100/ taux_recette, 2 ) if taux_recette is not None and taux_diviseur is not None else 0
+            
+#             taux_mois= round(taux_diviseur*100/ taux_recette, 2 ) if taux_recette is not None and taux_diviseur is not None else 0
+#             context['taux_par_mois'] = [taux_mois] * 12 if taux_recette else [0] * 12
+
+#             resultat = (context['recettes_totales'] - context['charges_totales'])
+#             context['resultat_total'] = resultat if resultat is not None else 0
+            
+# #-------------------------------------------Pour les Graphes---------------------------------------------
+#             recets = Recette.objects.filter(date__range=[date_debut, date_fin])
+#             charvars = ChargeVariable.objects.filter(date__range=[date_debut, date_fin])
+#             charfix = ChargeFixe.objects.filter(date__range=[date_debut, date_fin])
+#             pieces = Piece.objects.filter(date_achat__range=[date_debut, date_fin])
+            
+#             recettes_mensuelles = {month: 0 for month in range(1, 13)}
+#             charges_variables_mensuelles = {month: 0 for month in range(1, 13)}
+#             charges_fixe_mensuelles = {month: 0 for month in range(1, 13)}
+#             piece_mensuelles = {month: 0 for month in range(1, 13)}
+            
+#             for recette in recets:
+#                 recettes_mensuelles[recette.date.month] += recette.montant
+                
+#             for charge_variable in charvars:
+#                 charges_variables_mensuelles[charge_variable.date.month] += charge_variable.montant
+            
+#             for charge_fixe in charfix:
+#                 charges_fixe_mensuelles[charge_fixe.date.month] += charge_fixe.montant
+            
+#             for piec in pieces:
+#                 piece_mensuelles[piec.date_achat.month] += piec.cout
+            
+#             piece_data = [piece_mensuelles[month] for month in range(1, 13)]
+#             piece_data = [0 if piec == 0 else piece_data[i - 1] for i, piec in enumerate(piece_data, start=1)]
+            
+#             recette_data = [recettes_mensuelles[month] for month in range(1, 13)]
+#             recette_data = [0 if recette == 0 else recette_data[i - 1] for i, recette in enumerate(recette_data, start=1)]
+            
+#             charg_vari_data = [charges_variables_mensuelles[month] for month in range(1, 13)]
+#             charg_vari_data = [0 if charge_variable == 0 else charg_vari_data[i - 1] for i, charge_variable in enumerate(charg_vari_data, start=1)]
+            
+#             charg_fixe_data = [charges_fixe_mensuelles[month] for month in range(1, 13)]
+#             charg_fixe_data = [0 if charge_fixe == 0 else charg_fixe_data[i - 1] for i, charge_fixe in enumerate(charg_fixe_data, start=1)]
+            
+#             marges_mensuelles = {month: recettes_mensuelles[month] - charges_variables_mensuelles[month] for month in range(1, 13)}
+#             taux_mensuels = {month: (marges_mensuelles[month] * 100) / recettes_mensuelles[month] if recettes_mensuelles[month] > 0 else 0 for month in range(1, 13)}
+#             context['labels'] = [month[:2] for month in list(calendar.month_name)[1:]]
+            
+#             taux_data = [taux_mensuels[month] for month in range(1, 13)]
+#             taux_data = [0 if taux == 0 else taux_data[i - 1] for i, taux in enumerate(taux_data, start=1)]
+            
+#             marge_contri = []
+#             all_vehicule = Vehicule.objects.all()[:6]
+#             all_recettes= Recette.objects.all()[:5]
+#             best_recets = []
+#             best_marge = []
+#             best_taux = []
+#             for vehicule in all_vehicule:
+#                 recs = Recette.objects.filter(vehicule=vehicule, date__range=[date_debut, date_fin]).aggregate(Sum('montant'))['montant__sum'] 
+#                 context['rece_all'] = recs if recs is not None else 0
+                
+#                 charges_variables = ChargeVariable.objects.filter(vehicule = vehicule, date__range=[date_debut, date_fin]).aggregate(Sum('montant'))['montant__sum']
+#                 context['chargvari_all'] = charges_variables if charges_variables is not None else 0
+                
+#                 marge_cont = context['rece_all'] - context['chargvari_all']
+#                 context['marge'] = marge_cont if marge_cont is not None else 0
+                
+#                 if context['rece_all'] == 0:
+#                     context['taux'] =0
+#                 else:
+#                     taux = round((context['marge']*100)/context['rece_all'],2)
+#                     context['taux'] = taux if taux is not None else 0
+                    
+#                 best_taux.append({'vehicule': vehicule, 'taux':context['taux']})
+#                 best_marge.append({'vehicule': vehicule, 'marge_cont':marge_cont})
+#                 best_recets.append({'vehicule': vehicule, 'recs':recs})
+#             best_marge = sorted([x for x in best_marge if x['marge_cont'] is not None], key=lambda x: x['marge_cont'], reverse=True)[:5] 
+#             best_taux = sorted(best_taux, key=lambda x: x['taux'], reverse=True)[:5]
+#             best_recets = sorted([x for x in best_recets if x['recs'] is not None], key=lambda x: x['recs'], reverse=True)[:5] 
+            
+#             context['taux_data'] = taux_data
+#             context['best_taux'] = best_taux
+#             context['best_marge'] = best_marge
+#             context['best_recets'] = best_recets
+#             context['recette_data'] = recette_data
+#             context['charg_vari_data'] = charg_vari_data
+#             context['charg_fixe_data'] = charg_fixe_data
+#             context['piece_data'] = piece_data
+#         else:
+#             all_vehicule = Vehicule.objects.all()[:5]
+#             marge_contri = []
+#             best_taux = []
+#             recettes= Recette.objects.all()[:5]
+#             top_recets = []
+#             for vehicule in all_vehicule:
+#                 total_recets = Recette.objects.filter(vehicule = vehicule).aggregate(Sum('montant'))['montant__sum'] or 1
+#                 total_charg_var = ChargeVariable.objects.filter(vehicule = vehicule).aggregate(Sum('montant'))['montant__sum'] or 0
+#                 marge_contribution = total_recets - total_charg_var
+#                 taux = round(((marge_contribution)*100/total_recets),2)
+#                 marge_contri.append({'vehicule': vehicule, 'marge_contribution':marge_contribution})
+#                 best_taux.append({'vehicule': vehicule,'taux':taux})
+#                 top_recets.append({'vehicule': vehicule, 'total_recets':total_recets})
+# #-------    ----------------------Top marge----------------------------
+#             marge_contri = sorted(marge_contri, key=lambda x: x['marge_contribution'], reverse=True)[:5]    
+#             best_taux = sorted(best_taux, key=lambda x: x['taux'], reverse=True)[:5]    
+#             top_recets = sorted(top_recets, key=lambda x: x['total_recets'], reverse=True)[:5]
+            
+#             context['marge_contri'] = marge_contri
+#             context['best_taux'] = best_taux
+#             context['top_recets'] = top_recets
+#             context['labels'] = [month[:2] for month in list(calendar.month_name)[1:]]
+#             context['taux_data'] = [0] * 12
+#         context['form'] = form
+        
+#         catego_vehi = CategoVehi.objects.all()
+#         context['categories'] = CategoVehi.objects.all()
+#         categorie_id = self.request.GET.get('categorie')
+#         if categorie_id:
+#             categorie = CategoVehi.objects.get(pk=categorie_id)
+#             context['somme_par_categorie'] = Recette.objects.filter(vehicule_id__category=categorie).aggregate(Sum('montant'))['montant__sum']
+#         else:
+#             context['somme_par_categorie'] = Recette.objects.all().aggregate(Sum('montant'))['montant__sum']
+        
+# #_____________________________TOTAL DES CHARGES VARIABLES_____________________________#
+#         cahargevariable = ChargeVariable.objects.all()
+#         Total_charg_var = sum(chargvar.montant for chargvar in cahargevariable)
+        
+#         Total_charg_var_format ='{:,}'.format(Total_charg_var).replace('',' ')
+# #_____________________________TOTAL DES CHARGES FIXES_____________________________#       
+#         chargefix = ChargeFixe.objects.all()
+#         Total_charg_fix = sum(chargfix.montant for chargfix in chargefix)
+#         Total_charg_fix_format ='{:,}'.format(Total_charg_fix).replace('',' ')
+# #_____________________________TOTAL DES CHARGES_____________________________#
+#         total_charg = Total_charg_fix + Total_charg_var
+#         total_charge_format ='{:,}'.format(total_charg).replace('',' ')
+# #_____________________________MARGE CONTRIBUTION_____________________________#
+#         marge_contribution = Total_recettes - Total_charg_var
+# #_____________________________TAUX CONTRIBUTION_____________________________#
+#         if Total_recettes == 0:
+#             taux_marge = 0
+#         else:
+#             taux_marge = (marge_contribution*100/(Total_recettes))
+#         taux_marge_format ='{:.2f}'.format(taux_marge)
+# #_____________________________RESULTAT_____________________________#
+#         resultat = Total_recettes - total_charg
+#         resultat_format ='{:,}'.format(resultat).replace('',' ')
+# #_________________________________PIECE______________________________#
+#         piece = Piece.objects.all()
+#         totl_piece = sum(piece.cout for piece in piece)
+#         totl_piece_format ='{:,}'.format(totl_piece).replace('',' ')
+        
+#         total_piece_mois = Piece.objects.annotate(month_piece=ExtractMonth("date_achat")).values("month_piece").annotate(total_piece=Sum("cout")).values("month_piece","total_piece")
+#         month_piece =[]
+#         total_piece = []
+#         for i in total_piece_mois:
+#             month_piece.append(calendar.month_name[i["month_piece"]][:2])
+#             total_piece.append(i['total_piece'])
+        
+#         #-------------------------------------------Pour les Graphes---------------------------------------------
+#         recets = Recette.objects.all()
+#         charvars = ChargeVariable.objects.all()
+#         charfix = ChargeFixe.objects.all()
+#         piecs = Piece.objects.all()
+        
+#         recettes_mensuelles = {month: 0 for month in range(1, 13)}
+#         charges_variables_mensuelles = {month: 0 for month in range(1, 13)}
+#         charges_fixe_mensuelles = {month: 0 for month in range(1, 13)}
+#         piece_mensuelles = {month: 0 for month in range(1, 13)}
+        
+#         for recette in recets:
+#             recettes_mensuelles[recette.date.month] += recette.montant
+            
+#         for charge_variable in charvars:
+#             charges_variables_mensuelles[charge_variable.date.month] += charge_variable.montant
+        
+#         for charge_fixe in charfix:
+#             charges_fixe_mensuelles[charge_fixe.date.month] += charge_fixe.montant
+        
+#         for piec in piecs:
+#             piece_mensuelles[piec.date_achat.month] += piec.cout
+            
+#         recette_mois_data = [recettes_mensuelles[month] for month in range(1, 13)]
+#         recette_mois_data = [0 if recette == 0 else recette_mois_data[i - 1] for i, recette in enumerate(recette_mois_data, start=1)]
+#         context['recette_mois_data'] = recette_mois_data
+#         context['label_recette_mois'] = [month[:2] for month in list(calendar.month_name)[1:]]
+        
+#         charg_fixe_mois_data = [charges_fixe_mensuelles[month] for month in range(1, 13)]
+#         charg_fixe_mois_data = [0 if charge_fixe == 0 else charg_fixe_mois_data[i - 1] for i, charge_fixe in enumerate(charg_fixe_mois_data, start=1)]
+#         context['charg_fixe_mois_data'] = charg_fixe_mois_data
+        
+#         charg_vari_mois_data = [charges_variables_mensuelles[month] for month in range(1, 13)]
+#         charg_vari_mois_data = [0 if charge_variable == 0 else charg_vari_mois_data[i - 1] for i, charge_variable in enumerate(charg_vari_mois_data, start=1)]
+#         context['charg_vari_mois_data'] = charg_vari_mois_data
+        
+#         piece_mois_data = [piece_mensuelles[month] for month in range(1, 13)]
+#         context['piece_mois_data'] = [0 if piec == 0 else piece_mois_data[i - 1] for i, piec in enumerate(piece_mois_data, start=1)]
+           
+#         mois = list(range(1, 13))
+#         total_recettes_mois = [0] * 12
+#         total_charges_variables_mois = [0] * 12
+        
+#         for re in recette_mois:
+#             total_recettes_mois[re['mois_de_recettes'] - 1] = re['total_recet']
+#         for chvar in charg_var_mois:
+#             total_charges_variables_mois[chvar['month_chvar'] - 1] = chvar['total_chvar']
+#         context['taux_mois'] = [round(((total_recet - chvar) * 100) / total_recet, 2) if total_recet > 0 else 0 for total_recet, chvar in zip(total_recettes_mois, total_charges_variables_mois)]
+    
+#         mois_noms = [calendar.month_name[mois][:2] for mois in mois]
+#         context['mois_noms'] = mois_noms
+        
+#         context['label_mois'] = [month[:2] for month in list(calendar.month_name)[1:]]
+        
+#         #somme_recettes_par_categorie_aujourd = []
+#         #for categorie in categories:
+#         #    vehicules_categorie = Vehicule.objects.filter(category=categorie)
+#         #    recettes_categorie = Recette.objects.filter(vehicule__in=vehicules_categorie, date=date.today())
+#         #    somme_recette = recettes_categorie.aggregate(Sum('montant'))['montant__sum'] or 0
+#         #    somme_recettes_par_categorie_aujourd.append({
+#         #        'categorie': categorie.category,
+#         #        'somme_recette': somme_recette
+#         #    })
+#         #print("------------Aujourd'hui--------------", somme_recettes_par_categorie_aujourd)
+        
+#         context['catego_vehi'] = catego_vehi
+#         context['marge_contri'] = marge_contri
+#         context['total_piece'] = total_piece
+#         context['month_piece'] = month_piece
+#         context['Total_recette_format'] = Total_recette_format
+#         context['Total_charg_fix_format'] = Total_charg_fix_format
+#         context['Total_charg_var_format'] = Total_charg_var_format
+#         context['total_charge_format'] = total_charge_format
+#         context['taux_marge_format'] = taux_marge_format
+#         context['resultat_format'] = resultat_format
+#         context['totl_piece_format'] = totl_piece_format
+#         return context
+
+
+# def Dashboard(request):
+#     today = datetime.now()
+#     date_debut = request.GET.get('date_debut', today)
+#     date_fin = request.GET.get('date_fin', today)
+
+#     # Convert date_debut and date_fin to datetime objects if provided
+#     if isinstance(date_debut, str):
+#         date_debut = datetime.strptime(date_debut, '%Y-%m-%d').date()
+#     if isinstance(date_fin, str):
+#         date_fin = datetime.strptime(date_fin, '%Y-%m-%d').date()
+
+#     # Filter data based on the date range
+#     #total_orders = Commande.objects.filter(date_creation__range=[date_debut, date_fin]).count()
+#     # paniers = Panier.objects.filter(date_creation__range=[date_debut, date_fin])
+#     pieces = Piece.objects.all()
+
+#     total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
+#     # Total inventaire
+#     total_inventory_value = Piece.objects.aggregate(
+#         total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField()))
+#     )['total_value'] or 0
+#     # Total Commandes
+#     total_orders = Commande.objects.count()
+#     # Total revenue Commandes
+#     total_revenue = Commande.objects.aggregate(total=Sum('total'))['total'] or 0
+#     # Total impayés
+#     total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
+#     # Nombre de tickets émis et utilisés
+#     total_tickets_issued = Ticket.objects.count()
+#     total_tickets_used = Ticket.objects.filter(utilise=True).count()
+#     # Commandes entièrement payées et livrées
+#     fully_paid_delivered_orders = Commande.objects.filter(paye=True, panier__panier_livre=True).count()
+#     # Commandes en attente de paiement
+#     pending_payment_orders = Commande.objects.filter(paye=False).count()
+#     # Pièces dont le stock est faible
+#     low_stock_pieces = Piece.objects.filter(quantite__lte=5).count()
+#     # Total Paniers
+#     total_paniers = Panier.objects.count()
+#     # Paniers that are validated but not yet paid
+#     validated_paniers = Panier.objects.filter(valide=True, panier_paye=False).count()
+
+#     pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO']).count()
+#     pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT']).count()
+    
+#     context = {
+#         'total_pieces': total_pieces,
+#         'total_inventory_value': total_inventory_value,
+#         'total_orders': total_orders,
+#         'total_revenue': total_revenue,
+#         'total_unpaid': total_unpaid,
+#         'total_tickets_issued': total_tickets_issued,
+#         'total_tickets_used': total_tickets_used,
+#         'fully_paid_delivered_orders': fully_paid_delivered_orders,
+#         'pending_payment_orders': pending_payment_orders,
+#         'low_stock_pieces': low_stock_pieces,
+#         'total_paniers': total_paniers,
+#         'validated_paniers': validated_paniers,
+#         'pieces_by_category_alto': pieces_by_category_alto,
+#         'pieces_by_category_swift': pieces_by_category_swift,
+# #         date_debut
+# # date_fin =
+#         'date_debut': date_debut,
+#         'date_fin': date_fin,
+        
+#     }
+#     print("------------------------------------")
+#     print("<<",context,">>")
+#     print("------------------------------------")
+#     return render(request,'dashboard.html',context)
 
 
 def is_admin_magasin(user):
@@ -25,9 +477,12 @@ def is_accueillant(user):
 def is_liveur(user):
     return user.groups.filter(name__in=['Livraisons', 'AdminMagasin']).exists()
 
+
+
+
 @user_passes_test(is_accueillant)
 def piece_list(request):
-    pieces = Piece.objects.all()
+    pieces = Piece.objects.filter(quantite__gt=0)
     # Retrieve or create the cart for the current user
     panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
     panier_items = PanierItem.objects.filter(panier=panier)
@@ -69,7 +524,7 @@ def retirer_du_cart(request, piece_id):
     return redirect('piece_list_accueil')
 
 from decimal import Decimal, InvalidOperation# Redirect to the page showing both list and cart
-@user_passes_test(is_accueillant)
+# @user_passes_test(is_accueillant)
 def valider_panier(request):
     panier = get_object_or_404(Panier, utilisateur=request.user, valide=False)
     # Calculer le total du panier
@@ -109,10 +564,6 @@ def valider_panier(request):
         numero='TKT' + str(commande.id),
         commande=commande
     )
-    
-    # Vider le panier
-    #PanierItem.objects.filter(panier=panier).delete()
-    
     # Marquer le panier comme validé
     panier.valide = True
     numero=f"TKT{str(commande.id)}"
@@ -124,7 +575,7 @@ def valider_panier(request):
     return redirect('piece_list_accueil')
 
 
-@user_passes_test(is_accueillant)
+# @user_passes_test(is_accueillant)
 def supprimer_du_panier(request, item_id):
     panier = Panier.objects.get(utilisateur=request.user, valide=False)
     panier_item = get_object_or_404(PanierItem, id=item_id, panier=panier)
@@ -137,7 +588,7 @@ def piece_detail(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
     return render(request, 'piece_detail.html', {'piece': piece})
 
-@user_passes_test(is_admin_magasin)
+# @user_passes_test(is_admin_magasin)
 def piece_create(request):
     stock = Piece.objects.all()
     if request.method == 'POST':
@@ -175,7 +626,7 @@ def piece_update(request, pk):
     return render(request, 'create_piece.html', {'form': form})
 
 
-@user_passes_test(is_admin_magasin)
+# @user_passes_test(is_admin_magasin)
 def piece_delete(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
     if request.method == 'POST':
@@ -190,7 +641,6 @@ from django.db import transaction
 @user_passes_test(is_accueillant)
 def panier(request):
     panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
-    
     if created:
         # Si un nouveau panier est créé, aucun panier_item existant n'est associé
         panier_items = []
@@ -221,7 +671,7 @@ def panier(request):
 
 
 
-@user_passes_test(is_caissier)
+@user_passes_test(is_caissier, is_admin_magasin)
 def valider_paiement(request, ticket_id):
     paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=False)

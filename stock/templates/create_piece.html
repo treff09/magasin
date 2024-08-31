@@ -94,19 +94,26 @@
                                             <td>{{piece.designation}}</td>
                                             <td>{{piece.type_voiture}}</td>
                                             <td>
-                                                {% if piece.quantite < 10 %} 
-                                                    <a style="text-decoration:none" class="text-danger">{{piece.quantite}}</a>
+                                                {% if piece.quantite > 10 %} 
+                                                    <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a>
                                                 {% elif piece.quantite == 10 %}
                                                     <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a> 
+                                                {% elif piece.quantite >= 5 %}
+                                                    <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a> 
                                                 {% else %}
-                                                    <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a> 
+                                                    <a style="text-decoration:none" class="text-danger">Rupture de stock</a> 
                                                 {% endif %}
                                             </td>
                                             <td>
                                                 {% if piece.quantite > 10 %}
-                                                <i class="bi bi-arrow-up-right text-theme"></i> {% elif piece.quantite == 10 %}
-                                                <i class="bi bi-dash text-warning"></i> {% else %}
-                                                <i class="bi bi-arrow-down-right text-danger"></i> {% endif %}
+                                                    <i class="bi bi-arrow-up-right text-theme"></i> 
+                                                {% elif piece.quantite == 10 %}
+                                                    <i class="bi bi-dash text-warning"></i> 
+                                                {% elif piece.quantite >= 5 %}
+                                                    <i class="bi bi-arrow-down-right text-warning"></i> 
+                                                {% else %}
+                                                    <i class="bi bi-arrow-down text-danger"></i> 
+                                                {% endif %}
                                             </td>
                                             <td>{{piece.prix_unitaire}}</td>
                                             <td>

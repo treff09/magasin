@@ -1,6 +1,10 @@
 from django import forms
 from .models import Piece
+from django.forms import DateInput
 
+class DateForm(forms.Form):
+    date_debut = forms.DateField(widget=forms.DateInput(attrs={'type': 'date','class':'form-control'}))
+    date_fin = forms.DateField(widget=forms.DateInput(attrs={'type': 'date','class':'form-control'}))
 class PieceForm(forms.ModelForm):
     class Meta:
         model = Piece

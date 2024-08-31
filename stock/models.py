@@ -26,6 +26,7 @@ class Piece(models.Model):
     emplacement = models.CharField(max_length=255)
     utilisateur = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     fournisseur = models.ForeignKey(Fournisseur, on_delete=models.SET_NULL, null=True)
+    date_creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.designation} - {self.numero_piece}"
@@ -37,12 +38,13 @@ class Panier(models.Model):
     # date_creation = models.DateTimeField(auto_now_add=True)
     ticket = models.CharField(max_length=100, null=True, blank=True)
     panier_livre = models.BooleanField(default=False)
+    date_creation = models.DateTimeField(auto_now_add=True)
 
 class PanierItem(models.Model):
     panier = models.ForeignKey(Panier, on_delete=models.CASCADE,related_name='panier_items')
     piece = models.ForeignKey(Piece, on_delete=models.CASCADE)
     quantite = models.PositiveIntegerField(default=1)
-
+    date_creation = models.DateTimeField(auto_now_add=True)
 
 class Commande(models.Model):
     panier = models.ForeignKey(Panier, on_delete=models.CASCADE, related_name='commands')

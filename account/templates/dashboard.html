@@ -9,9 +9,9 @@
                     <div class="card h-100">
                         <div class="card-header">VENTE JOURNALIERE</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">1.000.000</div>
+                            <div class="h4 fw-100 text-theme mb-1">1.000.000 frscfa</div>
                             <p class="text-white fs-10px mb-0">
-                                Pieces vendues: 300
+                                Pieces vendues: {{total_paniers}}
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
                                 updated 1 min ago
@@ -63,9 +63,9 @@
                 </div>
                 <div class="col-xl-2 col-lg-4 col-6">
                     <div class="card h-100">
-                        <div class="card-header">NBRE DE PIECE EN RUPTURE</div>
+                        <div class="card-header">TOTAL REVENUE</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">28</div>
+                            <div class="h4 fw-100 text-theme mb-1">{{total_revenue}} frscfa</div>
                             <p class="text-white fs-10px mb-0">
                                 2 new referrals added
                             </p>
@@ -77,14 +77,14 @@
                 </div>
                 <div class="col-xl-2 col-lg-4 col-6">
                     <div class="card h-100">
-                        <div class="card-header">EMPLOYERS</div>
+                        <div class="card-header">TOTALE DES PIECES</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">87</div>
+                            <div class="h4 fw-100 text-theme mb-1">{{total_pieces}}</div>
                             <p class="text-white fs-10px mb-0">
-                                +5 countries vs last year
+                                Valeur inventaire: {{total_inventory_value}} frcfa
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
-                                updated 1 min ago
+                                {% comment %} updated 1 min ago {% endcomment %}
                             </p>
                         </div>
                     </div>
@@ -108,8 +108,8 @@
 												</canvas>
                                     <script>
                                         const cta = document.getElementById('CA');
-                                        var labels = ['jan', 'fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
-                                        var recetData = [35, 15, 45, 75, 115, 55, 40, 65, 85, 95, 25, 70];
+                                        var labels = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
+                                        var recetData = [35, 15, 45, 75, 88, 55, 38, 65, 85, 98, 25, 78];
                                         new Chart(cta, {
                                             type: 'bar',
                                             data: {
@@ -142,7 +142,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="p-3">
-                                <div class="h4 text-theme mb-0 fw-100">[33,129]</div>
+                                {% comment %} <div class="h4 text-theme mb-0 fw-100">[33,129]</div> {% endcomment %}
                                 <p class="text-white fs-10px fw-semibold mb-0">MEILLEURS VENTES</p>
                                 <hr class="my-2" />
                                 <table class="w-100 text-truncate fs-10px">
@@ -158,46 +158,6 @@
                                             <td>FRANCE</td>
                                             <td class="text-end">13,849</td>
                                             <td class="text-end">40.79%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>SPAIN</td>
-                                            <td class="text-end">3,216</td>
-                                            <td class="text-end">9.79%</td>
-                                        </tr>
-                                        <tr class="text-theme fw-bold bg-white bg-opacity-10">
-                                            <td>MEXICO</td>
-                                            <td class="text-end">1,398</td>
-                                            <td class="text-end">4.26%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>UNITED STATES</td>
-                                            <td class="text-end">1,090</td>
-                                            <td class="text-end">3.32%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>BELGIUM</td>
-                                            <td class="text-end">1,045</td>
-                                            <td class="text-end">3.18%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>INDIA</td>
-                                            <td class="text-end">1,033</td>
-                                            <td class="text-end">3.09%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>BRAZIL</td>
-                                            <td class="text-end">954</td>
-                                            <td class="text-end">2.81%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>JAPAN</td>
-                                            <td class="text-end">911</td>
-                                            <td class="text-end">3.09%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ARCANIA</td>
-                                            <td class="text-end">839</td>
-                                            <td class="text-end">2.13%</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -216,25 +176,22 @@
                                             <td class="text-end">8,000</td>
                                             <td class="text-end">40%</td>
                                         </tr>
-                                        <tr>
-                                            <td>Firefox</td>
-                                            <td class="text-end">5,000</td>
-                                            <td class="text-end">25%</td>
+                                    </tbody>
+                                </table>
+                                <hr class="my-2" />
+                                <table class="w-100 text-truncate fs-10px">
+                                    <thead>
+                                        <tr class="text-white">
+                                            <th class="w-50">MOINS ACHETER</th>
+                                            <th class="w-25 text-end">NO/m</th>
+                                            <th class="w-25 text-end">PCT%</th>
                                         </tr>
-                                        <tr class="text-theme fw-600 bg-white bg-opacity-10">
-                                            <td>Safari</td>
-                                            <td class="text-end">3,000</td>
-                                            <td class="text-end">15%</td>
-                                        </tr>
+                                    </thead>
+                                    <tbody class="text-body text-opacity-75">
                                         <tr>
-                                            <td>Edge</td>
-                                            <td class="text-end">2,000</td>
-                                            <td class="text-end">10%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Opera</td>
-                                            <td class="text-end">1,000</td>
-                                            <td class="text-end">5%</td>
+                                            <td>Chrome</td>
+                                            <td class="text-end">8,000</td>
+                                            <td class="text-end">40%</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -254,37 +211,39 @@
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-4">
+                            <div class="col-4">
                                     <div class="d-flex align-items-center">
                                         <div class="fs-32px text-theme d-flex w-40px">
-                                            <iconify-icon icon="material-symbols-light:bar-chart-4-bars"></iconify-icon>
+                                            <iconify-icon icon="mdi:journal" width="24" height="24"></iconify-icon>
                                         </div>
                                         <div class="flex-1">
-                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">REVENUE</div>
-                                            <div class="h6 mb-0 fw-base">$7.5m</div>
+                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">COMMANDE</div>
+                                            <div class="h6 mb-0 fw-base">{{total_orders}}</div>
                                         </div>
                                     </div>
                                 </div>
+                                
 
                                 <div class="col-4">
                                     <div class="d-flex align-items-center">
                                         <div class="fs-32px text-theme d-flex w-40px">
-                                            <iconify-icon icon="material-symbols-light:group-outline"></iconify-icon>
+                                            <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
                                         </div>
                                         <div class="flex-1">
-                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">CUSTOMERS</div>
-                                            <div class="h6 mb-0 fw-base">45k</div>
+                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">EMIS</div>
+                                            <div class="h6 mb-0 fw-base">{{total_tickets_issued}}</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="d-flex align-items-center">
                                         <div class="fs-32px text-theme d-flex w-40px">
-                                            <iconify-icon icon="material-symbols-light:touch-app-outline"></iconify-icon>
+                                            <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
+
                                         </div>
                                         <div class="flex-1">
-                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">VISITS</div>
-                                            <div class="h6 mb-0 fw-base">1.3m</div>
+                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">UTILISES</div>
+                                            <div class="h6 mb-0 fw-base">{{total_tickets_used}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -293,25 +252,25 @@
                             <hr class="invisible m-0" />
                             <hr/>
                             <div class="row g-3">
-
                                 <div class="col-4">
                                     <div class="d-flex align-items-center">
                                         <div class="fs-32px text-theme d-flex w-40px">
-                                            <iconify-icon icon="material-symbols-light:approval-delegation-outline"></iconify-icon>
+                                            <iconify-icon icon="ph:gear-fine" width="24" height="24"></iconify-icon>
                                         </div>
                                         <div class="flex-1">
-                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">PROFIT</div>
-                                            <div class="h6 mb-0 fw-base">$3.2m</div>
+                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">FAIBLE</div>
+                                            <div class="h6 mb-0 fw-base">{{low_stock_pieces}}</div>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-4">
                                     <div class="d-flex align-items-center">
                                         <div class="fs-32px text-theme d-flex w-40px">
-                                            <iconify-icon icon="material-symbols-light:app-badging-outline"></iconify-icon>
+                                            <iconify-icon icon="bi:cart-check-fill" class="fs-24px d-flex justify-content-center text-theme"></iconify-icon>
                                         </div>
                                         <div class="flex-1">
-                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">LAUNCHES</div>
+                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">TOTAL</div>
                                             <div class="h6 mb-0 fw-base">4</div>
                                         </div>
                                     </div>
@@ -319,11 +278,11 @@
                                 <div class="col-4">
                                     <div class="d-flex align-items-center">
                                         <div class="fs-32px text-theme d-flex w-40px">
-                                            <iconify-icon icon="material-symbols-light:store-outline"></iconify-icon>
+                                            <iconify-icon icon="bi:cart-fill" class="fs-24px d-flex justify-content-center text-theme"></iconify-icon>
                                         </div>
                                         <div class="flex-1">
-                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">SALES</div>
-                                            <div class="h6 mb-0 fw-base">$8.9m</div>
+                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">A VALIDER</div>
+                                            <div class="h6 mb-0 fw-base">{{validated_paniers}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -343,18 +302,16 @@
                                             <div data-render="apexchart" data-type="donut" data-height="40"></div>
                                         </div>
                                         <div class="mt-2">ALTO</div>
-                                        <div class="text-white">459</div>
+                                        <div class="text-white">{{pieces_by_category_alto}}</div>
                                     </div>
                                 </div>
-
-
                                 <div class="col-4">
                                     <div class="d-flex flex-column justify-content-center text-center">
                                         <div class="w-40px mx-auto">
                                             <div data-render="apexchart" data-type="donut" data-height="40"></div>
                                         </div>
-                                        <div class="mt-2">SUZIKI</div>
-                                        <div class="text-white mt-0">20</div>
+                                        <div class="mt-2">SWIFT</div>
+                                        <div class="text-white mt-0">{{pieces_by_category_swift}}</div>
                                     </div>
                                 </div>
 
@@ -388,30 +345,6 @@
                                         <td>High</td>
                                         <td>150</td>
                                     </tr>
-                                    <tr>
-                                        <td>IPS</td>
-                                        <td>Phishing</td>
-                                        <td>Medium</td>
-                                        <td>90</td>
-                                    </tr>
-                                    <tr>
-                                        <td>FIREWALL</td>
-                                        <td>DDoS</td>
-                                        <td>Critical</td>
-                                        <td>45</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ENDPOINT</td>
-                                        <td>XSS</td>
-                                        <td>High</td>
-                                        <td>30</td>
-                                    </tr>
-                                    <tr>
-                                        <td>IDS</td>
-                                        <td>SQL Injection</td>
-                                        <td>Low</td>
-                                        <td>75</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -424,3 +357,4 @@
 </div>
 
 {% endblock %}
+

@@ -64,9 +64,35 @@
 
             <div class="menu">
                 <div class="menu-item dropdown d-lg-flex d-none">
-                    <a href="#" class="menu-link">
+                    <a href="#" class="menu-link text-theme">
                         <span>$1,859,050.12</span>
                     </a>
+                </div>
+                <div class="menu-item dropdown dropdown-mobile-full">
+                    <a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
+                        <iconify-icon icon="ph:calendar-dots-duotone" class="menu-icon"></iconify-icon>
+                    </a>
+                    <div class="dropdown-menu fade dropdown-menu-end p-0 w-300px text-center">
+                        <div class="row row-grid gx-0">
+                            <div class="col-12 p-2">
+                                <form method="get" id="date-filter-form">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Filtre <span class="text-danger">*</span></label>
+                                                <div class="input-group input-daterange" id="datepicker-range">
+                                                    <span class="input-group-text">De</span>
+                                                    <input type="text" class="form-control" name="date_debut" value="{{ date_debut }}" placeholder="start date">
+                                                    <span class="input-group-text">à</span>
+                                                    <input type="text" class="form-control" name="date_fin" value="{{ date_fin }}" placeholder="end date"><button type="submit" class="input-group-text btn btn-outline-light btn-block" style="border-radius: 0px 5px 5px 0px;">valider</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="menu-item dropdown d-lg-flex d-none me-3">
                     <div class="menu-search-inline">
@@ -90,81 +116,14 @@
                                         <div> - Conference Room</div>
                                     </div>
                                 </div>
-                                <div class="widget-reminder-item">
-                                    <div class="widget-reminder-time">20:00<br>23:00</div>
-                                    <div class="widget-reminder-divider bg-primary"></div>
-                                    <div class="widget-reminder-content">
-                                        <div class="fw-semibold text-white">Dinner with Richard</div>
-                                        <div> - Tom's Too Restaurant</div>
-                                        <div class="d-flex align-items-center mt-2">
-                                            <div class="flex-fill d-flex align-items-center">
-                                                <img src="assets/img/user/user-3.jpg" alt width="16" class="me-2"> Richard Leong
-                                            </div>
-                                            <a href="#" class="ms-auto">Contact</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-header">TOMORROW, NOV 5</div>
-                            <div class="card-body p-0 widget-reminder">
-                                <div class="widget-reminder-item">
-                                    <div class="widget-reminder-time">All day</div>
-                                    <div class="widget-reminder-divider bg-gray-300"></div>
-                                    <div class="widget-reminder-content">
-                                        <div class="fw-semibold text-white">Terry Birthday</div>
-                                    </div>
-                                </div>
-                                <div class="widget-reminder-item">
-                                    <div class="widget-reminder-time">08:00</div>
-                                    <div class="widget-reminder-divider bg-gray-300"></div>
-                                    <div class="widget-reminder-content">
-                                        <div class="fw-semibold text-white">Meeting</div>
-                                    </div>
-                                </div>
-                                <div class="widget-reminder-item">
-                                    <div class="widget-reminder-time">00:00<br>00:30</div>
-                                    <div class="widget-reminder-divider bg-gray-300"></div>
-                                    <div class="widget-reminder-content">
-                                        <div class="fw-semibold text-white">Server Maintenance</div>
-                                        <div> - Data Centre</div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <a class="dropdown-item fs-10px text-center py-2 d-block" href="calendar.html">VIEW ALL</a>
                     </div>
                 </div>
 
-                <div class="menu-item dropdown dropdown-mobile-full">
-                    <a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
-                        <iconify-icon icon="ph:squares-four-duotone" class="menu-icon"></iconify-icon>
-                    </a>
-                    <div class="dropdown-menu fade dropdown-menu-end p-0 w-300px text-center">
-                        <div class="row row-grid gx-0">
-                            <div class="col-4">
-                                <a href="email_inbox.html" class="dropdown-item text-decoration-none p-3 bg-none">
-                                    <div class="position-relative">
-                                        <i class="bi bi-circle-fill position-absolute text-theme top-0 mt-n2 me-n2 fs-6px d-block text-center w-100"></i>
-                                        <i class="bi bi-envelope h2 opacity-5 d-block my-1"></i>
-                                    </div>
-                                    <div class="fw-500 fs-10px text-white">COMMANDE</div>
-                                </a>
-                            </div>
-                            <div class="col-4">
-                                <a href="pos_customer_order.html" target="_blank" class="dropdown-item text-decoration-none p-3 bg-none">
-                                    <div><i class="bi bi-hdd-network h2 opacity-5 d-block my-1"></i></div>
-                                    <div class="fw-500 fs-10px text-white">POS SYSTEM</div>
-                                </a>
-                            </div>
-                            <div class="col-4">
-                                <a href="calendar.html" class="dropdown-item text-decoration-none p-3 bg-none">
-                                    <div><i class="bi bi-calendar4 h2 opacity-5 d-block my-1"></i></div>
-                                    <div class="fw-500 fs-10px text-white">CALENDAR</div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="menu-item dropdown dropdown-mobile-full">
                     <a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link d-flex align-items-center">
                         <div class="menu-img online me-sm-2 ms-lg-0 ms-n2">
@@ -205,19 +164,19 @@
                 <div class="menu">
                     <div class="menu-header">TABLEAU DE BORD</div>
                     <div class="menu-item {% if request.resolver_match.url_name == 'adminmagasin' %}active{% endif %}">
-    <a href="{% url 'adminmagasin' %}" class="menu-link">
-        <span class="menu-icon"><iconify-icon icon="fluent-mdl2:b-i-dashboard"></iconify-icon></span>
-        <span class="menu-text">ADMINISTRATEUR</span>
-    </a>
-</div>
-<div class="menu-item {% if request.resolver_match.url_name == 'piece_list_accueil' %}active{% endif %}">
-    <a href="{% url 'piece_list_accueil' %}" class="menu-link">
-        <span class="menu-icon">
-            <iconify-icon icon="bi:person-workspace"></iconify-icon>
-        </span>
-        <span class="menu-text">ACCUEIL</span>
-    </a>
-</div>
+                        <a href="{% url 'adminmagasin' %}" class="menu-link">
+                            <span class="menu-icon"><iconify-icon icon="fluent-mdl2:b-i-dashboard"></iconify-icon></span>
+                            <span class="menu-text">ADMINISTRATEUR</span>
+                        </a>
+                    </div>
+                    <div class="menu-item {% if request.resolver_match.url_name == 'piece_list_accueil' %}active{% endif %}">
+                        <a href="{% url 'piece_list_accueil' %}" class="menu-link">
+                            <span class="menu-icon">
+                            <iconify-icon icon="bi:person-workspace"></iconify-icon>
+                        </span>
+                            <span class="menu-text">ACCUEIL</span>
+                        </a>
+                    </div>
 
                     <div class="menu-item {% if request.resolver_match.url_name == 'caisseDashboard' %}active{% endif %} ">
                         <a href="{% url 'caisseDashboard' %}" class="menu-link">
@@ -250,12 +209,6 @@
                             <div class="menu-item {% if request.resolver_match.url_name == 'piece_create' %}active{% endif %}">
                                 <a href="{% url 'piece_create' %}" target="_blank" class="menu-link">
                                     <div class="menu-text">PIECES</div>
-                                </a>
-                            </div>
-
-                            <div class="menu-item {% if request.resolver_match.url_name == 'piece_create' %}active{% endif %}" >
-                                <a href="{% url 'piece_create' %}" target="_blank" class="menu-link">
-                                    <div class="menu-text ">PIECE EN RUPTURE</div>
                                 </a>
                             </div>
                             <div class="menu-item">
@@ -372,28 +325,21 @@
 
 
 
-        {% block main_content %} 
-		
-		{% endblock %}
-		
-		
-		{% if messages %}
-    		{% for msg in messages %}
-        		<div class="modal fade" id="modalSm">
-        		    <div class="modal-dialog modal-sm">
-        		        <div class="modal-content">
-        		            <div class="modal-header">
-        		                <h5 class="modal-title">Message</h5>
-        		                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        		            </div>
-        		            <div class="modal-body">
-        		                {{msg}}
-        		            </div>
-        		        </div>
-        		    </div>
-        		</div>
-    		{% endfor %}
-		{% endif %}
+        {% block main_content %} {% endblock %} {% if messages %} {% for msg in messages %}
+        <div class="modal fade" id="modalSm">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{msg}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %} {% endif %}
         <a href="# " data-toggle="scroll-to-top " class="btn-scroll-top fade ">
             <iconify-icon icon="material-symbols-light:keyboard-arrow-up "></iconify-icon>
         </a>
@@ -404,24 +350,50 @@
     </div>
     </div>
 
-	
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var myModal = new bootstrap.Modal(document.getElementById('modalSm'));
             myModal.show();
-            
+
             setTimeout(function() {
                 myModal.hide();
             }, 3000);
         });
     </script>
-    
-	
+
     <script>
         setTimeout(function() {
             $('#message').fadeOut('slow')
         }, 3000);
     </script>
+
+
+    <script src="{% static 'assets/plugins/jquery-migrate/dist/jquery-migrate.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/moment/min/moment.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/bootstrap-daterangepicker/daterangepicker.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/bootstrap-slider/dist/bootstrap-slider.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/jquery-typeahead/dist/jquery.typeahead.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/jquery.maskedinput/src/jquery.maskedinput.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/tag-it/js/tag-it.min.js' %} " type="text/javascript"></script>
+
+    <script src="{% static 'assets/plugins/blueimp-file-upload/js/vendor/jquery.ui.widget.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/blueimp-tmpl/js/tmpl.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/blueimp-load-image/js/load-image.all.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/blueimp-canvas-to-blob/js/canvas-to-blob.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/blueimp-gallery/js/jquery.blueimp-gallery.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.iframe-transport.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.fileupload-ui.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/summernote/dist/summernote-lite.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/spectrum-colorpicker2/dist/spectrum.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/plugins/select-picker/dist/picker.min.js' %} " type="text/javascript"></script>
+    <script src="{% static 'assets/js/demo/form-plugins.demo.js' %} " type="text/javascript"></script>
+
+    {% comment %} _________________________________________________________________________________________ {% endcomment %}
+
+
     <script src="{% static 'assets/magas/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %} " data-cfasync="false "></script>
     <script src="{% static 'assets/magas/code/2.1.0/iconify-icon.min.js' %} " type="text/javascript "></script>
     <script src="{% static 'assets/js/vendor.min.js' %} " type="text/javascript "></script>
@@ -481,7 +453,49 @@
     </script>
     <script src="{% static 'assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js' %} " type="text/javascript "></script>
 
+    <script>
+        document.getElementById('date-filter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const dateDebut = document.getElementById('date_debut').value;
+            const dateFin = document.getElementById('date_fin').value;
     
+            // Redirect to the same page with the date parameters in the URL
+            window.location.href = `?date_debut=${dateDebut}&date_fin=${dateFin}`;
+        });
+    </script>
+
+
+
+    {% comment %}
+    <script id="template-upload" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) {%}
+        <tr class="template-upload">
+            <td>
+                <span class="preview d-flex justify-content-center flex-align-center" style="height: 80px"></span>
+            </td>
+            <td>
+                <p class="name mb-1">{%=file.name%}</p>
+                <strong class="error text-danger"></strong>
+            </td>
+            <td>
+                <p class="size mb-2">Processing...</p>
+                <div class="progress progress-sm mb-0 h-4px progress-striped active">
+                    <div class="progress-bar progress-bar-primary" style="min-width: 2em; width:0%;"></div>
+                </div>
+            </td>
+            <td nowrap>
+                {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-theme btn-sm d-block w-100 start" disabled>
+						<span>Start</span>
+					</button> {% } %} {% if (!i) { %}
+                <button class="btn btn-default btn-sm d-block w-100 cancel mt-2">
+						<span>Cancel</span>
+					</button> {% } %}
+            </td>
+        </tr>
+        {%} %}
+    </script> {% endcomment %}
+
 </body>
 
 </html>

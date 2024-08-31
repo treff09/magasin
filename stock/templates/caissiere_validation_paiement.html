@@ -1,4 +1,4 @@
- {% extends "base.html" %} {% block title %}DASHBOARD{% endblock %} {% block main_content %}
+{% extends "base.html" %} {% block title %}DASHBOARD{% endblock %} {% block main_content %}
 <div id="app" class="app app-content-full-height app-without-header">
     <div id="content" class="app-content p-0">
         <div class="pos pos-with-menu pos-with-sidebar" id="pos">
@@ -100,7 +100,10 @@
                                                 </tr>
                                                 {% endwith %} {% empty %}
                                                 <tr>
-                                                    <td colspan="7">Aucune pièce disponible.{{ paniers_non_valides|default:0 }}</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
                                                 </tr>
                                                 {% endfor%}
                                             </tbody>
@@ -136,59 +139,106 @@
 
                         <div class="pos-sidebar-nav fs-10px">
                             <ul class="nav nav-tabs nav-fill">
-                                {% if commande %}
-                                <li class="nav-item">
-                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total sans remise : {{ commande.total_sans_remise }} Fcfa</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">REMISE : {{ commande.remise }}  %</a>
-                                </li>
-                                 <li class="nav-item">
-                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Montant total à payer : {{ commande.total }} Fcfa</a>
-                                </li>
-                                {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link fw-semibold" href="#" data-bs-toggle="tab" data-bs-target="#orderHistoryTab">Montant total à payer : 0</a>
-                                </li>
+                                {% if panier_items %}
+                                    <li class="nav-item">
+                                        <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Total type pièce : {{  panier_items.count }}</a>
+                                    </li>
                                 {% endif %}
                             </ul>
                         </div>
-
                         <div class="pos-sidebar-body tab-content mb-2px" data-scrollbar="true" data-height="100%">
                             <form method="post">
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
                                     {% csrf_token %} 
-									{% for item in panier_items %}
                                     <div class="pos-order py-3">
                                         <div class="pos-order-product">
                                             <div class="flex-1">
                                                 <div class="row">
-                                                    <div class="col-7">
-                                                        <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
-                                                        {% comment %} <div class="mb-1">{{ item.quantite }}</div>
-                                                        <div class="small">- size: large</div> {% endcomment %}
+                                                    <div class="col-4">
+                                                        <div class="fw-semibold text-white">Article</div>
                                                     </div>
-                                                    <div class="col-2">x{{ item.quantite }}</div>
-                                                    <div class="col-3 fw-semibold text-white">{{item.piece.prix_unitaire}}</div>
+                                                    <div class="col-3">
+                                                        <div class="fw-semibold text-white">véhicule</div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="fw-semibold text-white">Qte</div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="fw-semibold text-white">Montant</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-									{% endfor %}
+                                    {% for item in panier_items %}
+                                        <div class="pos-order py-3">
+                                            <div class="pos-order-product">
+                                                <div class="flex-1">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="small">{{ item.piece.type_voiture.type_voiture }}</div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            {{ item.quantite }}
+                                                        </div>
+                                                        <div class="col-3">
+                                                            {{item.piece.prix_unitaire}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                         </div>
                         <div class="pos-sidebar-footer">
-                            {% comment %}
+                            {% if commande %}
                             <div class="d-flex align-items-center mb-2">
-                                <div>Subtotaler</div>
-                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ sous_total }}</div>
-                            </div> {% endcomment %}
+                                <div>Motant TTC</div>
+                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.total_sans_remise }} frs</div>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Remise</div>
+                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.remise }} %</div>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Motant à payer</div>
+                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.total }} frs</div>
+                            </div>
                             <div class="d-flex align-items-center row ">
-								<div class="col-md-3 mb-3">Montant</div>
+                                <div class="col-md-3 mb-3">Montant</div>
                                 <div class="flex-1 text-end h6 mb-2 col-md-9">
-									<input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                                    <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
                                 </div>
                             </div>
+                            {% else %}
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Motant TTC</div>
+                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">0 frs</div>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Remise</div>
+                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">0.0 %</div>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <div>Motant à payer</div>
+                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">0 frs</div>
+                            </div>
+                            <div class="d-flex align-items-center row ">
+                                <div class="col-md-3 mb-3">Montant</div>
+                                <div class="flex-1 text-end h6 mb-2 col-md-9">
+                                    <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                                </div>
+                            </div>
+                            {% endif %}
+
+
+
+
+
                             <hr class="my-3" /> {% comment %}
                             <div class="d-flex align-items-center mb-2">
                                 <div>Total</div>
