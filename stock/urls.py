@@ -32,3 +32,13 @@ urlpatterns = [
     path('recu/commande/<int:commande_id>/', generate_receipt, name='generate_receipt'),
     
 ]
+                                    # <script>
+                                    # function printReceipt(orderId) {
+                                    #      var url = 'recu/commande/' + commande_id + '/'; 
+                                    #      var printWindow = window.open(url, 'Print', 'width=800,height=600');
+                                    #      printWindow.onload = function() {
+                                    #          printWindow.print();
+                                    #      };
+                                    #  }
+                                                                        
+                                    # </script>

@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from decouple import config
-import dj_database_url
+#import dj_database_url
 #from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,26 +80,26 @@ WSGI_APPLICATION = 'magazin_piece.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('NAME'),
-#         'USER': config('USER'),
-#         'PASSWORD': config('PASSWORD'),
-#         'HOST': config('HOST'),
-#         'PORT': config('PORT'),
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'magasin_piece',
-        'USER': 'magasin_piece_user',
-        'PASSWORD': 'kEz2jKPbm8U7os7mLwdMtqq7C8igzNQk',
-        'HOST': 'dpg-cr8dbt23esus73b56la0-a.oregon-postgres.render.com',
-        'PORT': '5432',
+        'NAME': config('NAME'),
+        'USER': config('USER'),
+        'PASSWORD': config('PASSWORD'),
+        'HOST': config('HOST'),
+        'PORT': config('PORT'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'magasin_piece',
+#         'USER': 'magasin_piece_user',
+#         'PASSWORD': 'kEz2jKPbm8U7os7mLwdMtqq7C8igzNQk',
+#         'HOST': 'dpg-cr8dbt23esus73b56la0-a.oregon-postgres.render.com',
+#         'PORT': '5432',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 

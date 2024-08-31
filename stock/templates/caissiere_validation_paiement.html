@@ -199,14 +199,25 @@
                                     <a href="{% url 'caisseDashboard' %} " class="btn btn-secondary btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px; " title="Annuler">
                                         <iconify-icon icon="bi:arrow-return-left" class="fs-24px d-flex justify-content-center"></iconify-icon>
                                     </a>
-                                    <a href="#" class="btn btn-secondary btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
-                                        <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
-                                        <span class="fw-semibold ">BILL</span>
-                                    </a>
+     <script>
+    function printReceipt() {
+        var url = '/stock/recu/commande/1/';  // URL relative basée sur la racine du site
+        
+        var printWindow = window.open(url, 'Print', 'width=800,height=600');
+        printWindow.onload = function() {
+            printWindow.print();
+        };
+    }
+</script>
+
+<a href="javascript:void(0);" onclick="printReceipt()" class="btn btn-secondary btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
+    <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
+    <span class="fw-semibold">BILL</span>
+</a>                              
                                     <button type="submit" class="btn btn-secondary btn-sm flex-fill d-flex flex-column align-items-center justify-content-cente" style="border-radius: 10px;">
                                     	<iconify-icon icon="fluent-emoji-high-contrast:money-bag" class="fs-30px d-flex justify-content-center" title="Payer"></iconify-icon>
 									</button>
-
+                                                    
                                 </div>
                             </div>
                         </div>
