@@ -795,3 +795,14 @@ def generate_receipt(request, commande_id):
         'qr_code_img': img_str,
         'panier_items': panier_items
     })
+
+#scanne 
+from django.shortcuts import render, get_object_or_404
+from .models import Commande
+
+def details_commande(request, commande_id):
+    commande = get_object_or_404(Commande, id=commande_id)
+    return render(request, 'details_commande.html', {'commande': commande})
+
+def scanner_qr_code(request):
+    return render(request, 'scanner.html')

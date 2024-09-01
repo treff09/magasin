@@ -3,7 +3,7 @@ from .views import caisseDashboard,livraison_accueil, piece_list, piece_detail, 
 
 # from . import views
 from .views import *
-
+from . import views
 urlpatterns = [
     path('admin_magasin', DashboardView.as_view(), name='adminmagasin'),
     #piece
@@ -30,6 +30,10 @@ urlpatterns = [
     path('acceuil/', accueil, name='accueil'),
     #reçu
     path('recu/commande/<int:commande_id>/', generate_receipt, name='generate_receipt'),
+    #scanne
+    path('details_commande/<int:commande_id>/', views.details_commande, name='details_commande'),
+    path('scanner/', views.scanner_qr_code, name='scanner_qr_code'),
+
     
 ]
                                     # <script>
