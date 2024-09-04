@@ -211,88 +211,10 @@
                                     <div class="menu-text">PIECES</div>
                                 </a>
                             </div>
-                            <div class="menu-item">
-                                <a href="pos_table_booking.html" target="_blank" class="menu-link">
-                                    <div class="menu-text">TABLE BOOKING</div>
+                            <div class="menu-item {% if request.resolver_match.url_name == 'fournisseur' %}active{% endif %} ">
+                                <a href="{% url 'fournisseur' %}" target="_blank" class="menu-link">
+                                    <div class="menu-text">FOURNISSEURS</div>
                                 </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item has-sub ">
-                        <a href="#" class="menu-link">
-                            <span class="menu-icon">
-								<iconify-icon icon="ph:pencil-simple-duotone"></iconify-icon>
-							</span>
-                            <span class="menu-text">FORMS</span>
-                            <span class="menu-caret"><b class="caret"></b></span>
-                        </a>
-                        <div class="menu-submenu">
-                            <div class="menu-item ">
-                                <a href="form_elements.html" class="menu-link">
-                                    <span class="menu-text">FORM ELEMENTS</span>
-                                </a>
-                            </div>
-                            <div class="menu-item ">
-                                <a href="form_plugins.html" class="menu-link">
-                                    <span class="menu-text">FORM PLUGINS</span>
-                                </a>
-                            </div>
-                            <div class="menu-item ">
-                                <a href="form_wizards.html" class="menu-link">
-                                    <span class="menu-text">WIZARDS</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="menu-item has-sub ">
-                        <a href="#" class="menu-link">
-                            <span class="menu-icon">
-							<iconify-icon icon="ph:open-ai-logo-duotone"></iconify-icon>
-						</span>
-                            <span class="menu-text">PAGES</span>
-                            <span class="menu-caret"><b class="caret"></b></span>
-                        </a>
-                        <div class="menu-submenu">
-                            <div class="menu-item ">
-                                <a href="page_products.html" class="menu-link">
-                                    <span class="menu-text">PRODUCTS</span>
-                                </a>
-                            </div>
-                            <div class="menu-item ">
-                                <a href="page_product_details.html" class="menu-link">
-                                    <span class="menu-text">PRODUCT DETAILS</span>
-                                </a>
-                            </div>
-                            <div class="menu-item ">
-                                <a href="page_orders.html" class="menu-link">
-                                    <span class="menu-text">ORDERS</span>
-                                </a>
-                            </div>
-                            <div class="menu-item ">
-                                <a href="page_order_details.html" class="menu-link">
-                                    <span class="menu-text">ORDER DETAILS</span>
-                                </a>
-                            </div>
-
-                            <div class="menu-item ">
-                                <a href="page_coming_soon.html" class="menu-link">
-                                    <span class="menu-text">COMING SOON PAGE</span>
-                                </a>
-                            </div>
-                            <div class="menu-item ">
-                                <a href="page_register.html" class="menu-link">
-                                    <span class="menu-text">REGISTER</span>
-                                </a>
-                            </div>
-                            <div class="menu-item ">
-                                <a href="page_data_management.html" class="menu-link">
-                                    <span class="menu-text">DATA MANAGEMENT</span>
-                                </a>
-                            </div>
-                            <div class="menu-item ">
-                                <a href="page_pricing.html" class="menu-link"><span class="menu-text">PRICING PAGE</span></a>
                             </div>
                         </div>
                     </div>
@@ -308,12 +230,6 @@
                         <a href="{% url 'user_detail' user.pk %} " class="menu-link ">
                             <span class="menu-icon "><iconify-icon icon="ph:user-focus-duotone "></iconify-icon></span>
                             <span class="menu-text ">PROFILE</span>
-                        </a>
-                    </div>
-                    <div class="menu-item ">
-                        <a href="settings.html " class="menu-link ">
-                            <span class="menu-icon "><iconify-icon icon="ph:gear-duotone "></iconify-icon></span>
-                            <span class="menu-text ">SETTINGS</span>
                         </a>
                     </div>
                     <div class="mt-auto p-15px w-100 ">

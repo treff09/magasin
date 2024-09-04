@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}Liste des fournisseurs{% endblock %} {% block main_content %}
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+
+<div id="content" class="app-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="row">
+                <div class="col-xl-9">
+                    <h1 class="page-header">Supprimer Fournisseur</h1>
+                    <ul class="profile-tab nav nav-tabs nav-tabs-v2 mb-3"></ul>
+                    <div class="tab-content p-0">
+                        <div class="tab-pane fade show active" id="profile-post">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-fill ps-2">
+                                            <form method="POST" name="login_form">
+                                                {% csrf_token %}
+                                                <div class="row mb-3">
+                                                    <div class="col-md-6 mb-2">
+                                                        <label class="form-label">Nom</label> 
+                                                         <input type="text" class="form-control is-valid text-center" id="validationValidInput" value="{{ fournisseur.nom }}" disabled>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-6 mb-2">
+                                                        <label class="form-label">Contact</label>
+                                                         <input type="text" class="form-control is-valid text-center" id="validationValidInput" value="{{ fournisseur.contact }}" disabled>
+                                                         
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="col-md-12 mb-2 text-center">
+                                                    <a href="{% url 'fournisseur' %}" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Annuler</a>
+
+                                                    <button type="submit" class="btn btn-outline-light btn-block" onclick="return confirm('Etes-vous sûre de vouloir supprimer le compte de {{ fournisseur.nom|upper }}? car si vous supprimer toutes les informations liées seront perdues')" style="border-radius: 8px;">Suppimer</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3">
+
+                    <nav id="sidebar-bootstrap" class="navbar navbar-sticky d-none d-xl-block">
+                        <nav class="nav">
+                            <a class="nav-link" href="#validation" data-toggle="scroll-to">Validation</a>
+                        </nav>
+                    </nav>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

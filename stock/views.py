@@ -1,8 +1,9 @@
 from datetime import date, datetime, timedelta, timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse_lazy
 from .models import Categorie, Piece, Fournisseur, Panier, PanierItem, Commande, Ticket
-from .forms import AjouterAuPanierForm, PieceForm, DateForm
+from .forms import AjouterAuPanierForm, PieceForm, DateForm, FournisseurForm
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -20,9 +21,9 @@ login_required(login_url='login')
 
 
 class DashboardView(TemplateView):
-     template_name = 'dashboard.html'
-     form_class = DateForm
-     def get_context_data(self, **kwargs):
+    template_name = 'dashboard.html'
+    form_class = DateForm
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_group = self.request.user.groups.first()
         context['user_group'] = user_group.name if user_group else None
@@ -39,6 +40,7 @@ class DashboardView(TemplateView):
         total_orders = Commande.objects.filter(date_creation=date.today()).count()
         # Total revenue Commandes
         total_revenue = Commande.objects.aggregate(total=Sum('total'))['total'] or 0
+        total_revenue = Commande.objects.filter(date_creation=date.today()).aggregate(total=Sum('total'))['total'] or 0
         # Total impayés
         total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
         # Nombre de tickets émis et utilisés
@@ -58,9 +60,7 @@ class DashboardView(TemplateView):
         #total_paniers = Panier.objects.filter(date_creation=date.today()).count()
         # Paniers that are validated but not yet paid
         validated_paniers = Panier.objects.filter(valide=True, panier_paye=False, date_creation=date.today()).count()
-        pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO'], date_creation=date.today(),).count()
-        pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT'], date_creation=date.today(),).count()
-       # ----------------------------------------------------------------------------#
+        # ----------------------------------------------------------------------------#
         # total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
         # # Total inventaire
         # total_inventory_value = Piece.objects.aggregate(
@@ -85,8 +85,9 @@ class DashboardView(TemplateView):
         # total_paniers = Panier.objects.count()
         # # Paniers that are validated but not yet paid
         # validated_paniers = Panier.objects.filter(valide=True, panier_paye=False).count()
-        # pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO']).count()
-        # pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT']).count()
+        pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO']).count()
+        pieces_by_category_dzire = Piece.objects.filter(type_voiture__type_voiture__in=['DZIRE']).count()
+        pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT']).count()
         
         context = {
         'total_pieces': total_pieces,
@@ -103,6 +104,7 @@ class DashboardView(TemplateView):
         'validated_paniers': validated_paniers,
         'pieces_by_category_alto': pieces_by_category_alto,
         'pieces_by_category_swift': pieces_by_category_swift,
+        'pieces_by_category_dzire': pieces_by_category_dzire,
         }
 
         print("------------------------------------")
@@ -396,77 +398,6 @@ class DashboardView(TemplateView):
 #         return context
 
 
-# def Dashboard(request):
-#     today = datetime.now()
-#     date_debut = request.GET.get('date_debut', today)
-#     date_fin = request.GET.get('date_fin', today)
-
-#     # Convert date_debut and date_fin to datetime objects if provided
-#     if isinstance(date_debut, str):
-#         date_debut = datetime.strptime(date_debut, '%Y-%m-%d').date()
-#     if isinstance(date_fin, str):
-#         date_fin = datetime.strptime(date_fin, '%Y-%m-%d').date()
-
-#     # Filter data based on the date range
-#     #total_orders = Commande.objects.filter(date_creation__range=[date_debut, date_fin]).count()
-#     # paniers = Panier.objects.filter(date_creation__range=[date_debut, date_fin])
-#     pieces = Piece.objects.all()
-
-#     total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
-#     # Total inventaire
-#     total_inventory_value = Piece.objects.aggregate(
-#         total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField()))
-#     )['total_value'] or 0
-#     # Total Commandes
-#     total_orders = Commande.objects.count()
-#     # Total revenue Commandes
-#     total_revenue = Commande.objects.aggregate(total=Sum('total'))['total'] or 0
-#     # Total impayés
-#     total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
-#     # Nombre de tickets émis et utilisés
-#     total_tickets_issued = Ticket.objects.count()
-#     total_tickets_used = Ticket.objects.filter(utilise=True).count()
-#     # Commandes entièrement payées et livrées
-#     fully_paid_delivered_orders = Commande.objects.filter(paye=True, panier__panier_livre=True).count()
-#     # Commandes en attente de paiement
-#     pending_payment_orders = Commande.objects.filter(paye=False).count()
-#     # Pièces dont le stock est faible
-#     low_stock_pieces = Piece.objects.filter(quantite__lte=5).count()
-#     # Total Paniers
-#     total_paniers = Panier.objects.count()
-#     # Paniers that are validated but not yet paid
-#     validated_paniers = Panier.objects.filter(valide=True, panier_paye=False).count()
-
-#     pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO']).count()
-#     pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT']).count()
-    
-#     context = {
-#         'total_pieces': total_pieces,
-#         'total_inventory_value': total_inventory_value,
-#         'total_orders': total_orders,
-#         'total_revenue': total_revenue,
-#         'total_unpaid': total_unpaid,
-#         'total_tickets_issued': total_tickets_issued,
-#         'total_tickets_used': total_tickets_used,
-#         'fully_paid_delivered_orders': fully_paid_delivered_orders,
-#         'pending_payment_orders': pending_payment_orders,
-#         'low_stock_pieces': low_stock_pieces,
-#         'total_paniers': total_paniers,
-#         'validated_paniers': validated_paniers,
-#         'pieces_by_category_alto': pieces_by_category_alto,
-#         'pieces_by_category_swift': pieces_by_category_swift,
-# #         date_debut
-# # date_fin =
-#         'date_debut': date_debut,
-#         'date_fin': date_fin,
-        
-#     }
-#     print("------------------------------------")
-#     print("<<",context,">>")
-#     print("------------------------------------")
-#     return render(request,'dashboard.html',context)
-
-
 def is_admin_magasin(user):
     return user.groups.filter(name='AdminMagasin').exists()
 def is_caissier(user):
@@ -589,6 +520,65 @@ def piece_detail(request, pk):
     return render(request, 'piece_detail.html', {'piece': piece})
 
 # @user_passes_test(is_admin_magasin)
+class AddfournisseurView(CreateView):
+    model = Fournisseur
+    form_class = FournisseurForm
+    template_name = 'create_fournisseur.html'
+    success_message = 'Fournisseur enregistré avec succès👍✓✓'
+    error_message = "Erreur de saisie ✘✘ "
+    success_url = reverse_lazy ('fournisseur')
+    def form_valid(self, form):
+        reponse =  super().form_valid(form)
+        messages.success(self.request, self.success_message)
+        return reponse
+    def form_invalid(self, form):
+        reponse =  super().form_invalid(form)
+        messages.success(self.request, self.error_message)
+        return reponse
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_group = self.request.user.groups.first()
+        context['user_group'] = user_group.name if user_group else None
+        context['fournisseurs'] = Fournisseur.objects.all()
+        return context
+    
+class UpdatefournisseurView(UpdateView):
+    model = Fournisseur
+    form_class = FournisseurForm
+    template_name = 'modifi_fournisseur.html'
+    success_message = 'Modification effectuée avec succès👍✓✓'
+    error_message = "Erreur de saisie ✘✘ "
+    success_url = reverse_lazy ('fournisseur')
+    def form_valid(self, form):
+        reponse =  super().form_valid(form)
+        messages.success(self.request, self.success_message)
+        return reponse
+    def form_invalid(self, form):
+        reponse =  super().form_invalid(form)
+        messages.success(self.request, self.error_message)
+        return reponse
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_group = self.request.user.groups.first()
+        context['user_group'] = user_group.name if user_group else None
+        context['fournisseurs'] = Fournisseur.objects.all()
+        return context
+
+class DeletFournisseurView(DeleteView):
+    model = Fournisseur
+    template_name = 'delet_fournisseur.html' 
+    success_message = 'Fournisseur Supprimé avec succès👍✓✓'
+    success_url =reverse_lazy ('fournisseur')
+    def form_valid(self, form):
+        reponse =  super().form_valid(form)
+        messages.success(self.request, self.success_message)
+        return reponse
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_group = self.request.user.groups.first()
+        context['user_group'] =user_group.name if user_group else None
+        return context 
+
 def piece_create(request):
     stock = Piece.objects.all()
     if request.method == 'POST':
@@ -623,7 +613,7 @@ def piece_update(request, pk):
             return redirect('piece_create')
     else:
         form = PieceForm(instance=piece)
-    return render(request, 'create_piece.html', {'form': form})
+    return render(request, 'piece_modifi.html', {'form': form})
 
 
 # @user_passes_test(is_admin_magasin)
@@ -633,7 +623,7 @@ def piece_delete(request, pk):
         piece.delete()
         messages.success(request, f"La pièce {piece.numero_piece} a été supprimée.")
         return redirect('piece_create')
-    return render(request, 'create_piece.html', {'piece': piece})
+    return render(request, 'piece_delete.html', {'piece': piece})
 
     # return render(request, 'piece_confirm_delete.html', {'piece': piece})
 

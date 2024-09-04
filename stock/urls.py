@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import caisseDashboard,livraison_accueil, piece_list, piece_detail, piece_create, piece_update, piece_delete,ajouter_au_panier, valider_livraison, valider_paiement, valider_panier,accueil,base,livraison_dashboard,panier,supprimer_du_panier,retirer_du_cart,generate_receipt
+from .views import caisseDashboard,livraison_accueil, piece_list, piece_detail, piece_update, piece_delete,ajouter_au_panier, valider_livraison, valider_paiement, valider_panier,accueil,base,livraison_dashboard,panier,supprimer_du_panier,retirer_du_cart,generate_receipt
 
 # from . import views
 from .views import *
@@ -10,6 +10,9 @@ urlpatterns = [
     path('piece_accueil/', piece_list, name='piece_list_accueil'),
     path('piece/<int:pk>/',piece_detail, name='piece_detail'),
     path('piece/new/',piece_create, name='piece_create'),
+    path('create_fournisseur',AddfournisseurView.as_view(), name='fournisseur'),
+    path('update_fournisseur/<int:pk>/edit',UpdatefournisseurView.as_view(), name='update_fournisseur'),
+    path('update_fournisseur/<int:pk>/delete',DeletFournisseurView.as_view(), name='delet_fournisseur'),
     path('piece/<int:pk>/edit/',piece_update, name='piece_update'),
     path('piece/<int:pk>/delete/', piece_delete, name='piece_delete'),
     #panier

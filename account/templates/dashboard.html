@@ -104,8 +104,8 @@
                             <div class="card-body">
                                 <div class="h-320px  p-0">
                                     <canvas id="CA" class="h-100 w-100" width="500" height="343" style="display: block; box-sizing: border-box; height: 350px; width: 500px; position:relative;">
-													<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-												</canvas>
+										<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+									</canvas>
                                     <script>
                                         const cta = document.getElementById('CA');
                                         var labels = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -145,55 +145,63 @@
                                 {% comment %} <div class="h4 text-theme mb-0 fw-100">[33,129]</div> {% endcomment %}
                                 <p class="text-white fs-10px fw-semibold mb-0">MEILLEURS VENTES</p>
                                 <hr class="my-2" />
-                                <table class="w-100 text-truncate fs-10px">
+                                <table class="w-100 text-truncate fs-8px">
                                     <thead>
                                         <tr class="text-white">
-                                            <th class="w-50">COUNTRY</th>
-                                            <th class="w-25 text-end">VISITS</th>
+                                            <th class="w-50">CATEGORIE</th>
+                                            <th class="w-25 text-end">TOTALE</th>
                                             <th class="w-25 text-end">PCT%</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-body text-opacity-75">
                                         <tr>
-                                            <td>FRANCE</td>
+                                            <td>ALTO</td>
+                                            <td class="text-end">13,849</td>
+                                            <td class="text-end">40.79%</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody class="text-body text-opacity-75">
+                                        <tr>
+                                            <td>DZIRE</td>
+                                            <td class="text-end">13,849</td>
+                                            <td class="text-end">40.79%</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody class="text-body text-opacity-75">
+                                        <tr>
+                                            <td>SWIFT</td>
                                             <td class="text-end">13,849</td>
                                             <td class="text-end">40.79%</td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <hr class="my-2" />
-                                <table class="w-100 text-truncate fs-10px">
-                                    <thead>
-                                        <tr class="text-white">
-                                            <th class="w-50">MOINS ACHETER</th>
-                                            <th class="w-25 text-end">NO/m</th>
-                                            <th class="w-25 text-end">PCT%</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-body text-opacity-75">
-                                        <tr>
-                                            <td>Chrome</td>
-                                            <td class="text-end">8,000</td>
-                                            <td class="text-end">40%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <hr class="my-2" />
-                                <table class="w-100 text-truncate fs-10px">
-                                    <thead>
-                                        <tr class="text-white">
-                                            <th class="w-50">MOINS ACHETER</th>
-                                            <th class="w-25 text-end">NO/m</th>
-                                            <th class="w-25 text-end">PCT%</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-body text-opacity-75">
-                                        <tr>
-                                            <td>Chrome</td>
-                                            <td class="text-end">8,000</td>
-                                            <td class="text-end">40%</td>
-                                        </tr>
-                                    </tbody>
+                                <table class="w-180 text-truncate fs-10px">
+                                    <canvas id="PIE">
+										<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+									</canvas>
+                                    <script>
+                                        const ctx = document.getElementById('PIE');
+                                        var labels = ['Ja', 'Fe','Ma',];
+                                        var data = [5, 1, 2];
+                                        new Chart(ctx, {
+                                            type: 'pie',
+                                            data: {
+                                                labels: labels,
+                                                datasets: [{
+                                                    label: "Evolution des ventes",
+                                                    data: data,
+                                                    fill: true,
+                                                    borderColor: ['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)'],
+                                                    hoverOffset: 1,
+                                                    backgroundColor: [
+                                                        '#00b57f',
+                                                    ],
+                                                }]
+                                            },
+                                            
+                                        });
+                                    </script>
                                 </table>
                             </div>
                         </div>
@@ -271,7 +279,7 @@
                                         </div>
                                         <div class="flex-1">
                                             <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">TOTAL</div>
-                                            <div class="h6 mb-0 fw-base">4</div>
+                                            <div class="h6 mb-0 fw-base">{{pending_payment_orders}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -296,36 +304,9 @@
                         <div class="card-header with-btn">NOMBRE DE PIECE VENDUE PAR CATEGORIE DE VEHICULE</div>
                         <div class="card-body">
                             <div class="row mb-3 fs-10px pt-1px">
-                                <div class="col-4">
-                                    <div class="d-flex flex-column justify-content-center text-center">
-                                        <div class="w-40px mx-auto">
-                                            <div data-render="apexchart" data-type="donut" data-height="40"></div>
-                                        </div>
-                                        <div class="mt-2">ALTO</div>
-                                        <div class="text-white">{{pieces_by_category_alto}}</div>
-                                    </div>
+                                <div class="col-12">
+                                        
                                 </div>
-                                <div class="col-4">
-                                    <div class="d-flex flex-column justify-content-center text-center">
-                                        <div class="w-40px mx-auto">
-                                            <div data-render="apexchart" data-type="donut" data-height="40"></div>
-                                        </div>
-                                        <div class="mt-2">SWIFT</div>
-                                        <div class="text-white mt-0">{{pieces_by_category_swift}}</div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-4">
-                                    <div class="d-flex flex-column justify-content-center text-center">
-                                        <div class="w-40px mx-auto">
-                                            <div data-render="apexchart" data-type="donut" data-height="40"></div>
-                                        </div>
-                                        <div class="mt-2">EXPRESSO</div>
-                                        <div class="text-white mt-0">200</div>
-                                    </div>
-                                </div>
-
                             </div>
 
                             <hr class="my-2" />
