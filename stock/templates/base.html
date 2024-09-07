@@ -76,15 +76,17 @@
                         <div class="row row-grid gx-0">
                             <div class="col-12 p-2">
                                 <form method="get" id="date-filter-form">
+                                {% csrf_token %}
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Filtre <span class="text-danger">*</span></label>
                                                 <div class="input-group input-daterange" id="datepicker-range">
                                                     <span class="input-group-text">De</span>
-                                                    <input type="text" class="form-control" name="date_debut" value="{{ date_debut }}" placeholder="start date">
+                                                    {{ form.date_debut }}
                                                     <span class="input-group-text">à</span>
-                                                    <input type="text" class="form-control" name="date_fin" value="{{ date_fin }}" placeholder="end date"><button type="submit" class="input-group-text btn btn-outline-light btn-block" style="border-radius: 0px 5px 5px 0px;">valider</button>
+                                                    {{ form.date_fin }}
+                                                    <button type="submit" class="input-group-text btn btn-outline-light btn-block" style="border-radius: 0px 5px 5px 0px;">valider</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -226,12 +228,7 @@
                             <span class="menu-text">EMPLOYERS</span>
                         </a>
                     </div>
-                    <div class="menu-item {% if request.resolver_match.url_name == 'user_detail' %}active{% endif %}">
-                        <a href="{% url 'user_detail' user.pk %} " class="menu-link ">
-                            <span class="menu-icon "><iconify-icon icon="ph:user-focus-duotone "></iconify-icon></span>
-                            <span class="menu-text ">PROFILE</span>
-                        </a>
-                    </div>
+                    
                     <div class="mt-auto p-15px w-100 ">
                         <a href="{% url 'deconnexion' %} " target="_blank " class="btn d-block btn-secondary btn-sm py-6px w-100 " style="border-radius: 20px; "><i class="fa fa-sign-out " aria-hidden="true "></i> DECONNEXION</a>
                     </div>
@@ -241,21 +238,25 @@
 
 
 
-        {% block main_content %} {% endblock %} {% if messages %} {% for msg in messages %}
-        <div class="modal fade" id="modalSm">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Message</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{msg}}
+        {% block main_content %} 
+        {% endblock %} 
+        {% if messages %} 
+            {% for msg in messages %}
+                <div class="modal fade" id="modalSm">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Message</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{msg}}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        {% endfor %} {% endif %}
+            {% endfor %} 
+        {% endif %}
         <a href="# " data-toggle="scroll-to-top " class="btn-scroll-top fade ">
             <iconify-icon icon="material-symbols-light:keyboard-arrow-up "></iconify-icon>
         </a>

@@ -9,12 +9,12 @@
                     <div class="card h-100">
                         <div class="card-header">VENTE JOURNALIERE</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">1.000.000 frscfa</div>
+                            <div class="h4 fw-100 text-theme mb-1">{{total_revenue_jour}} frscfa</div>
                             <p class="text-white fs-10px mb-0">
-                                Pieces vendues: {{total_paniers}}
+                                Pieces vendues: {{total_paniers_jour}}
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
-                                updated 1 min ago
+                                Total réduction: {{total_unpaid_jour}} frscfa
                             </p>
                         </div>
                     </div>
@@ -23,19 +23,19 @@
                     <div class="card h-100">
                         <div class="card-header">VENTE MENSUELLE</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">5.000.000</div>
+                            <div class="h4 fw-100 text-theme mb-1">{{total_revenue_mois}} frscfa</div>
                             <p class="text-white fs-10px mb-0">
-                                Pieces vendues: 1500
+                                Pieces vendues: {{total_paniers_mois}}
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
-                                updated 1 min ago
+                                Total réduction: {{total_unpaid_mois}}
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-2 col-lg-4 col-6">
                     <div class="card h-100">
-                        <div class="card-header">VENTE TOTALE</div>
+                        <div class="card-header">XXXX</div>
                         <div class="card-body">
                             <div class="h4 fw-100 text-theme mb-1">17.000.000</div>
                             <p class="text-white fs-10px mb-0">
@@ -49,15 +49,12 @@
                 </div>
                 <div class="col-xl-2 col-lg-4 col-6">
                     <div class="card h-100">
-                        <div class="card-header">TOTALE DES PIECES</div>
+                        <div class="card-header">DETAIL DU STOCK</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">3000</div>
-                            <p class="text-white fs-10px mb-0">
-                                Evaluation: 40.000.000
-                            </p>
-                            <p class="fs-9px mb-0 text-white text-opacity-50">
-                                updated 1 min ago
-                            </p>
+                            <div class="h6 fw-100 text-theme mb-1">Total piece: {{total_pieces}}</div>
+                            <p class="text-white fs-10px mb-0">TOTAL PIECE ALTO: {{total_quantite_alto}}</p>
+                            <p class="text-white fs-10px mb-0">TOTAL PIECE DZIRE: {{total_quantite_dzire}}</p>
+                            <p class="text-white fs-10px mb-0">TOTAL PIECE SWIFT: {{total_quantite_swift}}</p>
                         </div>
                     </div>
                 </div>
@@ -65,12 +62,12 @@
                     <div class="card h-100">
                         <div class="card-header">TOTAL REVENUE</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">{{total_revenue}} frscfa</div>
+                            <div class="h4 fw-100 text-theme mb-1">{{total_inventory_restant}} frscfa</div>
                             <p class="text-white fs-10px mb-0">
-                                2 new referrals added
+                                Total pièce vendue: {{total_paniers}}
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
-                                updated 1 min ago
+                                Totale des reductions: {{total_unpaid}}
                             </p>
                         </div>
                     </div>
@@ -79,20 +76,18 @@
                     <div class="card h-100">
                         <div class="card-header">TOTALE DES PIECES</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">{{total_pieces}}</div>
+                            <div class="h4 fw-100 text-theme mb-1">TOTAL: {{total_pieces}}</div>
                             <p class="text-white fs-10px mb-0">
                                 Valeur inventaire: {{total_inventory_value}} frcfa
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
-                                {% comment %} updated 1 min ago {% endcomment %}
+                                Estimation du stock: {{estimat_stock_format}}%
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
         <div class="col-xl-8">
             <div class="card h-100">
                 <div class="card-header with-btn">
@@ -102,36 +97,33 @@
                     <div class="row gx-0">
                         <div class="col-lg-8 position-relative">
                             <div class="card-body">
-                                <div class="h-320px  p-0">
-                                    <canvas id="CA" class="h-100 w-100" width="500" height="343" style="display: block; box-sizing: border-box; height: 350px; width: 500px; position:relative;">
+                                <div class="h-320px p-0">
+                                    <canvas id="baro" class="h-100 w-100" width="500" height="343" style="display: block; box-sizing: border-box; height: 350px; width: 500px; position:relative;">
 										<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 									</canvas>
                                     <script>
-                                        const cta = document.getElementById('CA');
-                                        var labels = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
-                                        var recetData = [35, 15, 45, 75, 88, 55, 38, 65, 85, 98, 25, 78];
-                                        new Chart(cta, {
+                                        const ctrev = document.getElementById('baro');
+                                        var labels = {{ mois_label|safe }};
+                                        var revenueData = {{ revenue_mensuelle_data|safe }};
+
+                                        new Chart(ctrev, {
                                             type: 'bar',
                                             data: {
                                                 labels: labels,
                                                 datasets: [{
                                                     label: "Evolution des ventes",
-                                                    data: recetData,
+                                                    data: revenueData,
                                                     fill: true,
-                                                    borderColor: ['rgb(34,110,90)'],
+                                                    borderColor: ['rgb(24,255,255)'],
                                                     tension: 0.4,
                                                     borderWidth: 1,
-                                                    backgroundColor: [
-                                                        '#00b57f',
-                                                    ],
+                                                    backgroundColor: 'rgb(0,181,127,.2)',
                                                 }]
                                             },
                                             options: {
                                                 scales: {
                                                     y: {
-                                                        beginAtZero: true,
-                                                        easing: 'linear',
-                                                        from: 1,
+                                                        beginAtZero: true
                                                     }
                                                 }
                                             }
@@ -149,30 +141,18 @@
                                     <thead>
                                         <tr class="text-white">
                                             <th class="w-50">CATEGORIE</th>
-                                            <th class="w-25 text-end">TOTALE</th>
-                                            <th class="w-25 text-end">PCT%</th>
+                                            <th class="w-25 text-end">NOMBRE</th>
+                                            <th class="w-25 text-end">SOMMES</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-body text-opacity-75">
-                                        <tr>
-                                            <td>ALTO</td>
-                                            <td class="text-end">13,849</td>
-                                            <td class="text-end">40.79%</td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody class="text-body text-opacity-75">
-                                        <tr>
-                                            <td>DZIRE</td>
-                                            <td class="text-end">13,849</td>
-                                            <td class="text-end">40.79%</td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody class="text-body text-opacity-75">
-                                        <tr>
-                                            <td>SWIFT</td>
-                                            <td class="text-end">13,849</td>
-                                            <td class="text-end">40.79%</td>
-                                        </tr>
+                                        {% for category in top_categories %}
+                                            <tr>
+                                                <td>{{ category.piece__type_voiture__type_voiture }}</td>
+                                                <td class="text-end">{{ category.total_pieces }}</td>
+                                                <td class="text-end">{{ category.total_revenue }}</td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                                 <hr class="my-2" />
@@ -182,20 +162,20 @@
 									</canvas>
                                     <script>
                                         const ctx = document.getElementById('PIE');
-                                        var labels = ['Ja', 'Fe','Ma',];
-                                        var data = [5, 1, 2];
+                                        var labels = ['A', 'D','S',];
+                                        var data = [{{total_pieces_alto}}, {{total_pieces_swift}}, {{total_pieces_dzire}}];
                                         new Chart(ctx, {
                                             type: 'pie',
                                             data: {
                                                 labels: labels,
                                                 datasets: [{
-                                                    label: "Evolution des ventes",
+                                                    label: "Total des ventes par categorie",
                                                     data: data,
                                                     fill: true,
-                                                    borderColor: ['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)'],
+                                                    borderColor: ['rgb(24,255,255)','rgb(244,67,54)','rgb(198,255,0)'],
                                                     hoverOffset: 1,
                                                     backgroundColor: [
-                                                        '#00b57f',
+                                                        'rgb(0,181,127,.2)',
                                                     ],
                                                 }]
                                             },
@@ -301,7 +281,7 @@
 
                 <div class="col-lg-12">
                     <div class="card h-100">
-                        <div class="card-header with-btn">NOMBRE DE PIECE VENDUE PAR CATEGORIE DE VEHICULE</div>
+                        <div class="card-header with-btn">LES 10 PIECES LES PLUS VENDUES</div>
                         <div class="card-body">
                             <div class="row mb-3 fs-10px pt-1px">
                                 <div class="col-12">
@@ -313,19 +293,21 @@
                             <table class="w-100 text-truncate fs-10px table-py-1px">
                                 <thead>
                                     <tr class="text-white">
-                                        <th width="35%">Libelle.</th>
+                                        <th width="30%">Libelle.</th>
                                         <th width="30%">CATEGORIE</th>
-                                        <th width="25%">SEVERITY</th>
+                                        <th width="30%">NOMBRE</th>
                                         <th width="10%">TOTAL</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>IDS</td>
-                                        <td>Malware</td>
-                                        <td>High</td>
-                                        <td>150</td>
-                                    </tr>
+                                    {% for piece in top_pieces %}
+                                        <tr>
+                                            <td>{{ piece.piece__designation }}</td>
+                                            <td>{{ piece.piece__type_voiture__type_voiture }}</td>
+                                            <td>{{ piece.total_commandes }}</td>
+                                            <td>{{ piece.total_somme }}</td>
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

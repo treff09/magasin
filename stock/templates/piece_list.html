@@ -156,36 +156,36 @@
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
                                     {% csrf_token %} 
                                     {% for item in panier_items %}
-                                    <div class="pos-order">
-                                        <div class="pos-order-product">
-                                            {% comment %}
-                                            <div class="img" style="background-image: url(assets/img/pos/product-1.jpg)"></div> {% endcomment %}
-                                            <div class="flex-1">
-                                                <div class="fw-semibold text-white">{{item.piece.designation}}</div>
-                                                <div class="mb-1">{{item.piece.prix_unitaire}}</div>
-                                                <div class="fs-10px lh-sm mb-3">
-                                                    - size: large<br/> - spicy: medium
+                                        <div class="pos-order">
+                                            <div class="pos-order-product">
+                                                {% comment %}
+                                                <div class="img" style="background-image: url(assets/img/pos/product-1.jpg)"></div> {% endcomment %}
+                                                <div class="flex-1">
+                                                    <div class="fw-semibold text-white">{{item.piece.designation}}</div>
+                                                    <div class="mb-1">{{item.piece.prix_unitaire}}</div>
+                                                    <div class="fs-10px lh-sm mb-3">
+                                                        - Véhicule: {{item.piece.type_voiture.type_voiture}}
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <a id="retirer" href="{% url 'retirer_du_panier' item.piece.id %}" class="btn-retirer btn btn-secondary btn-sm px-2px" data-piece-id="{{ item.piece.id }}">
+                                                            <iconify-icon icon="material-symbols-light:check-indeterminate-small" class="d-block fs-20px my-n1"></iconify-icon>
+                                                        </a>
+                                                        <input id="quantite_piece" type="text" class="form-control w-30px px-0 form-control-sm mx-2 bg-white bg-opacity-25 text-center" name="quantite_{{ item.piece.id }}" value="{{ item.quantite }}" disabled/>
+                                                        <a id="ajouter" href="{% url 'ajouter_au_panier' item.piece.id %}" class="btn-ajouter btn btn-secondary btn-sm px-2px " data-piece-id="{{ item.piece.id }}">
+                                                            <iconify-icon icon="material-symbols-light:add" class="d-block fs-20px my-n1"></iconify-icon>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex">
-                                                    <a id="retirer" href="{% url 'retirer_du_panier' item.piece.id %}" class="btn-retirer btn btn-secondary btn-sm px-2px" data-piece-id="{{ item.piece.id }}">
-                                                        <iconify-icon icon="material-symbols-light:check-indeterminate-small" class="d-block fs-20px my-n1"></iconify-icon>
-                                                    </a>
-                                                    <input id="quantite_piece" type="text" class="form-control w-30px px-0 form-control-sm mx-2 bg-white bg-opacity-25 text-center" name="quantite_{{ item.piece.id }}" value="{{ item.quantite }}" disabled/>
-                                                    <a id="ajouter" href="{% url 'ajouter_au_panier' item.piece.id %}" class="btn-ajouter btn btn-secondary btn-sm px-2px " data-piece-id="{{ item.piece.id }}">
-                                                        <iconify-icon icon="material-symbols-light:add" class="d-block fs-20px my-n1"></iconify-icon>
+                                            </div>
+                                            <div class="pos-order-price d-flex flex-column">
+                                                <div class="flex-1 h6 mb-0">{{ item.total }}</div>
+                                                <div class="text-end">
+                                                    <a href="{% url 'supprimer_du_panier' item.id %}" class="btn btn-theme-label-when-light btn-sm px-2px" onclick="return confirm('Etes-vous sûr de vouloir retirer cet article?')" class="btn btn-danger" title="Retirer">
+                                                        <iconify-icon icon="material-symbols-light:delete-outline-sharp" class="d-block fs-20px my-n1"></iconify-icon>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="pos-order-price d-flex flex-column">
-                                            <div class="flex-1 h6 mb-0">{{ item.total }}</div>
-                                            <div class="text-end">
-                                                <a href="{% url 'supprimer_du_panier' item.id %}" class="btn btn-theme-label-when-light btn-sm px-2px" onclick="return confirm('Etes-vous sûr de vouloir retirer cet article?')" class="btn btn-danger" title="Retirer">
-                                                    <iconify-icon icon="material-symbols-light:delete-outline-sharp" class="d-block fs-20px my-n1"></iconify-icon>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
                                     {% endfor %}
                                 </div>
                         </div>
