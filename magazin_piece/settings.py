@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
-
+from decouple import config
+#import dj_database_url
+#from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
@@ -14,8 +16,16 @@ SECRET_KEY = 'django-insecure-6dunc7u4a2^^4jb=uf%w3t4ax212-q3#@+2^(vom@#=@-4_(e3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [] 
 
+ALLOWED_HOSTS = [
+    'magasin-1.onrender.com',
+    'localhost',
+    '127.0.0.1',
+    # Ajoutez d'autres hôtes autorisés ici
+]
+CSRF_TRUSTED_ORIGINS = [
+    'https://magasin-1.onrender.com',
+]
 
 # Application definition
 
@@ -70,8 +80,26 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('NAME'),
+#         'USER': config('USER'),
+#         'PASSWORD': config('PASSWORD'),
+#         'HOST': config('HOST'),
+#         'PORT': config('PORT'),
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'magasin_piece',
+#         'USER': 'magasin_piece_user',
+#         'PASSWORD': 'kEz2jKPbm8U7os7mLwdMtqq7C8igzNQk',
+#         'HOST': 'dpg-cr8dbt23esus73b56la0-a.oregon-postgres.render.com',
+#         'PORT': '5432',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -117,3 +145,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import Profile
+from .models import Profile,PWD_FORGET
 from stock.models import*
 
 # Définir un inline admin descriptor pour le modèle Profile
@@ -21,4 +21,5 @@ admin.site.register(Profile)
 admin.site.register(Ticket)
 admin.site.register(Panier)
 admin.site.register(Commande)
+admin.site.register(PWD_FORGET)
 

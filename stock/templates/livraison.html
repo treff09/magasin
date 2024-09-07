@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}DASHBOARD{% endblock  %}
+{% block main_content %}
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+	<div id="content" class="app-content p-3">
+		<div class="row g-2">
+			<div class="col-xl-12">
+				<div class="row g-2">
+					<div class="col-xl-8">
+						<div class="card h-100">
+							<div class="card-header with-btn">
+								LISTES DES LIVRAISONS A EFFECTUER
+							</div>
+							<div class="card-body">
+								<table id="datatableDefault" width="100%" class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class='text-theme'>N°Ticket</th>
+                                            <th class='text-center text-theme'>Utiliser</th>
+                                            <th class='text-center text-theme'>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for panier in livraison_en_attente %}
+                                        {% with panier.ticket_set.first as ticket %}
+                                            <tr>
+                                                <td>-</td>
+                                                <td>{{ panier.ticket }}</td>
+                                                <td class="text-center">
+													{% if panier.valide == True %}
+														<iconify-icon icon="bi:check-circle-fill" class='text-success'></iconify-icon>
+													{% endif %}
+												</td>
+                                                <td  class='text-center'>
+                                                    <a style="text-decoration: none;" href="{% url 'valider_livraison' panier.ticket %}" onclick="return confirm('Êtes-vous sûr de vouloir valider cette livraison ?');">Livrer</a>
+                                                </td>
+                                            </tr>
+                                        {% endwith %}
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4">Aucun Livraison en attente.</td>
+                                            </tr>
+                                    {% endfor%}
+                                    </tbody>
+                                </table>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-4">
+						<div class="row gy-2">
+							<div class="col-lg-12">
+								<div class="card h-100">
+									<div class="card-header with-btn">
+										BUSINESS METRICS
+									</div>
+									<div class="card-body">
+										<div class="row g-3">
+											<div class="col-6">
+												<div class="d-flex align-items-center">
+													<div class="fs-32px text-theme d-flex w-40px"><iconify-icon icon="material-symbols-light:bar-chart-4-bars"></iconify-icon></div>
+														<div class="flex-1">
+															<div class="fs-10px fw-semibold text-white text-opacity-50 mb-1 text-theme">Nbre livraison effectuées</div>
+															<div class="h6 mb-0 fw-base text-theme">$7.5m</div>
+														</div>
+													</div>
+												</div>
+											
+												<div class="col-6">
+													<div class="d-flex align-items-center">
+														<div class="fs-32px text-theme d-flex w-40px"><iconify-icon icon="material-symbols-light:group-outline"></iconify-icon></div>
+														<div class="flex-1">
+															<div class="text-theme fs-10px fw-semibold text-white text-opacity-50 mb-1 ">Nbre livraison à effectuer</div>
+															<div class="h6 mb-0 fw-base text-theme">45k</div>
+														</div>
+													</div>
+												</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						
+							<div class="col-lg-12">
+								<div class="card h-100">
+									<div class="card-header with-btn">LISTE DES LIVRAISONS EFFECTUEES AUJOURD'HUI </div>
+									<div class="card-body">
+									    <table class="w-100 text-truncate fs-10px table-py-1px">
+									    	<thead>
+                                                <tr class="text-white">
+                                                <th width="35%">Libelle.</th>
+                                                <th width="30%">CATEGORIE</th>
+                                                <th width="25%">SEVERITY</th>
+                                                <th width="10%">TOTAL</th>
+                                                </tr>
+									    	</thead>
+									    	<tbody>
+									    	    <tr>
+									    	    <td>IDS</td>
+									    	    <td>Malware</td>
+									    	    <td>High</td>
+									    	    <td>150</td>
+									    	    </tr>
+
+									    	    <tr>
+									    	    <td>IDS</td>
+									    	    <td>SQL Injection</td>
+									    	    <td>Low</td>
+									    	    <td>75</td>
+									    	    </tr>
+									    	</tbody>
+									    </table>
+				    				</div>
+				    			</div>
+				    		</div>	
+				    	</div>
+				    </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+
+
+
+
+
+{% endblock  %}

@@ -1,301 +1,111 @@
-{% extends "magasin/base.html" %}
-{% block title %}Liste des utilisateurs{% endblock %}
-
-{% block main_content %}
+{% extends "base.html" %} {% block title %}Liste des utilisateurs{% endblock %} {% block main_content %}
 <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
-
 
 <div id="content" class="app-content p-0">
 
-<div class="profile">
+    <div class="profile">
 
-<div class="profile-sidebar">
-<div class="desktop-sticky-top small">
-{% comment %} <img src="assets/img/user/profile.jpg" class="object-fit-cover h-200px w-100 d-block mb-4" alt /> {% endcomment %}
-<i class="fa fa-5x fa-user-circle" ></i>
-<h4 class="mb-0">{{user.username}}</h4>
-<div class="mb-3 text-theme">{{user.profile.role}}</div>
-<div class="mb-1">
-<i class="fa fa-map-marker-alt fa-fw opacity-5 me-1"></i> New York, NY
-</div>
-<div class="mb-3">
-<i class="fa fa-link fa-fw opacity-5 me-1"></i> seantheme.com/studio-svelte
-</div>
-<hr class="my-4" />
-<a href="{% url 'user_create' %}" class="btn btn-outline-light" style="border-radius: 10px;"><i class='fa fa-reply'></i>  Retour</a>
-</div>
-</div>
+        <div class="profile-sidebar">
+            <div class="desktop-sticky-top small">
+                <i class="fa fa-5x fa-user-circle"></i> 
+                <h4 class="mb-0"></h4>
+                <u class="text-theme" style="text-decoration: none;">{{user.username|upper}}</u>
+                <hr class="my-4" />
+                {% if user.is_admin_magasin %}
+                    <a href="{% url 'user_create' %}" class="btn btn-outline-light" style="border-radius: 10px;"><i class='fa fa-reply'></i></a>
+                {% endif %}
+            </div>
+        </div>
 
+        <div class="profile-content">
+            <div class="row">
+                <div class="col-xl-8">
+                    <h1 class="page-header">Profil</h1>
+                    <ul class="profile-tab nav nav-tabs nav-tabs-v2 mb-3"></ul>
+                    <div class="tab-content p-0">
+                        <div class="tab-pane fade show active" id="profile-post">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-fill ps-2">
+                                            <div class="position-relative d-flex align-items-center">
+                                                <input type="text" class="form-control text-center text-theme" value='Noms: {{user.first_name}}' disabled>
+                                                <div class="position-absolute end-0 text-center">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-<div class="profile-content">
-<div class="row">
-<div class="col-xl-8">
-<ul class="profile-tab nav nav-tabs nav-tabs-v2 mb-3">
-	
-</ul>
-
-<div class="tab-content p-0">
-<div class="tab-pane fade show active" id="profile-post">
-<div class="card mb-3">
-<div class="card-body">
-
-<div class="d-flex align-items-center">
-<a href="#"><img src="assets/img/user/profile.jpg" alt width="36" /></a>
-<div class="flex-fill ps-3">
-</div>
-</div>
-
-<div class="row mb-n3 pb-1">
-<div class="col">
-
-</div>
-</div>
-</div>
-
-
-<div class="card-body">
-<div class="d-flex align-items-center">
-<div class="flex-fill ps-2">
-<div class="position-relative d-flex align-items-center">
-<input type="text" class="form-control" placeholder="Write a comment..." />
-<div class="position-absolute end-0 text-center">
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="card mb-3">
-<div class="card-body">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-fill ps-2">
+                                            <div class="position-relative d-flex align-items-center">
+                                                <input type="text" class="form-control text-center text-theme" value="Prenoms: {{user.last_name}}" />
+                                                <div class="position-absolute end-0 text-center"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
-<div class="mb-3">Nice PATAGONIA footage in 8K</div>
-<div class="row mb-n3 pb-1">
-<div class="col">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-fill ps-2">
+                                            <div class="position-relative d-flex align-items-center">
+                                                <input type="text" class="form-control text-center text-theme" value="Email: {{user.email}}" />
+                                                <div class="position-absolute end-0 text-center">
 
-</div>
-</div>
-</div>
-<div class="card-body">
-<div class="d-flex align-items-center">
-<img src="assets/img/user/user.jpg" alt width="30" />
-<div class="flex-fill ps-2">
-<div class="position-relative d-flex align-items-center">
-<input type="text" class="form-control" placeholder="Write a comment..." />
-<div class="position-absolute end-0 text-center">
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<div class="card mb-3">
-<div class="card-body">
+                <div class="col-xl-4">
+                    <div class="desktop-sticky-top d-none d-lg-block">
+                        <div class="fw-500 px-0 d-flex text-white my-3">
+                            <span class="flex-fill">Profile</span>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body px-3 py-2">
+                                <div><small class="text-white text-opacity-50 text-theme"> {{user.profile.role}}</small></div>
+                            </div>
+                            <div class="row gx-0">
+                                <div class="card-body p-0">
+                                    <a href="{% url 'user_detail' user.pk %}" class="list-group-item list-group-action px-3 py-2 ">
+                                        <i class='fa fa-user-circle text-flex-right'></i> Profil
+                                    </a>
+                                    <a href="{% url 'password_change' %} " class="list-group-item list-group-action px-3 py-2 ">
+                                        <i class='fa fa-key'></i> Change mot de passe
+                                    </a>
+                                    {% if user.is_admin_magasin %}
+                                        <a href="{% url 'user_create' %} " class="list-group-item list-group-action text-center px-3 py-2 ">
+                                            <i class='fa fa-reply'></i> Retour
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<div class="d-flex align-items-center mb-3">
-<div class="flex-fill ps-3">
-<div class="fw-semibold"><a href="#" class="text-decoration-none">Clyde Stanley</a></div>
-<div class="text-body text-opacity-50 small">March 4</div>
-</div>
-</div>
-
-
-
-<div class="row mb-n3 pb-1">
-<div class="col">
-
-</div>
-</div>
-</div>
-<div class="card-body">
-<div class="d-flex align-items-center">
-<div class="flex-fill ps-2">
-<div class="position-relative d-flex align-items-center">
-<input type="text" class="form-control" placeholder="Write a comment..." />
-<div class="position-absolute end-0 text-center">
-
-</div>
-</div>
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
-<div class="card mb-3">
-<div class="card-body">
-
-<div class="d-flex align-items-center mb-3">
-<div class="flex-fill ps-3">
-<div class="fw-semibold"><a href="#" class="text-decoration-none">Clyde Stanley</a> at <a href="#" class="text-decoration-none">United States</a></div>
-<div class="text-body text-opacity-50 small">May 5</div>
-</div>
-</div>
-
-<div class="profile-img-list mb-1"></div>
-
-<div class="row mb-n3 pb-1">
-<div class="col">
-
-</div>
-</div>
-</div>
-<div class="card-body">
-<div class="d-flex align-items-center">
-<img src="assets/img/user/user.jpg" alt width="30" />
-<div class="flex-fill ps-2">
-<div class="position-relative d-flex align-items-center">
-<input type="text" class="form-control" placeholder="Write a comment..." />
-<div class="position-absolute end-0 text-center">
-
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-<div class="tab-pane fade" id="profile-followers">
-<div class="card">
-<div class="card-body d-flex align-items-center">
-<img src="assets/img/user/user.jpg" alt width="36" />
-<div class="flex-fill px-3">
-<div><a href="#" class="text-white fw-semibold text-decoration-none">Ethel Wilkes</a></div>
-<div class="text-white text-opacity-50 small">North Raundspic</div>
-</div>
-<a href="#" class="btn btn-sm btn-outline-theme">Follow</a>
-</div>
-<div class="card-body d-flex align-items-center">
-<img src="assets/img/user/user-2.jpg" alt width="36" />
-<div class="flex-fill px-3">
-<div><a href="#" class="text-white fw-semibold text-decoration-none">Shanaya Hansen</a></div>
-<div class="text-white text-opacity-50 small">North Raundspic</div>
-</div>
-<a href="#" class="btn btn-sm btn-outline-theme">Follow</a>
-</div>
-<div class="card-body d-flex align-items-center">
-<img src="assets/img/user/user-3.jpg" alt width="36" />
-<div class="flex-fill px-3">
-<div><a href="#" class="text-white fw-semibold text-decoration-none">James Allman</a></div>
-<div class="text-white text-opacity-50 small">North Raundspic</div>
-</div>
-<a href="#" class="btn btn-sm btn-outline-theme">Follow</a>
-</div>
-<div class="card-body d-flex align-items-center">
-<img src="assets/img/user/user-4.jpg" alt width="36" />
-<div class="flex-fill px-3">
-<div><a href="#" class="text-white fw-semibold text-decoration-none">Marie Welsh</a></div>
-<div class="text-white text-opacity-50 small">Crencheporford</div>
-</div>
-<a href="#" class="btn btn-sm btn-outline-theme">Follow</a>
-</div>
-<div class="card-body d-flex align-items-center">
-<img src="assets/img/user/user-5.jpg" alt width="36" />
-<div class="flex-fill px-3">
-<div><a href="#" class="text-white fw-semibold text-decoration-none">Lamar Kirkland</a></div>
-<div class="text-white text-opacity-50 small">Prince Ewoodswan</div>
-</div>
-<a href="#" class="btn btn-sm btn-outline-theme">Follow</a>
-</div>
-<div class="card-body d-flex align-items-center">
-
-
-
-</div>
-<div class="card-body d-flex align-items-center">
-<img src="assets/img/user/user-10.jpg" alt width="36" />
-<div class="flex-fill px-3">
-<div><a href="#" class="text-white fw-semibold text-decoration-none">Roshni Fernandez</a></div>
-<div class="text-white text-opacity-50 small">Mount Lerdo</div>
-</div>
-
-</div>
-</div>
-</div>
-
-
-<div class="tab-pane fade" id="profile-media">
-<div class="card">
-<div class="card-header">MAY 20</div>
-<div class="card-body p-0">
-
-</div>
-<div class="card-header">MAY 16</div>
-
-</div>
-<div class="text-center p-3"><a href="#" class="text-body text-decoration-none">Show more <b class="caret"></b></a></div>
-</div>
-
-
-<div class="tab-pane fade" id="profile-video">
-<div class="card mb-3">
-<div class="card-header">COLLECTIONS #1</div>
-<div class="card-body p-0">
-<div class="row gx-1">
-
-
-</div>
-</div>
-<div class="card-header">COLLECTIONS #2</div>
-<div class="card-body p-0">
-<div class="row gx-1">
-
-<div class="col-md-4 col-6 mb-1">
-
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-<div class="col-xl-4">
-<div class="desktop-sticky-top d-none d-lg-block">
-<div class="fw-500 px-0 d-flex text-white my-3">
-<span class="flex-fill">Trends for you</span>
-</div>
-<div class="card mb-3">
-<div class="card-body px-3 py-2">
-<div class="text-white fw-semibold small">Trending Worldwide</div>
-<div class="text-theme fw-semibold mb-2">#BreakingNews</div>
-<a href="#" class="card overflow-hidden mb-1 text-body text-decoration-none">
-<div class="row gx-0">
-<div class="col-md-8">
-</div>
-<div class="col-md-4 d-flex">
-</div>
-</div>
-</a>
-<div><small class="text-white text-opacity-50">1.89m share</small></div>
-</div>
-<div class="card-body px-3 py-2">
-<div class="text-theme fw-semibold mb-2">#TrollingForGood</div>
-<div class="fs-11px lh-sm">Be a good Troll and spread some positivity on Studio today.</div>
-<div><small class="text-white text-opacity-50"><i class="fa fa-external-link-square-alt"></i> Promoted by Studio Trolls</small></div>
-</div>
-
-
-<div class="row gx-0">
-<div class="card-body p-0">
-<a href="{% url "user_create" %}" class="list-group-item list-group-action text-center px-3 py-2">
-<i class='fa fa-reply'></i>  Retour
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-<a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
-<iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
+<a href="# " data-toggle="scroll-to-top " class="btn-scroll-top fade ">
+    <iconify-icon icon="material-symbols-light:keyboard-arrow-up "></iconify-icon>
 </a>
 
 {% endblock %}

@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Profile
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 class UserForm(forms.ModelForm):
     
@@ -34,3 +36,9 @@ class ProfileForm(forms.ModelForm):
         widgets = {
             'role': forms.Select(attrs={'class':'form-control'}),
         } 
+
+#forms pour changer le mot de passe
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ancien mot de passe'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Nouveau mot de passe'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmez le nouveau mot de passe'}))

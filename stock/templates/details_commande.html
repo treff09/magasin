@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de la Commande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        .commande-details {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="commande-details">
+        <h1>Détails de la Commande</h1>
+        <p><strong>Numéro de Commande :</strong> {{ commande.numero_commande }}</p>
+        <p><strong>Date :</strong> {{ commande.date_creation }}</p>
+        <p><strong>Total :</strong> {{ commande.total }} Fcfa</p>
+        <p><strong>Montant Payé :</strong> {{ commande.montant_paye }} Fcfa</p>
+        <p><strong>Montant Restant :</strong> {{ commande.montant_reste }} Fcfa</p>
+
+        <h2>Articles Commandés</h2>
+        <ul>
+            {% for item in commande.panier_items.all %}
+                <li>{{ item.piece.designation }} - {{ item.quantite }} x {{ item.piece.prix_unitaire }} Fcfa</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
