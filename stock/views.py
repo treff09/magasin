@@ -28,137 +28,206 @@ class DashboardView(TemplateView):
         context = super().get_context_data(**kwargs)
         user_group = self.request.user.groups.first()
         context['user_group'] = user_group.name if user_group else None
-    
-        # AFFICHAGE DES DONNEES DU JOUR EN COURS
-        
-        total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
-        # Total inventaire
-        total_inventory_value = Piece.objects.aggregate(total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField())))['total_value'] or 0
-        # Total Commandes
-        total_orders = Commande.objects.filter(date_creation=date.today()).count()
-        # Total revenue Commandes
-        # total_revenue = Commande.objects.aggregate(total=Sum('total'))['total'] or 0
-        total_revenue_jour = Commande.objects.filter(date_creation=date.today()).aggregate(total=Sum('total'))['total'] or 0
-        total_revenue_mois = Commande.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('total'))['total'] or 0
-        
-        print('')
-        print('----------------------------------------------------------------', total_revenue_jour,'------------------------',total_revenue_mois,'-----------------',total_inventory_value)
-        print('')
-        # Total impayés
-        total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
-        total_unpaid_jour = Commande.objects.filter(date_creation=date.today()).aggregate(total=Sum('montant_reste'))['total'] or 0
-        total_unpaid_mois = Commande.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('montant_reste'))['total'] or 0
-        
-        # Nombre de tickets émis et utilisés
-        total_tickets_issued = Ticket.objects.filter(date_creation=date.today()).count()
-
-        total_tickets_used = Ticket.objects.filter(utilise=True, date_creation=date.today()).count()
-        # Commandes entièrement payées et livrées
-        fully_paid_delivered_orders = Commande.objects.filter(paye=True, panier__panier_livre=True,date_creation=date.today(),).count()
-        # Commandes en attente de paiement
-        pending_payment_orders = Commande.objects.filter(paye=False, date_creation=date.today()).count()
-
-        # Pièces dont le stock est faible
-        low_stock_pieces = Piece.objects.filter(quantite__lte=5).count()
-        # Total Paniers
-        total_paniers = Panier.objects.all().count()
-        total_paniers_jour = Panier.objects.filter(date_creation=date.today()).count()
-        #le mois en cours
-        total_paniers_mois = Panier.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).count()
-        # Estimation du stock
-        estimat_stock = (total_pieces/total_paniers)
-        if total_paniers == 0:
-            estimat_stock = 0
-        estimat_stock_format = '{:.2f}'.format(estimat_stock)
-        # Paniers that are validated but not yet paid
-        validated_paniers = Panier.objects.filter(valide=True, panier_paye=False, date_creation=date.today()).count()
-        #----------------------------------------------------------------------------#
-        pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO']).count()
-        pieces_by_category_dzire = Piece.objects.filter(type_voiture__type_voiture__in=['DZIRE']).count()
-        pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT']).count()
-        total_inventory_restant = total_inventory_value - total_revenue_mois
-
-        #Le Detail des quantités par type de voitures
-        total_quantite_alto = Piece.objects.filter(type_voiture__type_voiture='ALTO').aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
-        total_quantite_dzire = Piece.objects.filter(type_voiture__type_voiture='DZIRE').aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
-        total_quantite_swift = Piece.objects.filter(type_voiture__type_voiture='SWIFT').aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
-        # Total des pièces pour les commandes dont les pièces sont pour les voitures de type DZIRE
-        # Total des pièces pour les commandes dont les pièces sont pour les voitures de type ALTO
-        # Total des pièces pour les commandes dont les pièces sont pour les voitures de type SWIFT
-        total_pieces_swift = PanierItem.objects.filter(piece__type_voiture__type_voiture='SWIFT',
-            panier__commands__isnull=False,  # On filtre pour les paniers qui sont liés à des commandes
-            panier__valide=True,             # Panier validé
-            panier__panier_paye=True,
-            date_creation=date.today()
-        ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
-
-        total_pieces_alto = PanierItem.objects.filter(
-            piece__type_voiture__type_voiture='ALTO',
-            panier__valide=True,             # Panier validé
-            panier__panier_paye=True,
-            panier__commands__isnull=False,date_creation=date.today()
-        ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
-
-        total_pieces_dzire = PanierItem.objects.filter(
-            piece__type_voiture__type_voiture='DZIRE',
-            panier__valide=True,             # Panier validé
-            panier__panier_paye=True,
-            panier__commands__isnull=False,date_creation=date.today()
-        ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
-
-        #--------------------------------------Graphs--------------------------------#
-
-        total_revenue_filtre = Commande.objects.filter(date_creation__year=datetime.now().year)
-        revenue_mensuelle_filtre = {month: 0 for month in range(1, 13)}
-        for commande in total_revenue_filtre:
-            revenue_mensuelle_filtre[commande.date_creation.month] += 1
-
-        revenue_mensuelle_data = [revenue_mensuelle_filtre[month] for month in range(1, 13)]
-        mois_label = [calendar.month_name[month][:2] for month in range(1, 13)]
-
-        # Ajouter ces données au contexte
-
-        # print("--------------------------------")
-        # print(total_revenue_filtre,"--------------------------------",revenue_mensuelle_data,date.today() + timedelta(days=1))
-        # print("--------------------------------")
-
-        # print(total_pieces_swift,"-----------",total_pieces_alto,"-----------",total_pieces_dzire,"-----------",total_quantite_alto)
 
         form = self.form_class(self.request.GET)
         if form.is_valid():
             date_debut = form.cleaned_data['date_debut'] 
             date_fin = form.cleaned_data['date_fin'] 
-            print('date_debut', 'Date de debut invalide', 'danger')
-        
-        #La categorie ayant vendu le pluse de piece 1er au 3ieme
-        top_categories = (
-            PanierItem.objects.filter(piece__type_voiture__type_voiture__in=['SWIFT', 'ALTO', 'DZIRE'],
-                                        panier__valide=True,         
-                                        panier__panier_paye=True,
-                                        date_creation=date.today()
-                                    )
-            .values('piece__type_voiture__type_voiture')
-            .annotate(
-                total_pieces=Sum('quantite'),
-                total_revenue=Sum(
-                    ExpressionWrapper(F('piece__prix_unitaire') * F('quantite'), output_field=DecimalField())
-                )
-            )
-            .order_by('-total_pieces')[:3] 
-        )
 
-        #Les pièces les plus vendues
-        top_pieces = (
-            PanierItem.objects.filter(date_creation=date.today(),
-                                      panier__valide=True,         
-                                      panier__panier_paye=True,)
-            .values('piece__designation', 'piece__type_voiture__type_voiture')  
-            .annotate(total_commandes=Count('id'), total_somme=Sum('piece__prix_unitaire'))  
-            .order_by('-total_commandes')[:2]  
-        )
-        # best_pieces = sorted([x for x in best_pieces if x['recs'] is not None], key=lambda x: x['recs'], reverse=True)[:10]
-        print(top_pieces,"--------++++++++++++++++-------",top_categories)
-        
+            total_pieces = Piece.objects.filter(date_creation__range=[date_debut, date_fin]).aggregate(total=Sum('quantite'))['total'] or 0
+            total_inventory_value = Piece.objects.filter(date_creation__range=[date_debut, date_fin]).aggregate(total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField())))['total_value'] or 0
+            #commande
+            total_orders = Commande.objects.filter(date_creation__range=[date_debut, date_fin]).count()
+
+            total_revenue_jour = Commande.objects.filter(date_creation__range=[date_debut, date_fin]).aggregate(total=Sum('total'))['total'] or 0
+            total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
+            total_unpaid_jour = Commande.objects.filter(date_creation__range=[date_debut, date_fin]).aggregate(total=Sum('montant_reste'))['total'] or 0
+            total_unpaid_mois = Commande.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('montant_reste'))['total'] or 0
+            total_revenue_mois = Commande.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('total'))['total'] or 0
+
+            total_tickets_issued = Ticket.objects.filter(date_creation__range=[date_debut, date_fin]).count()
+            total_tickets_used = Ticket.objects.filter(utilise=True, date_creation__range=[date_debut, date_fin]).count()
+            fully_paid_delivered_orders = Commande.objects.filter(paye=True, panier__panier_livre=True, date_creation__range=[date_debut, date_fin]).count()
+
+            pending_payment_orders = Commande.objects.filter(paye=False, date_creation__range=[date_debut, date_fin]).count()
+            low_stock_pieces = Piece.objects.filter(date_creation__range=[date_debut, date_fin],quantite__lte=5).count()
+            total_paniers = Panier.objects.filter(date_creation__range=[date_debut, date_fin]).count() or 1
+            total_paniers_jour = Panier.objects.filter(date_creation__range=[date_debut, date_fin]).count()
+            total_paniers_mois = Panier.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).count()
+
+            validated_paniers = Panier.objects.filter(valide=True, panier_paye=False, date_creation__range=[date_debut, date_fin]).count()
+            total_inventory_restant = total_inventory_value - total_revenue_mois
+
+            pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO'], date_creation__range=[date_debut, date_fin]).count()
+            pieces_by_category_dzire = Piece.objects.filter(type_voiture__type_voiture__in=['DZIRE'], date_creation__range=[date_debut, date_fin]).count()
+            pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT'], date_creation__range=[date_debut, date_fin]).count()
+            total_quantite_alto = Piece.objects.filter(type_voiture__type_voiture='ALTO', date_creation__range=[date_debut, date_fin]).aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
+            total_quantite_dzire = Piece.objects.filter(type_voiture__type_voiture='DZIRE', date_creation__range=[date_debut, date_fin]).aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
+            total_quantite_swift = Piece.objects.filter(type_voiture__type_voiture='SWIFT', date_creation__range=[date_debut, date_fin]).aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
+            
+
+            total_pieces_swift = PanierItem.objects.filter(piece__type_voiture__type_voiture='SWIFT',
+                panier__commands__isnull=False,panier__valide=True,
+                panier__panier_paye=True,
+                date_creation__range=[date_debut, date_fin]
+            ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
+
+            total_pieces_alto = PanierItem.objects.filter(piece__type_voiture__type_voiture='ALTO', 
+                panier__commands__isnull=False,panier__valide=True, 
+                panier__panier_paye=True, 
+                date_creation__range=[date_debut, date_fin]
+            ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
+
+            total_pieces_dzire = PanierItem.objects.filter(piece__type_voiture__type_voiture='DZIRE', 
+                panier__commands__isnull=False,
+                panier__valide=True, panier__panier_paye=True, 
+                date_creation__range=[date_debut, date_fin]
+            ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
+
+            ################################----GRAPHICS----################################
+            total_revenue_filtre = Commande.objects.filter(date_creation__range=[date_debut, date_fin])
+            revenue_mensuelle_filtre = {month: 0 for month in range(1, 13)}
+            for commande in total_revenue_filtre:
+                revenue_mensuelle_filtre[commande.date_creation.month] += 1
+
+            revenue_mensuelle_data = [revenue_mensuelle_filtre[month] for month in range(1, 13)]
+            mois_label = [calendar.month_name[month][:2] for month in range(1, 13)]
+
+            
+            if total_paniers == 0:
+                estimat_stock = 0
+            estimat_stock = (total_pieces/total_paniers)
+            estimat_stock_format = '{:.2f}'.format(estimat_stock)
+            # Top categories
+            top_categories = PanierItem.objects.filter(
+                piece__type_voiture__type_voiture__in=['SWIFT', 'ALTO', 'DZIRE'],
+                panier__valide=True, panier__panier_paye=True, date_creation__range=[date_debut, date_fin]
+            ).values('piece__type_voiture__type_voiture').annotate(
+                total_pieces=Sum('quantite'),
+                total_revenue=Sum(ExpressionWrapper(F('piece__prix_unitaire') * F('quantite'), output_field=DecimalField()))
+            ).order_by('-total_pieces')[:3]
+
+            # Top pieces
+            top_pieces = PanierItem.objects.filter(
+                panier__valide=True, panier__panier_paye=True, date_creation__range=[date_debut, date_fin]
+            ).values('piece__designation', 'piece__type_voiture__type_voiture').annotate(
+                total_commandes=Count('id'), total_somme=Sum('piece__prix_unitaire')
+            ).order_by('-total_commandes')[:2]
+            
+        else:
+        # AFFICHAGE DES DONNEES DU JOUR EN COURS
+            total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
+            # Total inventaire
+            total_inventory_value = Piece.objects.aggregate(total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField())))['total_value'] or 0
+            # Total Commandes
+            total_orders = Commande.objects.filter(date_creation=date.today()).count()
+            # Total revenue Commandes
+            # total_revenue = Commande.objects.aggregate(total=Sum('total'))['total'] or 0
+            total_revenue_jour = Commande.objects.filter(date_creation=date.today()).aggregate(total=Sum('total'))['total'] or 0
+            total_revenue_mois = Commande.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('total'))['total'] or 0
+            
+            print('')
+            print('----------------------------------------------------------------', total_revenue_jour,'------------------------',total_revenue_mois,'-----------------',total_inventory_value)
+            print('')
+            # Total impayés
+            total_unpaid = Commande.objects.aggregate(total=Sum('montant_reste'))['total'] or 0
+            total_unpaid_jour = Commande.objects.filter(date_creation=date.today()).aggregate(total=Sum('montant_reste'))['total'] or 0
+            total_unpaid_mois = Commande.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('montant_reste'))['total'] or 0
+            
+            # Nombre de tickets émis et utilisés
+            total_tickets_issued = Ticket.objects.filter(date_creation=date.today()).count()
+            total_tickets_used = Ticket.objects.filter(utilise=True, date_creation=date.today()).count()
+            # Commandes entièrement payées et livrées
+            fully_paid_delivered_orders = Commande.objects.filter(paye=True, panier__panier_livre=True,date_creation=date.today(),).count()
+            # Commandes en attente de paiement
+            pending_payment_orders = Commande.objects.filter(paye=False, date_creation=date.today()).count()
+    
+            # Pièces dont le stock est faible
+            low_stock_pieces = Piece.objects.filter(quantite__lte=5).count()
+            # Total Paniers
+            total_paniers = Panier.objects.all().count()
+            total_paniers_jour = Panier.objects.filter(date_creation=date.today()).count()
+            #le mois en cours
+            total_paniers_mois = Panier.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).count()
+            # Estimation du stock
+            estimat_stock = (total_pieces/total_paniers)
+            if total_paniers == 0:
+                estimat_stock = 0
+            estimat_stock_format = '{:.2f}'.format(estimat_stock)
+            # Paniers that are validated but not yet paid
+            validated_paniers = Panier.objects.filter(valide=True, panier_paye=False, date_creation=date.today()).count()
+            #----------------------------------------------------------------------------#
+            pieces_by_category_alto = Piece.objects.filter(type_voiture__type_voiture__in=['ALTO']).count()
+            pieces_by_category_dzire = Piece.objects.filter(type_voiture__type_voiture__in=['DZIRE']).count()
+            pieces_by_category_swift = Piece.objects.filter(type_voiture__type_voiture__in=['SWIFT']).count()
+            total_inventory_restant = total_inventory_value - total_revenue_mois
+    
+            #Le Detail des quantités par type de voitures
+            total_quantite_alto = Piece.objects.filter(type_voiture__type_voiture='ALTO').aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
+            total_quantite_dzire = Piece.objects.filter(type_voiture__type_voiture='DZIRE').aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
+            total_quantite_swift = Piece.objects.filter(type_voiture__type_voiture='SWIFT').aggregate(total_quantite=Sum('quantite'))['total_quantite'] or 0
+            # Total des pièces pour les commandes dont les pièces sont pour les voitures de type DZIRE
+            # Total des pièces pour les commandes dont les pièces sont pour les voitures de type ALTO
+            # Total des pièces pour les commandes dont les pièces sont pour les voitures de type SWIFT
+            total_pieces_swift = PanierItem.objects.filter(piece__type_voiture__type_voiture='SWIFT',
+                panier__commands__isnull=False,  # On filtre pour les paniers qui sont liés à des commandes
+                panier__valide=True,             # Panier validé
+                panier__panier_paye=True,
+                date_creation=date.today()
+            ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
+    
+            total_pieces_alto = PanierItem.objects.filter(
+                piece__type_voiture__type_voiture='ALTO',
+                panier__valide=True,             # Panier validé
+                panier__panier_paye=True,
+                panier__commands__isnull=False,date_creation=date.today()
+            ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
+    
+            total_pieces_dzire = PanierItem.objects.filter(
+                piece__type_voiture__type_voiture='DZIRE',
+                panier__valide=True,             # Panier validé
+                panier__panier_paye=True,
+                panier__commands__isnull=False,date_creation=date.today()
+            ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
+    
+            #--------------------------------------Graphs--------------------------------#
+    
+            total_revenue_filtre = Commande.objects.filter(date_creation__year=datetime.now().year)
+            revenue_mensuelle_filtre = {month: 0 for month in range(1, 13)}
+            for commande in total_revenue_filtre:
+                revenue_mensuelle_filtre[commande.date_creation.month] += 1
+    
+            revenue_mensuelle_data = [revenue_mensuelle_filtre[month] for month in range(1, 13)]
+            mois_label = [calendar.month_name[month][:2] for month in range(1, 13)]
+    
+            top_categories = (
+                PanierItem.objects.filter(piece__type_voiture__type_voiture__in=['SWIFT', 'ALTO', 'DZIRE'],
+                                            panier__valide=True,         
+                                            panier__panier_paye=True,
+                                            date_creation=date.today()
+                                        )
+                .values('piece__type_voiture__type_voiture')
+                .annotate(
+                    total_pieces=Sum('quantite'),
+                    total_revenue=Sum(
+                        ExpressionWrapper(F('piece__prix_unitaire') * F('quantite'), output_field=DecimalField())
+                    )
+                )
+                .order_by('-total_pieces')[:3] 
+            )
+    
+            #Les pièces les plus vendues
+            top_pieces = (
+                PanierItem.objects.filter(date_creation=date.today(),
+                                          panier__valide=True,         
+                                          panier__panier_paye=True,)
+                .values('piece__designation', 'piece__type_voiture__type_voiture')  
+                .annotate(total_commandes=Count('id'), total_somme=Sum('piece__prix_unitaire'))  
+                .order_by('-total_commandes')[:2]  
+            )
+    
+            # best_pieces = sorted([x for x in best_pieces if x['recs'] is not None], key=lambda x: x['recs'], reverse=True)[:10]
+            print(top_pieces,"--------++++++++++++++++-------",top_categories)
         
         context = {
         'form': form,
@@ -167,7 +236,6 @@ class DashboardView(TemplateView):
         'total_pieces_alto': total_pieces_alto,
         'total_pieces_swift': total_pieces_swift,
         'total_pieces_dzire': total_pieces_dzire,
-        
         #Total en stock
         'total_quantite_alto': total_quantite_alto,
         'total_quantite_dzire': total_quantite_dzire,
