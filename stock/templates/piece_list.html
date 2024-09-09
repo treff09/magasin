@@ -1,4 +1,4 @@
- {% extends "base.html" %} {% block title %}Dashboard Accueil{% endblock %} {% block main_content %}
+ {% extends "base.html" %} {% block title %}SERVICE ACCUEIL{% endblock %} {% block main_content %}
 <div id="app" class="app app-content-full-height app-without-header">
     <div id="content" class="app-content p-0">
         <div class="pos pos-with-menu pos-with-sidebar" id="pos">
@@ -13,12 +13,12 @@
                                             <div class="card h-100">
                                                 <div class="card-header">VENTE JOURNALIERE</div>
                                                 <div class="card-body">
-                                                    <div class="h4 fw-100 text-theme mb-1">1.000.000</div>
+                                                    <div class="h4 fw-100 text-theme mb-1">{{total_revenue_jour}} frscfa</div>
                                                     <p class="text-white fs-10px mb-0">
-                                                        Pieces vendues: 300
+                                                        Nombre de commande: {{command_valide}}
                                                     </p>
                                                     <p class="fs-9px mb-0 text-white text-opacity-50">
-                                                        updated 1 min ago
+                                                        Nombre de piece vendue:{{panier_valide}}
                                                     </p>
                                                 </div>
                                             </div>
@@ -27,12 +27,12 @@
                                             <div class="card h-100">
                                                 <div class="card-header">VENTE MENSUELLE</div>
                                                 <div class="card-body">
-                                                    <div class="h4 fw-100 text-theme mb-1">5.000.000</div>
+                                                    <div class="h4 fw-100 text-theme mb-1">{{total_revenue_mois}}</div>
                                                     <p class="text-white fs-10px mb-0">
-                                                        Pieces vendues: 1500
+                                                        Nombre de commande: {{nb_command_valide_mois}}
                                                     </p>
                                                     <p class="fs-9px mb-0 text-white text-opacity-50">
-                                                        updated 1 min ago
+                                                        Nombre de piece vendue: {{nb_panier_mensuelle_valide}}
                                                     </p>
                                                 </div>
                                             </div>
@@ -55,9 +55,9 @@
                                             <div class="card h-100">
                                                 <div class="card-header">TOTALE DES PIECES</div>
                                                 <div class="card-body">
-                                                    <div class="h4 fw-100 text-theme mb-1">3000</div>
+                                                    <div class="h4 fw-100 text-theme mb-1">{{total_pieces}}</div>
                                                     <p class="text-white fs-10px mb-0">
-                                                        Evaluation: 40.000.000
+                                                        Evaluation: {{total_inventory_value}}
                                                     </p>
                                                     <p class="fs-9px mb-0 text-white text-opacity-50">
                                                         updated 1 min ago
