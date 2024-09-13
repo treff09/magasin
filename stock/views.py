@@ -66,7 +66,7 @@ class DashboardView(TemplateView):
         #le mois en cours
         total_paniers_mois = Panier.objects.filter(date_creation__year=date.today().year, date_creation__month=date.today().month).count()
         # Estimation du stock
-        estimat_stock = (total_pieces/total_paniers)
+        estimat_stock = 0
         if total_paniers == 0:
             estimat_stock = 0
         estimat_stock_format = '{:.2f}'.format(estimat_stock)
@@ -565,7 +565,7 @@ def valider_panier(request):
     # Créer une nouvelle commande pour le panier
     commande = Commande.objects.create(
         panier=panier,
-        numero_commande='CMD' + str(panier.id) + '-' + str(Commande.objects.filter(panier=panier).count() + 1),
+        numero_commande='CMD' + '-' +str(panier.id) + '-' + str(Commande.objects.filter(panier=panier).count() + 1),
         total=total_apres_remise,
         utilisateur=request.user,
         remise=remise,
@@ -877,3 +877,57 @@ def details_commande(request, commande_id):
 
 def scanner_qr_code(request):
     return render(request, 'scanner.html')
+
+
+#historique 
+
+from django.shortcuts import render
+from django.utils.dateparse import parse_date
+from datetime import datetime
+from .models import Panier, PanierItem, Piece, Commande, Ticket
+
+@user_passes_test(is_admin_magasin)
+def global_history_view(request):
+    filter_date = request.GET.get('date', None)
+    
+    # Si aucune date n'est fournie, on utilise la date du jour
+    if filter_date:
+        filter_date_obj = parse_date(filter_date)
+    else:
+        filter_date_obj = datetime.today().date()
+
+    # Obtenez l'utilisateur connecté
+    current_user = request.user
+
+    # Récupérer l'historique des objets pour différents modèles
+    history_diff = []
+    models = [Panier, PanierItem, Piece, Commande, Ticket]
+
+    for model in models:
+        model_history = model.history.filter(history_date__date=filter_date_obj)
+
+       
+       
+
+        for record in model_history:
+            if record.prev_record:
+                diff = record.diff_against(record.prev_record)
+                history_diff.append({
+                    'record': record,
+                    'model': model.__name__,
+                    'changed_fields': diff.changed_fields
+                })
+            else:
+                history_diff.append({
+                    'record': record,
+                    'model': model.__name__,
+                    'changed_fields': None
+                })
+
+    context = {
+        'global_history': history_diff,
+        'filter_date': filter_date_obj,
+        'current_user': current_user
+    }
+
+    return render(request, 'global_history.html', context)

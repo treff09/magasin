@@ -36,6 +36,8 @@ urlpatterns = [
     #scanne
     path('details_commande/<int:commande_id>/', views.details_commande, name='details_commande'),
     path('scanner/', views.scanner_qr_code, name='scanner_qr_code'),
+    #historique 
+    path('history/', global_history_view, name='global_history'),
 
     
 ]
