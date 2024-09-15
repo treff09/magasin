@@ -12,12 +12,12 @@
                     <div class="card h-100">
                         <div class="card-header">VENTE JOURNALIERE</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">{{total_revenue_jour}} frscfa</div>
+                            <div class="h4 fw-100 text-theme mb-1">{{total_cmde_revenue_jour}}</div>
                             <p class="text-white fs-10px mb-0">
-                                Pieces vendues: {{total_paniers_jour}}
+                                Pieces vendues: {{nb_piece_jour_vendu}}
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
-                                Total réduction: {{total_unpaid_jour}} frscfa
+                                Total panier validé: {{nb_paniers_jours_cours}}
                             </p>
                         </div>
                     </div>
@@ -26,26 +26,47 @@
                     <div class="card h-100">
                         <div class="card-header">VENTE MENSUELLE</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">{{total_revenue_mois}} frscfa</div>
+                            <div class="h4 fw-100 text-theme mb-1">{{total_cmde_mois_en_cours}}</div>
                             <p class="text-white fs-10px mb-0">
-                                Pieces vendues: {{total_paniers_mois}}
+                                Pieces vendues: {{nb_piece_mois_encours_vendu}}
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
-                                Total réduction: {{total_unpaid_mois}}
+                                Total panier validé: {{nb_paniers_mois_cours}}
+                            </p>
+                            <p class="fs-9px mb-0 text-white text-opacity-50">
+                                Total commande: {{nb_cmde_mois_en_cours}}
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-2 col-lg-4 col-6">
                     <div class="card h-100">
-                        <div class="card-header">XXXX</div>
+                        <div class="card-header">VENTE ANNUELLE</div>
                         <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">17.000.000</div>
+                            <div class="h4 fw-100 text-theme mb-1">{{total_cmde_annee_en_cours}}</div>
                             <p class="text-white fs-10px mb-0">
-                                Pieces vendues: 15000
+                                Pieces vendues: {{nb_piece_annee_en_cours_vendu}}
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
-                                updated 1 min ago
+                                TOTAL panier validé: {{nb_paniers_anneen_cours}} 
+                            </p>
+                            <p class="fs-9px mb-0 text-white text-opacity-50">
+                                TOTAL commande: {{nb_cmde_annee_en_cours}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-2 col-lg-4 col-6">
+                    <div class="card h-100">
+                        <div class="card-header">TOTAL REVENUE</div>
+                        <div class="card-body">
+                            <div class="h4 fw-100 text-theme mb-1">{{total_inventory_restant}}</div>
+                            <p class="text-white fs-10px mb-0">
+                                Total pièce vendue: {{total_paniers}}
+                            </p>
+                            <p class="fs-9px mb-0 text-white text-opacity-50">
+                                Totale des reductions: {{total_unpaid}}
                             </p>
                         </div>
                     </div>
@@ -63,25 +84,11 @@
                 </div>
                 <div class="col-xl-2 col-lg-4 col-6">
                     <div class="card h-100">
-                        <div class="card-header">TOTAL REVENUE</div>
-                        <div class="card-body">
-                            <div class="h4 fw-100 text-theme mb-1">{{total_inventory_restant}} frscfa</div>
-                            <p class="text-white fs-10px mb-0">
-                                Total pièce vendue: {{total_paniers}}
-                            </p>
-                            <p class="fs-9px mb-0 text-white text-opacity-50">
-                                Totale des reductions: {{total_unpaid}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-2 col-lg-4 col-6">
-                    <div class="card h-100">
                         <div class="card-header">TOTALE DES PIECES</div>
                         <div class="card-body">
                             <div class="h4 fw-100 text-theme mb-1">TOTAL: {{total_pieces}}</div>
                             <p class="text-white fs-10px mb-0">
-                                Valeur inventaire: {{total_inventory_value}} frcfa
+                                Valeur inventaire: {{total_inventaire}}
                             </p>
                             <p class="fs-9px mb-0 text-white text-opacity-50">
                                 Estimation du stock: {{estimat_stock_format}}%
@@ -198,7 +205,7 @@
                 <div class="col-lg-12">
                     <div class="card h-100">
                         <div class="card-header with-btn">
-                            BUSINESS METRICS
+                            TOTAL COMMANDE PIECE EN RUPTURE ET RECU GENERE 
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
@@ -209,19 +216,17 @@
                                         </div>
                                         <div class="flex-1">
                                             <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">COMMANDE</div>
-                                            <div class="h6 mb-0 fw-base">{{total_orders}}</div>
+                                            <div class="h6 mb-0 fw-base">{{cmd_en_attente_jour}}</div>
                                         </div>
                                     </div>
                                 </div>
-                                
-
                                 <div class="col-4">
                                     <div class="d-flex align-items-center">
                                         <div class="fs-32px text-theme d-flex w-40px">
                                             <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
                                         </div>
                                         <div class="flex-1">
-                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">EMIS</div>
+                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">VENDUE</div>
                                             <div class="h6 mb-0 fw-base">{{total_tickets_issued}}</div>
                                         </div>
                                     </div>
@@ -233,7 +238,7 @@
 
                                         </div>
                                         <div class="flex-1">
-                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">UTILISES</div>
+                                            <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">LIVRER</div>
                                             <div class="h6 mb-0 fw-base">{{total_tickets_used}}</div>
                                         </div>
                                     </div>
@@ -262,7 +267,7 @@
                                         </div>
                                         <div class="flex-1">
                                             <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">TOTAL</div>
-                                            <div class="h6 mb-0 fw-base">{{pending_payment_orders}}</div>
+                                            <div class="h6 mb-0 fw-base">{{cmd_payee_livrer}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +278,7 @@
                                         </div>
                                         <div class="flex-1">
                                             <div class="fs-10px fw-semibold text-white text-opacity-50 mb-1">A VALIDER</div>
-                                            <div class="h6 mb-0 fw-base">{{validated_paniers}}</div>
+                                            <div class="h6 mb-0 fw-base">{{cmd_en_attente_jour}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -284,7 +289,7 @@
 
                 <div class="col-lg-12">
                     <div class="card h-100">
-                        <div class="card-header with-btn">LES 10 PIECES LES PLUS VENDUES</div>
+                        <div class="card-header with-btn">LES 10 PIECES LES PLUS VENDUES DE {{libelle_mois_en_cours|upper}}</div>
                         <div class="card-body">
                             <div class="row mb-3 fs-10px pt-1px">
                                 <div class="col-12">
