@@ -1,4 +1,5 @@
-{% load static %} {% if user.is_authenticated %}
+{% load static %} 
+{% if user.is_authenticated %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +23,8 @@
     <link href="{% static 'assets/plugins/bootstrap-table/dist/bootstrap-table.min.css' %} " rel="stylesheet" />
 
 </head>
-{% block content %} {% endblock %}
+{% block content %} 
+{% endblock %}
 
 <body>
 
@@ -52,7 +54,7 @@
 
 
             <div class="brand">
-                <a href="" class="brand-logo w-100">
+                <a href=" " class="brand-logo w-100">
                     <iconify-icon icon="lets-icons:time-progress-duotone" class="fs-24px me-2 text-theme"></iconify-icon>
                     <span class="brand-text fw-500 fs-14px">AUTO-PIECE</span>
                 </a>
@@ -237,8 +239,11 @@
                     </div>
                     
                     <div class="mt-auto p-15px w-100 ">
-                        <a href="{% url 'deconnexion' %} " target="_blank " class="btn d-block btn-secondary btn-sm py-6px w-100 " style="border-radius: 20px; "><i class="fa fa-sign-out " aria-hidden="true "></i> DECONNEXION</a>
+                        <a href="{% url 'deconnexion' %} " target="_blank " class="btn d-block btn-secondary btn-sm py-6px w-100 " style="border-radius: 20px;"><i class="fa fa-sign-out " aria-hidden="true "></i> DECONNEXION</a>
                     </div>
+                    {% comment %} {% if user.is_superuser %}
+                        <a class="btn d-block btn-secondary btn-sm py-6px w-100 " style="border-radius: 20px;" href="/admin/">Accéder à la page admin</a>
+                    {% endif %} {% endcomment %}
                 </div>
             </div>
         </div>
