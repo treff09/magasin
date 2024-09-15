@@ -41,7 +41,10 @@
                                         {% endwith %}
                                         {% empty %}
                                             <tr>
-                                                <td colspan="4">Aucun Livraison en attente.</td>
+                                                <td class='text-center' >-</td>
+                                                <td class='text-center' >-</td>
+                                                <td class='text-center' >-</td>
+                                                <td class='text-center' >-</td>
                                             </tr>
                                     {% endfor%}
                                     </tbody>
@@ -63,7 +66,7 @@
 												<div class="d-flex align-items-center">
 													<div class="fs-32px text-theme d-flex w-40px"><iconify-icon icon="material-symbols-light:bar-chart-4-bars"></iconify-icon></div>
 														<div class="flex-1">
-															<div class="fs-10px fw-semibold text-white text-opacity-50 mb-1 text-theme">Nbre livraison effectuées</div>
+															<div class="fs-10px fw-semibold text-white text-opacity-50 mb-1 text-theme">Nbre de livraison effectuées</div>
 															<div class="h6 mb-0 fw-base text-theme">$7.5m</div>
 														</div>
 													</div>
@@ -92,7 +95,7 @@
                                                 <tr class="text-white">
                                                 <th width="35%">Libelle.</th>
                                                 <th width="30%">CATEGORIE</th>
-                                                <th width="25%">SEVERITY</th>
+                                                <th width="25%">QUANTITE</th>
                                                 <th width="10%">TOTAL</th>
                                                 </tr>
 									    	</thead>
