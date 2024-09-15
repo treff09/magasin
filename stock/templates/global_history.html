@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique Global</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        input[type="date"] {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background-color: #e7f3fe;
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Historique Global</h1>
+
+    <p>Utilisateur connecté : {{ current_user.username }}</p>
+
+    <!-- Formulaire pour sélectionner une autre date -->
+    <form method="GET" action="">
+        <label for="date">Filtrer par date :</label>
+        <input type="date" id="date" name="date" value="{{ filter_date }}">
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Modèle</th>
+                <th>Date de l'Action</th>
+                <th>Type d'Action</th>
+                <th>Utilisateur</th>
+                <th>Changements</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in global_history %}
+            <tr>
+                <td>{{ entry.model }}</td>
+                <td>{{ entry.record.history_date|date:"d M Y H:i:s" }}</td>
+                <td>
+                    {% if entry.record.history_type == '+' %}
+                    Création
+                    {% elif entry.record.history_type == '-' %}
+                    Suppression
+                    {% else %}
+                    Modification
+                    {% endif %}
+                </td>
+                <td>{% if entry.record.utilisateur %}{{ entry.record.utilisateur }}{% else %}Système{% endif %}</td>
+                <td>
+                    {% if entry.changed_fields %}
+                    <ul>
+                        {% for change in entry.changed_fields %}
+                        <li>{{ change }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
