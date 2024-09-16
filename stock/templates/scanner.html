@@ -26,44 +26,70 @@
             border: 1px solid #ccc;
             margin-bottom: 20px;
         }
+       
     </style>
 </head>
 <body>
     <h1>Scanner le Code QR</h1>
     <video id="preview"></video>
+    <canvas id="canvas"></canvas>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
     <script>
         const video = document.getElementById('preview');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        let shouldRestart = false; // Variable pour contrôler le redémarrage
 
+        // Demander l'accès à la caméra de l'appareil
         navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
             .then(function(stream) {
                 video.srcObject = stream;
-                video.setAttribute("playsinline", true); // Required for iOS Safari
+                video.setAttribute("playsinline", true); // Nécessaire pour Safari sur iOS
                 video.play();
                 requestAnimationFrame(tick);
+                
+                // Relancer l'analyse toutes les 30 secondes
+                setInterval(() => {
+                    shouldRestart = true;
+                }, 30000); // 30 secondes en millisecondes
+            })
+            .catch(function(error) {
+                console.error("Erreur d'accès à la caméra :", error);
+                alert("Impossible d'accéder à la caméra. Vérifiez les permissions.");
             });
 
         function tick() {
             if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;  // Utiliser la largeur de la vidéo
+                canvas.height = video.videoHeight; // Utiliser la hauteur de la vidéo
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
+                // Obtenir les données de l'image du canvas
                 const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
                 const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
 
+                // Si un QR code est détecté
                 if (qrCode) {
-                    video.pause();
-                    const commandeId = qrCode.data; // Assumes QR code contains the order ID
+                    console.log("Code QR détecté :", qrCode.data); // Vérifier dans la console le contenu du QR code
+                    video.pause(); // Mettre en pause la vidéo une fois le QR code détecté
+                    const commandeId = qrCode.data; // Récupérer les données du QR code
 
-                    // Redirection vers la page des détails de commande
+                    // Rediriger vers la page des détails de commande
                     window.location.href = `/details_commande/${commandeId}/`;
+                } else if (shouldRestart) {
+                    console.log("Aucun QR code détecté. Redémarrage de l'analyse.");
+                    shouldRestart = false;
+                    // Relancer l'analyse en appelant `requestAnimationFrame` immédiatement
+                    requestAnimationFrame(tick);
+                } else {
+                    // Si aucun QR code n'est détecté et aucune relance n'est prévue, continuer à analyser
+                    requestAnimationFrame(tick);
                 }
+            } else {
+                // Si la vidéo n'a pas encore assez de données, continuer à appeler `tick`
+                requestAnimationFrame(tick);
             }
-            requestAnimationFrame(tick);
         }
     </script>
 </body>
