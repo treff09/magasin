@@ -18,7 +18,6 @@ from django.core.mail import EmailMultiAlternatives
 def is_admin_magasin(user):
     return user.is_authenticated and user.groups.filter(name='AdminMagasin').exists()
     
-
 # @user_passes_test(is_admin_magasin)
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
@@ -235,10 +234,7 @@ class VerifyOtpView(View):
             return JsonResponse({'success': 'Mot de passe réinitialisé avec succès.'})
 
             messages.error(request, 'Mot de passe réinitialisé avec succès.')
-            return  render(request, "logins.html")
-
-            messages.error(request, 'Mot de passe réinitialisé avec succès.')
-            return  render(request, "logins.html")
+            return render(request, "logins.html")
 
         except PWD_FORGET.DoesNotExist:
             messages.error(request, 'OTP non valide.')
@@ -261,8 +257,6 @@ class OptValid(View):
                  messages.error(request, "OTP non valide.")
                  return  render(request, "opt.html")
                
-              
-        
 from .forms import ChangePasswordForm
 from django.contrib.auth.views import PasswordChangeView 
 from django.urls import reverse_lazy
@@ -286,14 +280,7 @@ class PasswordChangeView(PasswordChangeView):
     def get(self, request, *args, **kwargs):
         form = self.get_form()
         return render(request, self.template_name, {'form': form})
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     user_group = self.request.user.groups.first()
-    #     context['user_group'] = user_group.name if user_group else None
-    #     return context
-
-
+    
 class PasswordChangeDoneView(View):
     def get(self, request):
          return render(request, 'password_change_done.html')

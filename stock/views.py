@@ -750,8 +750,17 @@ def caisseDashboard(request):
 @user_passes_test(is_liveur)
 def livraison_dashboard(request):
     # Filtrer les paniers dont le statut 'valide' est True
-    livraison_en_attente = Panier.objects.filter(valide=True,panier_paye = True,panier_livre=False) 
-    return render(request, 'livraison.html', {'livraison_en_attente': livraison_en_attente})
+    livraison_en_attente = Panier.objects.filter(valide=True, panier_paye=True, panier_livre=False) 
+    nb_en_attente = Panier.objects.filter(valide=True, panier_paye=True, panier_livre=False, date_creation=date.today()).count() 
+    livraison_effectuee = Panier.objects.filter(valide=True, panier_paye=True, panier_livre=True) 
+    # livraison_effectuee = Panier.objects.filter(valide=True, panier_paye=True, panier_livre=True, date_creation=date.today()) 
+    nb_effectuee = Panier.objects.filter(valide=True, panier_paye=True, panier_livre=True,).count() 
+    return render(request, 'livraison.html', {
+        'livraison_en_attente': livraison_en_attente,
+        'livraison_effectuee': livraison_effectuee,
+        'nb_en_attente': nb_en_attente,
+        'nb_effectuee': nb_effectuee,
+        })
 
 
 import qrcode
@@ -834,10 +843,6 @@ def global_history_view(request):
 
     for model in models:
         model_history = model.history.filter(history_date__date=filter_date_obj)
-
-       
-       
-
         for record in model_history:
             if record.prev_record:
                 diff = record.diff_against(record.prev_record)

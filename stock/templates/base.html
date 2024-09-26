@@ -227,6 +227,11 @@
                                     <div class="menu-text">FOURNISSEURS</div>
                                 </a>
                             </div>
+                            <div class="menu-item {% if request.resolver_match.url_name == 'global_history' %}active{% endif %} ">
+                                <a href="{% url 'global_history' %}" target="_blank" class="menu-link">
+                                    <div class="menu-text">AUDITE</div>
+                                </a>
+                            </div>
                         </div>
                     </div>
 

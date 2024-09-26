@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth.forms import PasswordChangeForm
 
-
 class UserForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"magasin@20",'class':'form-control'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Bradtref",'class':'form-control'}))
