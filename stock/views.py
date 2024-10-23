@@ -159,8 +159,6 @@ class DashboardView(TemplateView):
             
             total_cms_unpaid = Commande.objects.filter(date_creation__month=date.today().month,).aggregate(total=Sum('montant_reste'))['total'] or 0
             # best_pieces = sorted([x for x in best_pieces if x['recs'] is not None], key=lambda x: x['recs'], reverse=True)[:10]
-            print(total_cms_unpaid)
-            
         else:
             # AFFICHAGE DES DONNEES DU JOUR EN COURS
             total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
@@ -181,8 +179,8 @@ class DashboardView(TemplateView):
             cmd_en_attente_jour = Commande.objects.filter(paye=False, date_creation=date.today()).count()
 
             nb_piece_jour_vendu = PanierItem.objects.filter(
-                panier__commands__isnull=False,  # On filtre pour les paniers qui sont liés à des commandes
-                panier__valide=True,             # Panier validé
+                panier__commands__isnull=False,  
+                panier__valide=True,             
                 panier__panier_paye=True,
                 date_creation=date.today()
             ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
@@ -247,7 +245,8 @@ class DashboardView(TemplateView):
                 piece__type_voiture__type_voiture='DZIRE',
                 panier__valide=True,             # Panier validé
                 panier__panier_paye=True,
-                panier__commands__isnull=False,date_creation=date.today()
+                panier__commands__isnull=False,
+                date_creation=date.today()
             ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
     
             #--------------------------------------Graphs--------------------------------#
@@ -673,10 +672,10 @@ def panier(request):
     return render(request, 'panier.html', context)
 
 
-
+from django.http import JsonResponse
 @user_passes_test(is_caissier, is_admin_magasin)
 def valider_paiement(request, ticket_id):
-    paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False)
+    paniers_non_valides = Panier.objects.filter(valide=True, panier_paye=False)
     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=False)
     commande = ticket.commande
     panier = commande.panier
@@ -686,25 +685,51 @@ def valider_paiement(request, ticket_id):
             commande.paye = True
             reste = float(montant) - float(commande.total)
             commande.utilisateur = request.user
-            commande.montant_paye=float(montant)
-            commande.montant_reste= abs(reste)
+            commande.montant_paye = float(montant)
+            commande.montant_reste = abs(reste)
             commande.paye
             commande.save()
             ticket.utilise = True
             ticket.utilisateur = request.user
             ticket.save()
-            panier.panier_paye=True
+            panier.panier_paye = True
             panier.save()
+           
             # Mettre à jour le stock
             for item in PanierItem.objects.filter(panier=panier):
                 piece = item.piece
                 piece.quantite -= item.quantite
                 piece.save()
-            messages.success(request, f"Paiement validé. Utilisez le numéro {ticket.numero} pour récupérer vos articles.")
-            return redirect('caisseDashboard')
+
+            # Générer les données du reçu
+            panier_items = PanierItem.objects.filter(panier=panier)
+            receipt_data = {
+                'commande_numero': commande.numero_commande,
+                'total': commande.total,
+                'montant_paye': commande.montant_paye,
+                'montant_reste': commande.montant_reste,
+                'panier_items': [
+                    {
+                        'designation': item.piece.designation,
+                        'quantite': item.quantite,
+                        'prix_unitaire': item.piece.prix_unitaire
+                    }
+                    for item in panier_items
+                ]
+            }
+
+            # Renvoie les données du reçu en réponse AJAX
+            return JsonResponse({
+                'success': True,
+                'receipt_data': receipt_data,
+                'message': f"Paiement validé. Utilisez le numéro {ticket.numero} pour récupérer vos articles."
+            })
         else:
-            messages.error(request, "Le montant payé ne correspond pas au total de la commande.")
-    # Passer les items du panier au template
+            return JsonResponse({
+                'success': False,
+                'message': "Le montant payé ne correspond pas au total de la commande."
+            })
+
     panier_items = PanierItem.objects.filter(panier=panier)
     context = {
         'ticket': ticket,
@@ -712,8 +737,9 @@ def valider_paiement(request, ticket_id):
         'paniers_non_valides': paniers_non_valides,
         'panier_items': panier_items,
     }
-    print("++++++++++++++++++++++++++++",commande.panier,'\n')
     return render(request, 'caissiere_validation_paiement.html', context)
+
+
 
 # @user_passes_test(is_caissier)
 # def caissier_accueil(request):

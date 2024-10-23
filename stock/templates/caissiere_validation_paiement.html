@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block title %}DASHBOARD{% endblock %} {% block main_content %}
+
 <div id="app" class="app app-content-full-height app-without-header">
     <div id="content" class="app-content p-0">
         <div class="pos pos-with-menu pos-with-sidebar" id="pos">
@@ -140,16 +141,16 @@
                         <div class="pos-sidebar-nav fs-10px">
                             <ul class="nav nav-tabs nav-fill">
                                 {% if panier_items %}
-                                    <li class="nav-item">
-                                        <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Total type pièce : {{  panier_items.count }}</a>
-                                    </li>
+                                <li class="nav-item">
+                                    <a class="nav-link fw-semibold active" href="#" data-bs-toggle="tab" data-bs-target="#newOrderTab">Total type pièce : {{  panier_items.count }}</a>
+                                </li>
                                 {% endif %}
                             </ul>
                         </div>
                         <div class="pos-sidebar-body tab-content mb-2px" data-scrollbar="true" data-height="100%">
-                            <form method="post">
+                            <form method="post" onsubmit="handlePaymentFormSubmit(event)">
                                 <div class="tab-pane fade h-100 show active" id="newOrderTab">
-                                    {% csrf_token %} 
+                                    {% csrf_token %}
                                     <div class="pos-order py-3">
                                         <div class="pos-order-product">
                                             <div class="flex-1">
@@ -171,68 +172,68 @@
                                         </div>
                                     </div>
                                     {% for item in panier_items %}
-                                        <div class="pos-order py-3">
-                                            <div class="pos-order-product">
-                                                <div class="flex-1">
-                                                    <div class="row">
-                                                        <div class="col-4">
-                                                            <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <div class="small">{{ item.piece.type_voiture.type_voiture }}</div>
-                                                        </div>
-                                                        <div class="col-2">
-                                                            {{ item.quantite }}
-                                                        </div>
-                                                        <div class="col-3">
-                                                            {{item.piece.prix_unitaire}}
-                                                        </div>
+                                    <div class="pos-order py-3">
+                                        <div class="pos-order-product">
+                                            <div class="flex-1">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <div class="fw-semibold text-white">{{ item.piece.designation }}</div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="small">{{ item.piece.type_voiture.type_voiture }}</div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        {{ item.quantite }}
+                                                    </div>
+                                                    <div class="col-3">
+                                                        {{item.piece.prix_unitaire}}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     {% endfor %}
                                 </div>
                         </div>
                         <div class="pos-sidebar-footer">
                             {% if commande %}
-                            <div class="d-flex align-items-center mb-2">
-                                <div>Motant TTC</div>
-                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.total_sans_remise }} frs</div>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <div>Remise</div>
-                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.remise }} %</div>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <div>Motant à payer</div>
-                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.total }} frs</div>
-                            </div>
-                            <div class="d-flex align-items-center row ">
-                                <div class="col-md-3 mb-3">Montant</div>
-                                <div class="flex-1 text-end h6 mb-2 col-md-9">
-                                    <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Motant TTC</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.total_sans_remise }} frs</div>
                                 </div>
-                            </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Remise</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.remise }} %</div>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Motant à payer</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">{{ commande.total }} frs</div>
+                                </div>
+                                <div class="d-flex align-items-center row ">
+                                    <div class="col-md-3 mb-3">Montant</div>
+                                    <div class="flex-1 text-end h6 mb-2 col-md-9">
+                                        <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                                    </div>
+                                </div>
                             {% else %}
-                            <div class="d-flex align-items-center mb-2">
-                                <div>Motant TTC</div>
-                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">0 frs</div>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <div>Remise</div>
-                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">0.0 %</div>
-                            </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <div>Motant à payer</div>
-                                <div id="#sous-total" class="flex-1 text-end h6 mb-0">0 frs</div>
-                            </div>
-                            <div class="d-flex align-items-center row ">
-                                <div class="col-md-3 mb-3">Montant</div>
-                                <div class="flex-1 text-end h6 mb-2 col-md-9">
-                                    <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Motant TTC</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">0 frs</div>
                                 </div>
-                            </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Remise</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">0.0 %</div>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>Motant à payer</div>
+                                    <div id="#sous-total" class="flex-1 text-end h6 mb-0">0 frs</div>
+                                </div>
+                                <div class="d-flex align-items-center row ">
+                                    <div class="col-md-3 mb-3">Montant</div>
+                                    <div class="flex-1 text-end h6 mb-2 col-md-9">
+                                        <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px" required>
+                                    </div>
+                                </div>
                             {% endif %}
 
 
@@ -249,25 +250,24 @@
                                     <a href="{% url 'caisseDashboard' %} " class="btn btn-secondary btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px; " title="Annuler">
                                         <iconify-icon icon="bi:arrow-return-left" class="fs-24px d-flex justify-content-center"></iconify-icon>
                                     </a>
-     <script>
-    function printReceipt() {
-        var url = '/stock/recu/commande/1/';  // URL relative basée sur la racine du site
-        
-        var printWindow = window.open(url, 'Print', 'width=800,height=600');
-        printWindow.onload = function() {
-            printWindow.print();
-        };
-    }
-</script>
+                                    <script>
+                                        function printReceipt() {
+                                            var url = '/stock/recu/commande/1/';
+                                            var printWindow = window.open(url, 'Print', 'width=800,height=600');
+                                            printWindow.onload = function() {
+                                                printWindow.print();
+                                            };
+                                        }
+                                    </script>
 
-<a href="javascript:void(0);" onclick="printReceipt()" class="btn btn-secondary btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
-    <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
-    <span class="fw-semibold">BILL</span>
-</a>                              
+                                    <a href="javascript:void(0);" onclick="printReceipt()" class="btn btn-secondary btn-sm w-70px me-2 d-flex flex-column align-items-center justify-content-center" style="border-radius: 10px;">
+                                        <iconify-icon icon="material-symbols-light:receipt-outline" class="fs-24px d-flex justify-content-center"></iconify-icon>
+                                        <span class="fw-semibold">BILL</span>
+                                    </a>
                                     <button type="submit" class="btn btn-secondary btn-sm flex-fill d-flex flex-column align-items-center justify-content-cente" style="border-radius: 10px;">
                                     	<iconify-icon icon="fluent-emoji-high-contrast:money-bag" class="fs-30px d-flex justify-content-center" title="Payer"></iconify-icon>
-									</button>
-                                                    
+						    		</button>
+
                                 </div>
                             </div>
                         </div>

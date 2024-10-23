@@ -1,5 +1,4 @@
-{% load static %} 
-{% if user.is_authenticated %}
+{% load static %} {% if user.is_authenticated %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,10 +20,73 @@
     <link href="{% static 'assets/plugins/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css' %} " rel="stylesheet" />
     <link href="{% static 'assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' %} " rel="stylesheet" />
     <link href="{% static 'assets/plugins/bootstrap-table/dist/bootstrap-table.min.css' %} " rel="stylesheet" />
-
+    <style>
+        /* Style du contenu du reçu */
+        
+        #receiptContent {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            color: white;
+        }
+        
+        #receiptContent p {
+            margin: 0.5em 0;
+        }
+        
+        #receiptContent h5 {
+            margin-top: 1em;
+            border-bottom: 1px solid #e0dfdf;
+            padding-bottom: 0.5em;
+        }
+        
+        #receiptContent ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        #receiptContent ul li {
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        #receiptContent strong {
+            display: inline-block;
+            width: 200px;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        /* Styles spécifiques pour l'impression */
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #paymentReceiptModal,
+            #paymentReceiptModal * {
+                visibility: visible;
+            }
+            #paymentReceiptModal {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+            .modal-content {
+                border: none;
+            }
+            .modal-footer {
+                display: none;
+            }
+            #receiptContent ul {
+                border-top: 1px solid #333;
+            }
+        }
+    </style>
 </head>
-{% block content %} 
-{% endblock %}
+{% block content %} {% endblock %}
 
 <body>
 
@@ -60,7 +122,7 @@
                 </a>
             </div>
 
-            
+
             <div class="menu">
                 <div class="menu-item dropdown d-lg-flex d-none">
                     <a href="#" class="menu-link text-theme">
@@ -74,17 +136,15 @@
                     <div class="dropdown-menu fade dropdown-menu-end p-0 w-300px text-center">
                         <div class="row row-grid gx-0">
                             <div class="col-12 p-2">
-                                <form method="get" >
-                                {% csrf_token %}
+                                <form method="get">
+                                    {% csrf_token %}
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <div class="mb-3">
                                                 <label class="form-label">Filtre <span class="text-danger">*</span></label>
                                                 <div class="input-group input-daterange" id="datepicker-range">
-                                                    <span class="input-group-text">De</span>
-                                                    {{ form.date_debut }}
-                                                    <span class="input-group-text">à</span>
-                                                    {{ form.date_fin }}
+                                                    <span class="input-group-text">De</span> {{ form.date_debut }}
+                                                    <span class="input-group-text">à</span> {{ form.date_fin }}
                                                     <button type="submit" class="input-group-text btn btn-outline-light btn-block" style="border-radius: 0px 5px 5px 0px;">valider</button>
                                                 </div>
                                             </div>
@@ -113,11 +173,11 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end p-0 w-400px">
                         <div class="card">
-                            
+
                         </div>
                         <a class="" href=""></a>
                     </div>
-                </div> 
+                </div>
                 <div class="menu-item dropdown dropdown-mobile-full">
                     <a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon">
                     </a>
@@ -126,7 +186,7 @@
                         </div>
                         <a class="" href=""></a>
                     </div>
-                </div> 
+                </div>
                 <div class="menu-item dropdown dropdown-mobile-full">
                     <a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link menu-link-icon"></a>
                     <div class="dropdown-menu dropdown-menu-end p-0 w-300px">
@@ -134,7 +194,7 @@
                         </div>
                         <a class="" href=""></a>
                     </div>
-                </div> 
+                </div>
 
                 <div class="menu-item dropdown dropdown-mobile-full">
                     <a href="#" data-bs-toggle="dropdown" data-bs-display="static" class="menu-link d-flex align-items-center">
@@ -157,7 +217,8 @@
                 </div>
             </div>
 
-            {% comment %} <form class="menu-search-float" method="POST" name="header_search_form">
+            {% comment %}
+            <form class="menu-search-float" method="POST" name="header_search_form">
                 <div class="menu-search-container">
                     <div class="menu-search-icon"><i class="bi bi-search"></i></div>
                     <div class="menu-search-input">
@@ -242,38 +303,57 @@
                             <span class="menu-text">EMPLOYERS</span>
                         </a>
                     </div>
-                    
+
                     <div class="mt-auto p-15px w-100 ">
                         <a href="{% url 'deconnexion' %} " target="_blank " class="btn d-block btn-secondary btn-sm py-6px w-100 " style="border-radius: 20px;"><i class="fa fa-sign-out " aria-hidden="true "></i> DECONNEXION</a>
                     </div>
                     {% comment %} {% if user.is_superuser %}
-                        <a class="btn d-block btn-secondary btn-sm py-6px w-100 " style="border-radius: 20px;" href="/admin/">Accéder à la page admin</a>
-                    {% endif %} {% endcomment %}
+                    <a class="btn d-block btn-secondary btn-sm py-6px w-100 " style="border-radius: 20px;" href="/admin/">Accéder à la page admin</a> {% endif %} {% endcomment %}
                 </div>
             </div>
         </div>
 
 
 
-        {% block main_content %} 
-        {% endblock %} 
-        {% if messages %} 
-            {% for msg in messages %}
-                <div class="modal fade" id="modalSm">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Message</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                {{msg}}
-                            </div>
+        {% block main_content %} {% endblock %}
+
+        <div class="modal fade" id="paymentReceiptModal" tabindex="-1" aria-labelledby="paymentReceiptModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentReceiptModalLabel">Reçu de Paiement</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="receiptContent">
+                            <!-- Le contenu du reçu sera inséré ici via JavaScript -->
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary rounded" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-theme rounded" onclick="printReceipt()">Imprimer le Reçu</button>
+                    </div>
                 </div>
-            {% endfor %} 
-        {% endif %}
+            </div>
+        </div>
+
+
+
+        {% if messages %} {% for msg in messages %}
+        <div class="modal fade" id="modalSm">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{msg}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %} {% endif %}
         <a href="# " data-toggle="scroll-to-top " class="btn-scroll-top fade ">
             <iconify-icon icon="material-symbols-light:keyboard-arrow-up "></iconify-icon>
         </a>
@@ -401,12 +481,74 @@
             e.preventDefault();
             const dateDebut = document.getElementById('date_debut').value;
             const dateFin = document.getElementById('date_fin').value;
-    
+
             // Redirect to the same page with the date parameters in the URL
             window.location.href = `?date_debut=${dateDebut}&date_fin=${dateFin}`;
         });
     </script>
 
+
+
+
+
+
+    <script>
+        function handlePaymentFormSubmit(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const url = form.action;
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Afficher le message de succès
+                        showModal(data.receipt_data);
+                    } else {
+                        // Afficher le message d'erreur
+                        alert(data.message);
+                    }
+                });
+        }
+
+        function showModal(receiptData) {
+            const receiptContent = document.getElementById('receiptContent');
+            receiptContent.innerHTML = `
+            <p><strong>Numéro de commande:</strong> ${receiptData.commande_numero}</p>
+            <p><strong>Total:</strong> ${receiptData.total} Fcfa</p>
+            <p><strong>Montant payé:</strong> ${receiptData.montant_paye} Fcfa</p>
+            <p><strong>Montant restant:</strong> ${receiptData.montant_reste} Fcfa</p>
+            <h5>Articles:</h5>
+            <ul>
+                ${receiptData.panier_items.map(item => `
+                    <li>${item.designation} - ${item.quantite} x ${item.prix_unitaire}Fcfa</li>
+                `).join('')}
+            </ul>
+        `;
+
+        // Afficher le modal
+        const modal = new bootstrap.Modal(document.getElementById('paymentReceiptModal'));
+        modal.show();
+    }
+
+    function printReceipt() {
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(document.getElementById('receiptContent').innerHTML);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+    }
+    </script>
 
 
     {% comment %}
