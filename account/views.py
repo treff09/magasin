@@ -87,10 +87,10 @@ def login_view(request):
             return redirect('caisseDashboard')
         elif user.groups.filter(name='Accueillants').exists():
             messages.success(request, "Bienvenue au service accueil")
-            return redirect('piece')
+            return redirect('piece_list_accueil')
         elif user.groups.filter(name='Livraisons').exists():
             messages.success(request, "Bienvenue au service livraison")
-            return redirect('livraison')
+            return redirect('livraison_dashboard')
         else:
             messages.success(request, "Bienvenue administrateur")
             return redirect('adminmagasin') 
