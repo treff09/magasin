@@ -17,13 +17,8 @@ SECRET_KEY = 'django-insecure-6dunc7u4a2^^4jb=uf%w3t4ax212-q3#@+2^(vom@#=@-4_(e3
 DEBUG = True
 
 
-ALLOWED_HOSTS = [
-    'magasin-1.onrender.com',
-    'localhost',
-    '127.0.0.1',
-    '45.92.109.86',
-    
-]
+ALLOWED_HOSTS = ['45.92.109.86']
+
 CSRF_TRUSTED_ORIGINS = [
     'https://magasin-1.onrender.com',
 ]
