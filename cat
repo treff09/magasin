@@ -1,0 +1,1 @@
+  /etc/filebeat/filebeat.ymlsudo sh -c echo "" > /etc/filebeat/filebeat.yml

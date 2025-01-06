@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+from decouple import config
+#import dj_database_url
 #from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,12 +17,8 @@ SECRET_KEY = 'django-insecure-6dunc7u4a2^^4jb=uf%w3t4ax212-q3#@+2^(vom@#=@-4_(e3
 DEBUG = True
 
 
-ALLOWED_HOSTS = [
-    'magasin-1.onrender.com',
-    'localhost',
-    '127.0.0.1',
-    # Ajoutez d'autres hôtes autorisés ici
-]
+ALLOWED_HOSTS = ['45.92.109.86']
+
 CSRF_TRUSTED_ORIGINS = [
     'https://magasin-1.onrender.com',
 ]
@@ -35,7 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'stock',
-    'account'
+    'account',
+    'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -72,14 +71,50 @@ WSGI_APPLICATION = 'magazin_piece.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER':config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST':config('DB_HOST'),
+        'PORT':config('DB_PORT'),
     }
 }
+print("DEBUG:", config('DEBUG'))
+print("DB_NAME:", config('DB_NAME'))
+print("DB_USER:", config('DB_USER'))
+print("DB_PASSWORD:", config('DB_PASSWORD'))
+print("DB_HOST:", config('DB_HOST'))
+print("DB_PORT:", config('DB_PORT'))
 
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('NAME'),
+#         'USER': config('USER'),
+#         'PASSWORD': config('PASSWORD'),
+#         'HOST': config('HOST'),
+#         'PORT': config('PORT'),
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'magasin_piece',
+#         'USER': 'magasin_piece_user',
+#         'PASSWORD': 'kEz2jKPbm8U7os7mLwdMtqq7C8igzNQk',
+#         'HOST': 'dpg-cr8dbt23esus73b56la0-a.oregon-postgres.render.com',
+#         'PORT': '5432',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -127,15 +162,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# EMAIL_BACKEND = config('EMAIL_BACKEND')
-# EMAIL_HOST = config('EMAIL_HOST')
-# EMAIL_PORT = config('EMAIL_PORT', cast=int)
-# EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST="smtp.gmail.com"
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER="boundaonestephane482@gmail.com"
-EMAIL_HOST_PASSWORD="vxevcbfzkpswjgrf"
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+

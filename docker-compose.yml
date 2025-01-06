@@ -5,16 +5,27 @@ services:
     build:
       context: .
     ports:
-      - "3000:3000"
+      - "8000:8000"
     volumes:
       - .:/app
-      - sqlite_data:/app/db
+      - postgres_data:/var/lib/postgresql/data
     command: >
-      sh -c "python manage.py migrate && 
-             python manage.py runserver 0.0.0.0:3000"
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     working_dir: /app
-    env_file: 
+    env_file:
       - .env
 
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: magasin_piece
+      POSTGRES_USER: magasin_piece_user
+      POSTGRES_PASSWORD: kEz2jKPbm8U7os7mLwdMtqq7C8igzNQk
+    ports:
+      - "5432:5432"  # Optional: expose PostgreSQL port
+
 volumes:
-  sqlite_data:
+  postgres_data:

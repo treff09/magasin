@@ -1,0 +1,102 @@
+{% extends "base.html" %} 
+    {% block title %}Liste des fournisseurs{% endblock %}
+        {% block main_content %}
+            <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+
+            <div id="content" class="app-content">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="modal modal-cover fade" id="modalCoverExample">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title">AJOUTER UN FOURNISSEUR</h3>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <hr>
+                                                    <a style="text-decoration:none" class="text-center"><SMall>Entrer correctement les informations </SMall></a>
+                                                    <hr>
+                                                    <div class="card-body">
+                                                        <form class="was-validated" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label for="validationValidInput" class="form-label">Nom</label> {{ form.nom }}
+                                                                </div>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label for="validationValidInput" class="form-label">N° telephone</label> {{ form.contact }}
+                                                                </div>
+
+                                                            </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-5 p-2 position-relative text-center">
+                                                        <button type="submit" class="btn btn-outline-light btn-block" style="border-radius: 8px;">Enrégistrer</button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h1 class="page-header">
+                                   FOURNISSEURS
+                                </h1>
+
+                                <hr class="mb-4 opacity-3" />
+
+                                <div id="datatable" class="mb-5">
+                                    <div class="card">
+                                        <div class="card-header with-btn">
+                                            <div class="card-header-btn">
+                                                <a href="#" data-bs-target="#modalCoverExample" class="btn btn-theme" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
+                                            </div>
+                                            Ajouter un fournisseur
+                                        </div>
+                                        <div class="card-body">
+                                            <table id="datatableDefault" width="100%" class="table text-nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Nom</th>
+                                                        <th class="text-center">Contact</th>
+                                                        <th class='text-center'>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for f in fournisseurs %}
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td><a style="text-decoration:none" href="#">
+                                                            {{ f.nom }} 
+                                                            </a></td>
+                                                            <td class="text-center">{{f.contact}}</td>
+                                                            <td class='text-center'>
+                                                                <a href="{% url 'update_fournisseur' f.pk %}"><i class="fa fa-edit"></i></a>
+                                                                <a href="{% url 'delet_fournisseur' f.pk %}" ><i class="fa fa-trash"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor%}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
+                <iconify-icon icon="material-symbols-light:keyboard-arrow-up"></iconify-icon>
+            </a>
+
+
+
+    {% endblock %}

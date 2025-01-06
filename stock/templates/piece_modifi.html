@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Liste des utilisateurs{% endblock %}
+{% block main_content %}
+
+<button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
+<div id="content" class="app-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-12">
+                <div class="row">
+                    <div class="col-xl-9">
+                        <div id="validation" class="mb-5">
+                            <h4><i class="fa fa-10px fa-user-circle"></i> MODIFICATION PIECE</h4>
+                            <div class="card">
+                                <div class="card-header with-btn">MODIFICATION D'UNE PIECE</div>
+                                <div class="card-body">
+                                    <form method="post" class="was-validated">
+                                        {% csrf_token %}
+                                        <div class="row mb-n3">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Categorie véhicule</label> {{ form.type_voiture }}
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">N° Piece</label> {{ form.numero_piece }}
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Désignation</label> {{ form.designation }}
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Prix achat</label> {{ form.prix_achat }}
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Prix unitaire</label> {{ form.prix_unitaire }}
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Quantité</label> {{ form.quantite }}
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Emplacement</label> {{ form.emplacement }}
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="validationValidInput" class="form-label">Fournisseur</label> {{ form.fournisseur }}
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                            -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                            </div>
+                                            <div class="mb-3 d-flex align-items-center">
+                                                <div class="flex-fill"><div class="text-white text-opacity-50"><a href="{% url 'piece_create' %}" class="btn btn-outline-light  btn-block" style="border-radius: 8px;"><i class="fa fa-reply"></i>Retour</a></div></div>
+                                                <button type="submit" class="btn btn-outline-light  btn-block" style="border-radius: 8px;" ><i class="fa fa-fw fa-save"></i>Enregistrer</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-xl-3">
+                        <nav id="sidebar-bootstrap" class="navbar navbar-sticky d-none d-xl-block">
+                            <nav class="nav">
+                                <a class="nav-link text-theme" href="#general" data-bs-toggle="scroll-to">Profile: {{user.profile.role}}</a>
+                            </nav>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+{% endblock  %}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner le Code QR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        #preview {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+       
+    </style>
+</head>
+<body>
+    <h1>Scanner le Code QR</h1>
+    <video id="preview"></video>
+    <canvas id="canvas"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+    <script>
+        const video = document.getElementById('preview');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        let shouldRestart = false; // Variable pour contrôler le redémarrage
+
+        // Demander l'accès à la caméra de l'appareil
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.setAttribute("playsinline", true); // Nécessaire pour Safari sur iOS
+                video.play();
+                requestAnimationFrame(tick);
+                
+                // Relancer l'analyse toutes les 30 secondes
+                setInterval(() => {
+                    shouldRestart = true;
+                }, 30000); // 30 secondes en millisecondes
+            })
+            .catch(function(error) {
+                console.error("Erreur d'accès à la caméra :", error);
+                alert("Impossible d'accéder à la caméra. Vérifiez les permissions.");
+            });
+
+        function tick() {
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                canvas.width = video.videoWidth;  // Utiliser la largeur de la vidéo
+                canvas.height = video.videoHeight; // Utiliser la hauteur de la vidéo
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                // Obtenir les données de l'image du canvas
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const qrCode = jsQR(imageData.data, imageData.width, imageData.height);
+
+                // Si un QR code est détecté
+                if (qrCode) {
+                    console.log("Code QR détecté :", qrCode.data); // Vérifier dans la console le contenu du QR code
+                    video.pause(); // Mettre en pause la vidéo une fois le QR code détecté
+                    const commandeId = qrCode.data; // Récupérer les données du QR code
+
+                    // Rediriger vers la page des détails de commande
+                    window.location.href = `/details_commande/${commandeId}/`;
+                } else if (shouldRestart) {
+                    console.log("Aucun QR code détecté. Redémarrage de l'analyse.");
+                    shouldRestart = false;
+                    // Relancer l'analyse en appelant `requestAnimationFrame` immédiatement
+                    requestAnimationFrame(tick);
+                } else {
+                    // Si aucun QR code n'est détecté et aucune relance n'est prévue, continuer à analyser
+                    requestAnimationFrame(tick);
+                }
+            } else {
+                // Si la vidéo n'a pas encore assez de données, continuer à appeler `tick`
+                requestAnimationFrame(tick);
+            }
+        }
+    </script>
+</body>
+</html>

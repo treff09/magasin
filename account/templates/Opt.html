@@ -117,14 +117,12 @@
                     inputs[index + 1].focus();
                 }
             });
-
             input.addEventListener('keydown', (e) => {
                 if (e.key === 'Backspace' && index > 0 && input.value === '') {
                     inputs[index - 1].focus();
                 }
             });
         });
-
         // Script pour combiner les valeurs des champs OTP en un seul champ caché avant la soumission du formulaire
         document.getElementById('otp-form').addEventListener('submit', (e) => {
             e.preventDefault(); // Empêcher la soumission normale

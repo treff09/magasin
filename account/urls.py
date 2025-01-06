@@ -28,7 +28,7 @@ urlpatterns = [
     path('request-email/', RequestEmailView.as_view(), name='request_email'),
     path('verify-otp/', VerifyOtpView.as_view(), name='verify_otp'),
 
-     path('password_change/',PasswordChangeView.as_view(), name='password_change'),
+    path('password_change/',PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
     
 ]
