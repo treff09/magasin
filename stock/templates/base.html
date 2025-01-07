@@ -210,7 +210,7 @@
                         <h6 class="dropdown-header">{{ user.profile.role }}</h6>
                         <a class="dropdown-item" href="{% url 'user_detail' user.pk %}">Profile</a>
                         <a class="dropdown-item" href="{% url 'password_change' %}">Modifier mot de passe</a>
-                        {% if request.user.profile.role == 'adminmagasin' %}
+                        {% if request.user.profile.role == 'AdminMagasin' %}
                         <a class="dropdown-item" href="{% url 'global_history' %}">Piste d'audite</a> {% comment %} <a class="dropdown-item" href="calendar.html">CALENDER SETTINGS</a> {% endcomment %}
                         {% endif %}
 
@@ -240,7 +240,7 @@
                 <div class="menu">
                 
                     <div class="menu-header">TABLEAU DE BORD</div>
-                    {% if request.user.profile.role == 'adminmagasin' %}
+                    {% if  request.user.profile.role == 'AdminMagasin' %}
                     <div class="menu-item {% if request.resolver_match.url_name == 'adminmagasin' %}active{% endif %}">
                         <a href="{% url 'adminmagasin' %}" class="menu-link">
                             <span class="menu-icon"><iconify-icon icon="fluent-mdl2:b-i-dashboard"></iconify-icon></span>
@@ -248,7 +248,7 @@
                         </a>
                     </div>
                     {% endif %}
-                    {% if request.user.profile.role == 'Accueillants' %}
+                    {% if request.user.profile.role == 'Accueillants' or request.user.profile.role == 'AdminMagasin' %}
                     <div class="menu-item {% if request.resolver_match.url_name == 'piece_list_accueil' %}active{% endif %}">
                         <a href="{% url 'piece_list_accueil' %}" class="menu-link">
                             <span class="menu-icon">
@@ -259,7 +259,7 @@
                     </div>
                     {% endif %}
 
-                    {% if request.user.profile.role == 'Caissiers' %}
+                    {% if request.user.profile.role == 'Caissiers' or request.user.profile.role == 'AdminMagasin' %}
                     <div class="menu-item {% if request.resolver_match.url_name == 'caisseDashboard' %}active{% endif %} ">
                         <a href="{% url 'caisseDashboard' %}" class="menu-link">
                             <span class="menu-icon">
@@ -269,7 +269,7 @@
                         </a>
                     </div>
                     {% endif %}
-                    {% if request.user.profile.role == 'Livraisons' %}
+                    {% if request.user.profile.role == 'Livraisons' or request.user.profile.role == 'AdminMagasin' %}
                     <div class="menu-item {% if request.resolver_match.url_name == 'livraison_dashboard' %}active{% endif %} ">
                         <a href="{% url 'livraison_dashboard' %}" class="menu-link">
                             <span class="menu-icon">
@@ -280,7 +280,7 @@
                     </div>
                     {% endif %}
 
-                    {% if request.user.profile.role == 'adminmagasin' %}
+                    {% if request.user.profile.role == 'AdminMagasin' %}
                     <div class="menu-header">FORMULAIRES & LISTES</div>
                     <div class="menu-item has-sub ">
                         <a href="javascript:;" class="menu-link">
