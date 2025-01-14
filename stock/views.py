@@ -26,7 +26,7 @@ class DashboardView(TemplateView):
         context = super().get_context_data(**kwargs)
         user_group = self.request.user.groups.first()
         context['user_group'] = user_group.name if user_group else None
-        mois_en_cours =date.today().month
+        mois_en_cours=date.today().month
         libelle_mois_en_cours = calendar.month_name[mois_en_cours]
         form = self.form_class(self.request.GET)
         if form.is_valid():
@@ -261,7 +261,17 @@ class DashboardView(TemplateView):
                 revenue_mensuelle_filtre[commande.date_creation.month] += 1
             revenue_mensuelle_data = [revenue_mensuelle_filtre[month] for month in range(1, 13)]
             mois_label = [calendar.month_name[month][:2] for month in range(1, 13)]
-    
+            
+            # total_cmde_mois_en_cours = Commande.objects.filter(paye=True, date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('total'))['total'] or 0
+            valeur_mens_cmde = Commande.objects.filter(paye=True, date_creation__month=date.today().month)
+            val_mensuelle_filtre = {month: 0 for month in range(1, 13)}
+            for commande in valeur_mens_cmde:
+                val_mensuelle_filtre[commande.date_creation.month] += commande.total
+            valeur_mensuelle_data = [val_mensuelle_filtre[month] for month in range(1, 13)]
+            mois_label = [calendar.month_name[month][:2] for month in range(1, 13)]
+
+            print("-------*----------", valeur_mensuelle_data)
+            
             top_categories = (
                 PanierItem.objects.filter(piece__type_voiture__type_voiture__in=['SWIFT', 'ALTO', 'DZIRE'],
                                             panier__valide=True,         
@@ -672,13 +682,115 @@ def panier(request):
     return render(request, 'panier.html', context)
 
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import user_passes_test
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from io import BytesIO
+import qrcode
+from PIL import Image
+import os
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+def generate_receipt_pdf(commande, panier_items, ticket):
+    # Définir les dimensions du reçu en 57mm x 80mm
+    width, height = 200 * 1, 420 * 1
+
+    buffer = BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=(width, height))
+    y = height - 30
+    
+    logo_path = os.path.join(BASE_DIR,'static', 'icn.png')
+    if os.path.exists(logo_path):
+        logo_width, logo_height = 25, 25  # Taille du logo plus visible
+        pdf.drawInlineImage(logo_path, (width - logo_width) / 2, y, logo_width, logo_height)
+        y -= logo_height + 10
+    else:
+        pdf.setFont("Helvetica-Bold", 8)
+        pdf.drawCentredString(width / 2, y, "P")
+        y -= 40
+
+    # Titre du reçu
+    pdf.setFont("Helvetica-Bold", 10)
+    pdf.drawCentredString(width / 2, y, "***** Reçu de Commande *****")
+    y -= 15
+
+    # Détails de la commande
+    pdf.setFont("Helvetica", 8)
+    pdf.drawString(10, y, f"Numéro: {commande.numero_commande}")
+    pdf.drawString(120, y, f"Date: {commande.date_creation.strftime('%b. %d, %Y')}")
+    y -= 15
+
+    # Ligne de séparation
+    pdf.line(10, y, width - 10, y)
+    y -= 15
+
+    # En-tête du tableau
+    pdf.drawString(10, y, "Pièce")
+    pdf.drawString(50, y, "Qte")
+    pdf.drawString(100, y, "P.U")
+    pdf.drawString(150, y, "Total")
+    y -= 10
+    pdf.line(10, y, width - 10, y)
+    y -= 15
+
+    # Détails des articles
+    for item in panier_items:
+        pdf.drawString(10,  y, f"{item.piece.designation}")
+        pdf.drawString(50,  y, f"{item.quantite}")
+        pdf.drawString(100, y, f"{item.piece.prix_unitaire}")
+        pdf.drawString(150, y, f"{item.quantite * item.piece.prix_unitaire}")
+        y -= 15
+    y -= 10
+
+    pdf.line(10, y, width - 10, y)
+    y -= 15
+
+    # Totaux
+     # Totaux alignés avec une distance de 100
+    pdf.drawString(10, y, "Total:")
+    pdf.drawString(135, y, f"{commande.total} Fcfa")
+    y -= 15
+    pdf.drawString(10, y, "Remise:")
+    pdf.drawString(135, y, "0.00 %")
+    y -= 15
+    pdf.drawString(10, y, "Payé:")
+    pdf.drawString(135, y, f"{commande.montant_paye} Fcfa")
+    y -= 15
+    pdf.drawString(10, y, "Rendu:")
+    pdf.drawString(135, y, f"{commande.montant_reste} Fcfa")
+    y -= 15
+
+    # QR Code
+    qr = qrcode.make(f"Commande: {commande.numero_commande}")
+    qr_buffer = BytesIO()
+    qr.save(qr_buffer, format='PNG')
+    qr_buffer.seek(0)
+    qr_image = Image.open(qr_buffer)
+    pdf.drawInlineImage(qr_image, width / 2 - 25, y - 50, 50, 50)
+    y -= 65
+
+    # Message de remerciement
+    pdf.setFont("Helvetica", 7)
+    pdf.drawCentredString(width / 2, y, "Merci pour votre achat !")
+    y -= 10
+    pdf.drawCentredString(width / 2, y, "Contact : PBGentreprise@admin.com")
+    y -= 10
+    pdf.drawCentredString(width / 2, y, "*** A tes résolutions repondra le succès ***")
+    y -= 10
+
+    pdf.save()
+    buffer.seek(0)
+    return buffer
+
 @user_passes_test(is_caissier, is_admin_magasin)
 def valider_paiement(request, ticket_id):
-    paniers_non_valides = Panier.objects.filter(valide=True, panier_paye=False)
+    paiement_non_valide = Panier.objects.filter(valide=True, panier_paye=False)
     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=False)
     commande = ticket.commande
     panier = commande.panier
+
     if request.method == 'POST':
         montant = request.POST.get('montant')
         if float(montant) >= commande.total:
@@ -689,61 +801,107 @@ def valider_paiement(request, ticket_id):
             commande.montant_reste = abs(reste)
             commande.paye
             commande.save()
+        
             ticket.utilise = True
             ticket.utilisateur = request.user
             ticket.save()
+
             panier.panier_paye = True
             panier.save()
-           
-            # Mettre à jour le stock
+
             for item in PanierItem.objects.filter(panier=panier):
                 piece = item.piece
                 piece.quantite -= item.quantite
                 piece.save()
-
-            # Générer les données du reçu
+            messages.success(request, f"Paiement effectué.")
+            # Génération du reçu PDF
             panier_items = PanierItem.objects.filter(panier=panier)
-            receipt_data = {
-                'commande_numero': commande.numero_commande,
-                'total': commande.total,
-                'montant_paye': commande.montant_paye,
-                'montant_reste': commande.montant_reste,
-                'panier_items': [
-                    {
-                        'designation': item.piece.designation,
-                        'quantite': item.quantite,
-                        'prix_unitaire': item.piece.prix_unitaire
-                    }
-                    for item in panier_items
-                ]
-            }
+            pdf_buffer = generate_receipt_pdf(commande, panier_items, ticket)
+            
+            response = HttpResponse(pdf_buffer, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="recu_{commande.numero_commande}.pdf"'
+            return response
 
-            # Renvoie les données du reçu en réponse AJAX
-            return JsonResponse({
-                'success': True,
-                'receipt_data': receipt_data,
-                'message': f"Paiement validé. Utilisez le numéro {ticket.numero} pour récupérer vos articles."
-            })
         else:
-            return JsonResponse({
-                'success': False,
-                'message': "Le montant payé ne correspond pas au total de la commande."
-            })
-
+            messages.error(request, f"Le montant payé ne correspond pas au total de la commande.")
+            return redirect('piece_list_accueil')
+            
     panier_items = PanierItem.objects.filter(panier=panier)
     context = {
         'ticket': ticket,
         'commande': commande,
-        'paniers_non_valides': paniers_non_valides,
+        'paiement_non_valide': paiement_non_valide,
         'panier_items': panier_items,
     }
     return render(request, 'caissiere_validation_paiement.html', context)
 
 
+# from django.http import JsonResponse
+# @user_passes_test(is_caissier, is_admin_magasin)
+# def valider_paiement(request, ticket_id):
+#     paniers_non_valides = Panier.objects.filter(valide=True, panier_paye=False)
+#     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=False)
+#     commande = ticket.commande
+#     panier = commande.panier
+#     if request.method == 'POST':
+#         montant = request.POST.get('montant')
+#         if float(montant) >= commande.total:
+#             commande.paye = True
+#             reste = float(montant) - float(commande.total)
+#             commande.utilisateur = request.user
+#             commande.montant_paye = float(montant)
+#             commande.montant_reste = abs(reste)
+#             commande.paye
+#             commande.save()
+#             ticket.utilise = True
+#             ticket.utilisateur = request.user
+#             ticket.save()
+#             panier.panier_paye = True
+#             panier.save()
+           
+#             # Mettre à jour le stock
+#             for item in PanierItem.objects.filter(panier=panier):
+#                 piece = item.piece
+#                 piece.quantite -= item.quantite
+#                 piece.save()
 
-# @user_passes_test(is_caissier)
-# def caissier_accueil(request):
-#     return render(request, 'caissier_accueil.html')
+#             # Générer les données du reçu
+#             panier_items = PanierItem.objects.filter(panier=panier)
+#             receipt_data = {
+#                 'commande_numero': commande.numero_commande,
+#                 'total': commande.total,
+#                 'montant_paye': commande.montant_paye,
+#                 'montant_reste': commande.montant_reste,
+#                 'panier_items': [
+#                     {
+#                         'designation': item.piece.designation,
+#                         'quantite': item.quantite,
+#                         'prix_unitaire': item.piece.prix_unitaire
+#                     }
+#                     for item in panier_items
+#                 ]
+#             }
+#             # Renvoie les données du reçu en réponse AJAX
+#             return JsonResponse({
+#                 'success': True,
+#                 'receipt_data': receipt_data,
+#                 'message': f"Paiement validé. Utilisez le numéro {ticket.numero} pour récupérer vos articles."
+#             })
+#         else:
+#             return JsonResponse({
+#                 'success': False,
+#                 'message': "Le montant payé ne correspond pas au total de la commande."
+#             })
+
+#     panier_items = PanierItem.objects.filter(panier=panier)
+#     context = {
+#         'ticket': ticket,
+#         'commande': commande,
+#         'paniers_non_valides': paniers_non_valides,
+#         'panier_items': panier_items,
+#     }
+#     return render(request, 'caissiere_validation_paiement.html', context)
+
 
 @user_passes_test(is_liveur)
 def valider_livraison(request, ticket_id):
@@ -789,47 +947,47 @@ def livraison_dashboard(request):
         })
 
 
-import qrcode
-import io
-import base64
-from django.shortcuts import render, get_object_or_404
-from .models import Commande, PanierItem
+# import qrcode
+# import io
+# import base64
+# from django.shortcuts import render, get_object_or_404
+# from .models import Commande, PanierItem
 
-def generate_receipt(request, commande_id):
-    # Récupérer la commande basée sur l'ID
-    commande = get_object_or_404(Commande, id=commande_id)
+# def generate_receipt(request, commande_id):
+#     # Récupérer la commande basée sur l'ID
+#     commande = get_object_or_404(Commande, id=commande_id)
 
-    # Calculer le montant restant (s'il n'est pas déjà calculé)
-    if commande.total and commande.montant_paye:
-        commande.montant_reste = commande.montant_paye - commande.total 
+#     # Calculer le montant restant (s'il n'est pas déjà calculé)
+#     if commande.total and commande.montant_paye:
+#         commande.montant_reste = commande.montant_paye - commande.total 
 
-    # Récupérer les pièces dans le panier de la commande
-    panier = commande.panier
-    panier_items = PanierItem.objects.filter(panier=panier)
+#     # Récupérer les pièces dans le panier de la commande
+#     panier = commande.panier
+#     panier_items = PanierItem.objects.filter(panier=panier)
 
-    # Générer un QR code avec une taille réduite
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=5,  # Réduit la taille des pixels du QR code
-        border=2,    # Réduit la largeur de la bordure
-    )
-    qr_data = f"Commande #{commande.numero_commande} - Total: {commande.total} Fcfa - Date : {commande.date_creation}"
-    qr.add_data(qr_data)
-    qr.make(fit=True)
+#     # Générer un QR code avec une taille réduite
+#     qr = qrcode.QRCode(
+#         version=1,
+#         error_correction=qrcode.constants.ERROR_CORRECT_L,
+#         box_size=5,  # Réduit la taille des pixels du QR code
+#         border=2,    # Réduit la largeur de la bordure
+#     )
+#     qr_data = f"Commande #{commande.numero_commande} - Total: {commande.total} Fcfa - Date : {commande.date_creation}"
+#     qr.add_data(qr_data)
+#     qr.make(fit=True)
 
-    # Convertir le QR code en image et l'encoder en base64
-    img = qr.make_image(fill='black', back_color='white')
-    buffer = io.BytesIO()
-    img.save(buffer, format="PNG")
-    img_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
+#     # Convertir le QR code en image et l'encoder en base64
+#     img = qr.make_image(fill='black', back_color='white')
+#     buffer = io.BytesIO()
+#     img.save(buffer, format="PNG")
+#     img_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
 
-    # Rendre la page du reçu avec QR code et détails des pièces
-    return render(request, 'reçu.html', {
-        'commande': commande,
-        'qr_code_img': img_str,
-        'panier_items': panier_items
-    })
+#     # Rendre la page du reçu avec QR code et détails des pièces
+#     return render(request, 'reçu.html', {
+#         'commande': commande,
+#         'qr_code_img': img_str,
+#         'panier_items': panier_items
+#     })
 
 #scanne 
 from django.shortcuts import render, get_object_or_404

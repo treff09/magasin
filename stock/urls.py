@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import caisseDashboard,livraison_accueil, piece_list, piece_detail, piece_update, piece_delete,ajouter_au_panier, valider_livraison, valider_paiement, valider_panier,accueil,base,livraison_dashboard,panier,supprimer_du_panier,retirer_du_cart,generate_receipt
+from .views import caisseDashboard,livraison_accueil, piece_list, piece_detail, piece_update, piece_delete,ajouter_au_panier, valider_livraison, valider_paiement, valider_panier,accueil,base,livraison_dashboard,panier,supprimer_du_panier,retirer_du_cart
 
 # from . import views
 from .views import *
@@ -32,7 +32,7 @@ urlpatterns = [
     #pour acceuil (Client)
     path('acceuil/', accueil, name='accueil'),
     #reçu
-    path('recu/commande/<int:commande_id>/', generate_receipt, name='generate_receipt'),
+    # path('recu/commande/<int:commande_id>/', generate_receipt, name='generate_receipt'),
     #scanne
     path('details_commande/<int:commande_id>/', views.details_commande, name='details_commande'),
     path('scanner/', views.scanner_qr_code, name='scanner_qr_code'),
