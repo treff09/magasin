@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %}Liste des utilisateurs{% endblock %} {% block main_content %}
+{% extends "base.html" %} 
+{% block title %}Liste des Pièces{% endblock %} 
+{% block main_content %}
 
 
 <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
@@ -60,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <h1 class="page-header">
                         Pieces en stock
                     </h1>
@@ -97,26 +99,18 @@
                                             <td>{{piece.designation}}</td>
                                             <td>{{piece.type_voiture}}</td>
                                             <td>
-                                                {% if piece.quantite > 10 %} 
-                                                    <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a>
-                                                {% elif piece.quantite == 10 %}
-                                                    <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a> 
-                                                {% elif piece.quantite >= 5 %}
-                                                    <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a> 
-                                                {% else %}
-                                                    <a style="text-decoration:none" class="text-danger">Rupture de stock</a> 
-                                                {% endif %}
+                                                {% if piece.quantite > 10 %}
+                                                <a style="text-decoration:none" class="text-theme">{{piece.quantite}}</a> {% elif piece.quantite == 10 %}
+                                                <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a> {% elif piece.quantite >= 5 %}
+                                                <a style="text-decoration:none" class="text-warning">{{piece.quantite}}</a> {% else %}
+                                                <a style="text-decoration:none" class="text-danger">Rupture de stock</a> {% endif %}
                                             </td>
                                             <td>
                                                 {% if piece.quantite > 10 %}
-                                                    <i class="bi bi-arrow-up-right text-theme"></i> 
-                                                {% elif piece.quantite == 10 %}
-                                                    <i class="bi bi-dash text-warning"></i> 
-                                                {% elif piece.quantite >= 5 %}
-                                                    <i class="bi bi-arrow-down-right text-warning"></i> 
-                                                {% else %}
-                                                    <i class="bi bi-arrow-down text-danger"></i> 
-                                                {% endif %}
+                                                <i class="bi bi-arrow-up-right text-theme"></i> {% elif piece.quantite == 10 %}
+                                                <i class="bi bi-dash text-warning"></i> {% elif piece.quantite >= 5 %}
+                                                <i class="bi bi-arrow-down-right text-warning"></i> {% else %}
+                                                <i class="bi bi-arrow-down text-danger"></i> {% endif %}
                                             </td>
                                             <td>{{piece.prix_unitaire}}</td>
                                             <td>

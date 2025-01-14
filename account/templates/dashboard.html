@@ -113,11 +113,12 @@
 									</canvas>
                                     <script>
                                         const ctrev = document.getElementById('baro');
-                                        var labels = {{ mois_label|safe }};
+                                        var labels = {{ labels|safe }};
+                                        //var revenueData = {{valeur_mensuelle_data }};
                                         var revenueData = {{ revenue_mensuelle_data|safe }};
 
                                         new Chart(ctrev, {
-                                            type: 'bar',
+                                            type: 'line',
                                             data: {
                                                 labels: labels,
                                                 datasets: [{
@@ -139,6 +140,55 @@
                                             }
                                         });
                                     </script>
+                                    <!--
+
+                                    <script>
+                                        const cta = document.getElementById('barChart').getContext('2d');
+                                        const gradient = cta.createLinearGradient(0, 0, 0, 400); // Adjust the gradient orientation as needed
+                                        gradient.addColorStop(0, 'rgb(23,84,133)'); // Start color
+                                        gradient.addColorStop(1, 'rgb(154, 214, 241,.1)');
+                                        const gradient6 = cta.createLinearGradient(0, 0, 0, 400);
+                                        gradient6.addColorStop(0, 'rgb(0,77,64)'); // Start color54,192,186
+                                        gradient6.addColorStop(1, 'rgb(0,77,64,0.1)'); 
+                                        new Chart(cta, {
+                                            type: 'line',
+                                            data: {
+                                                labels: {{labels|safe}},
+                                                datasets: [{
+                                                    label: 'Recette des vtc',
+                                                    data: {{recet_mois_vtc_data}},
+                                                    borderWidth: 2,
+                                                    borderColor: 'rgb(23,84,133,.6)',
+                                                    tension: 0.4,
+                                                    fill: true,
+                                                    backgroundColor: [
+                                                        gradient,
+                                                    ],
+                                                },{
+                                                    label: 'Recette des taxi',
+                                                    data: {{recet_mois_taxi_data}},
+                                                    borderWidth: 2,
+                                                    borderColor: gradient6,
+                                                    tension: 0.4,
+                                                    fill: true,
+                                                    backgroundColor: [
+                                                        gradient6,
+                                                    ],
+                                                },]
+                                            },
+                                            options:{
+                                                scales:{
+                                                    y:{
+                                                        beginAtZero: true,
+                                                        easing: 'linear',
+                                                        from: 1,
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    </script>
+                                    
+                                    -->
                                 </div>
                             </div>
                         </div>
