@@ -14,10 +14,10 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = 'django-insecure-6dunc7u4a2^^4jb=uf%w3t4ax212-q3#@+2^(vom@#=@-4_(e3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
-ALLOWED_HOSTS = ['45.92.109.86']
+ALLOWED_HOSTS = ['45.92.109.86','127.0.0.1']
 CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
@@ -68,12 +68,12 @@ WSGI_APPLICATION = 'magazin_piece.wsgi.application'
 # # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 DATABASES = {
     'default': {
@@ -85,12 +85,12 @@ DATABASES = {
         'PORT':config('DB_PORT'),
     }
 }
-print("DEBUG:", config('DEBUG'))
-print("DB_NAME:", config('DB_NAME'))
-print("DB_USER:", config('DB_USER'))
-print("DB_PASSWORD:", config('DB_PASSWORD'))
-print("DB_HOST:", config('DB_HOST'))
-print("DB_PORT:", config('DB_PORT'))
+# print("DEBUG:", config('DEBUG'))
+# print("DB_NAME:", config('DB_NAME'))
+# print("DB_USER:", config('DB_USER'))
+# print("DB_PASSWORD:", config('DB_PASSWORD'))
+# print("DB_HOST:", config('DB_HOST'))
+# print("DB_PORT:", config('DB_PORT'))
 
 # DATABASES = {
 #     'default': {
