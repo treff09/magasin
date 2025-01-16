@@ -108,87 +108,51 @@
                         <div class="col-lg-8 position-relative">
                             <div class="card-body">
                                 <div class="h-320px p-0">
-                                    <canvas id="baro" class="h-100 w-100" width="500" height="343" style="display: block; box-sizing: border-box; height: 350px; width: 500px; position:relative;">
-										<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-									</canvas>
-                                    <script>
-                                        const ctrev = document.getElementById('baro');
-                                        var labels = {{ labels|safe }};
-                                        //var revenueData = {{valeur_mensuelle_data }};
-                                        var revenueData = {{ revenue_mensuelle_data|safe }};
+                                    <div class="chart">
+                                        <canvas id="lineCharts" class="h-100 w-100" width="500" height="343"></canvas>
+                                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                    </div>
 
-                                        new Chart(ctrev, {
-                                            type: 'line',
+                                    <script>
+                                        const ctx = document.getElementById('lineCharts').getContext('2d');
+
+                                        // Dégradé pour la ligne de revenu
+                                        const gradientRevenue = ctx.createLinearGradient(0, 0, 0, 400);
+                                        gradientRevenue.addColorStop(0, 'rgba(109,225,217,0.9)');
+                                        gradientRevenue.addColorStop(1, 'rgba(248,248,248,0.1)');
+
+                                        new Chart(ctx, {
+                                            type: 'bar',
                                             data: {
-                                                labels: labels,
-                                                datasets: [{
-                                                    label: "Evolution des ventes",
-                                                    data: revenueData,
-                                                    fill: true,
-                                                    borderColor: ['rgb(24,255,255)'],
-                                                    tension: 0.4,
-                                                    borderWidth: 1,
-                                                    backgroundColor: 'rgb(0,181,127,.2)',
-                                                }]
+                                                labels: {{ labels|safe }},
+                                                datasets: [
+                                                    {
+                                                        type: 'bar',
+                                                        label: 'Nombre de pièces vendues',
+                                                        data: {{ revenue_mensuelle_data }},
+                                                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                                                        borderColor: 'rgba(255, 159, 64, 1)',
+                                                        borderWidth: 1
+                                                    },
+                                                    {
+                                                        type: 'line',
+                                                        label: 'Revenu mensuel (frscfa)',
+                                                        data: {{ valeur_mensuelle_data }},
+                                                        borderWidth: 2,
+                                                        borderColor: 'rgba(109,225,217,0.9)',
+                                                        tension: 0.4,
+                                                        fill: true,
+                                                        backgroundColor: gradientRevenue
+                                                    }
+                                                ]
                                             },
                                             options: {
                                                 scales: {
-                                                    y: {
-                                                        beginAtZero: true
-                                                    }
+                                                    y: { beginAtZero: true }
                                                 }
                                             }
                                         });
                                     </script>
-                                    <!--
-
-                                    <script>
-                                        const cta = document.getElementById('barChart').getContext('2d');
-                                        const gradient = cta.createLinearGradient(0, 0, 0, 400); // Adjust the gradient orientation as needed
-                                        gradient.addColorStop(0, 'rgb(23,84,133)'); // Start color
-                                        gradient.addColorStop(1, 'rgb(154, 214, 241,.1)');
-                                        const gradient6 = cta.createLinearGradient(0, 0, 0, 400);
-                                        gradient6.addColorStop(0, 'rgb(0,77,64)'); // Start color54,192,186
-                                        gradient6.addColorStop(1, 'rgb(0,77,64,0.1)'); 
-                                        new Chart(cta, {
-                                            type: 'line',
-                                            data: {
-                                                labels: {{labels|safe}},
-                                                datasets: [{
-                                                    label: 'Recette des vtc',
-                                                    data: {{recet_mois_vtc_data}},
-                                                    borderWidth: 2,
-                                                    borderColor: 'rgb(23,84,133,.6)',
-                                                    tension: 0.4,
-                                                    fill: true,
-                                                    backgroundColor: [
-                                                        gradient,
-                                                    ],
-                                                },{
-                                                    label: 'Recette des taxi',
-                                                    data: {{recet_mois_taxi_data}},
-                                                    borderWidth: 2,
-                                                    borderColor: gradient6,
-                                                    tension: 0.4,
-                                                    fill: true,
-                                                    backgroundColor: [
-                                                        gradient6,
-                                                    ],
-                                                },]
-                                            },
-                                            options:{
-                                                scales:{
-                                                    y:{
-                                                        beginAtZero: true,
-                                                        easing: 'linear',
-                                                        from: 1,
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    </script>
-                                    
-                                    -->
                                 </div>
                             </div>
                         </div>
@@ -222,7 +186,7 @@
 									</canvas>
                                     <script>
                                         const ctx = document.getElementById('PIE');
-                                        var labels = ['A', 'D','S',];
+                                        var labels = ['A','D','S',];
                                         var data = [{{total_pieces_alto}}, {{total_pieces_swift}}, {{total_pieces_dzire}}];
                                         new Chart(ctx, {
                                             type: 'pie',
@@ -238,8 +202,7 @@
                                                         'rgb(0,181,127,.2)',
                                                     ],
                                                 }]
-                                            },
-                                            
+                                            }, 
                                         });
                                     </script>
                                 </table>
