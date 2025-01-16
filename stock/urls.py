@@ -28,6 +28,9 @@ urlpatterns = [
     #VUE livraison
     path('livraison/', livraison_accueil, name='livraison_accueil'), #bienvenue
     path('livraison/dashboard/', livraison_dashboard, name='livraison_dashboard'),
+    
+    # path('list_recet',ListRecetView.as_view(), name="list_recet"),
+    # path('recette/<int:pk>/delet', delete_recette, name='delete_recets'),
     path('livraison/valider/<str:ticket_id>/', valider_livraison, name='valider_livraison'),
     #pour acceuil (Client)
     path('acceuil/', accueil, name='accueil'),

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}DASHBOARD{% endblock  %}
+{% block title %}VALIDATION DES LIVRAISONS{% endblock  %}
 {% block main_content %}
 <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
 
@@ -93,25 +93,24 @@
 									    <table class="w-100 text-truncate fs-10px table-py-1px">
 									    	<thead>
                                                 <tr class="text-white">
-                                                <th width="35%">N° TICKET.</th>
-                                                <th width="30%">LIVREUR</th>
-                                                <th width="25%">STATUS</th>
+                                                	<th width="35%">N° TICKET.</th>
+                                                	<th width="30%">LIVREUR</th>
+                                                	<th width="25%">STATUS</th>
                                                 </tr>
 									    	</thead>
 									    	<tbody>
-									    	    <tr>
-													{% for livrer in livraison_effectuee %}
-														<td>{{livrer.ticket}}</td>
-									    	    		<td>{{livrer.utilisateur.username}}</td>
-									    	    		<td>
-															{% if livrer.panier_livre %}
-															effectuer
-															{% else %}
-
-															{% endif %}
-														</td>
-													{% endfor %}
+												{% for livrer in livraison_effectuee %}
+									    		    <tr>
+													<td>{{livrer.ticket}}</td>
+									    	    	<td>{{livrer.utilisateur.username}}</td>
+									    	    	<td>
+														{% if livrer.panier_livre %}
+														effectuer
+														{% else %}
+														{% endif %}
+													</td>
 									    	    </tr>
+												{% endfor %}
 									    	</tbody>
 									    </table>
 				    				</div>

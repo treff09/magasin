@@ -107,22 +107,18 @@ class DashboardView(TemplateView):
     
             total_pieces_alto = PanierItem.objects.filter(
                 piece__type_voiture__type_voiture='ALTO',
-                panier__valide=True,             # Panier validé
-                panier__panier_paye=True,
+                panier__valide=True, panier__panier_paye=True,
                 panier__commands__isnull=False,
                 date_creation__range=[date_debut, date_fin]
             ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
     
             total_pieces_dzire = PanierItem.objects.filter(
                 piece__type_voiture__type_voiture='DZIRE',
-                panier__valide=True,             # Panier validé
-                panier__panier_paye=True,
+                panier__valide=True, panier__panier_paye=True,
                 panier__commands__isnull=False,
                 date_creation__range=[date_debut, date_fin]
             ).aggregate(total_pieces=Sum('quantite'))['total_pieces'] or 0
-    
             #--------------------------------------Graphs--------------------------------#
-    
             total_revenue_filtre = PanierItem.objects.filter(panier__valide=True, 
                                                             panier__panier_paye=True,
                                                             date_creation__range=[date_debut, date_fin]
@@ -132,7 +128,7 @@ class DashboardView(TemplateView):
             for commande in total_revenue_filtre:
                 revenue_mensuelle_filtre[commande.date_creation.month] += 1
             revenue_mensuelle_data = [revenue_mensuelle_filtre[month] for month in range(1, 13)]
-            mois_label = [calendar.month_name[month][:2] for month in range(1, 13)]
+            labels = [calendar.month_name[month][:2] for month in range(1, 13)]
     
             top_categories = (
                 PanierItem.objects.filter(piece__type_voiture__type_voiture__in=['SWIFT', 'ALTO', 'DZIRE'],
@@ -253,24 +249,24 @@ class DashboardView(TemplateView):
     
             total_revenue_filtre = PanierItem.objects.filter(panier__valide=True, 
                                                             panier__panier_paye=True,
-                                                            date_creation__year=datetime.now().year
-                                                            )
-            
+                                                            date_creation__year=datetime.now().year)
             revenue_mensuelle_filtre = {month: 0 for month in range(1, 13)}
             for commande in total_revenue_filtre:
                 revenue_mensuelle_filtre[commande.date_creation.month] += 1
             revenue_mensuelle_data = [revenue_mensuelle_filtre[month] for month in range(1, 13)]
-            mois_label = [calendar.month_name[month][:2] for month in range(1, 13)]
+            labels = [calendar.month_name[month][:2] for month in range(1, 13)]
             
             # total_cmde_mois_en_cours = Commande.objects.filter(paye=True, date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('total'))['total'] or 0
-            valeur_mens_cmde = Commande.objects.filter(paye=True, date_creation__month=date.today().month)
+            # Valeur mensuelle des ventes
             val_mensuelle_filtre = {month: 0 for month in range(1, 13)}
-            for commande in valeur_mens_cmde:
-                val_mensuelle_filtre[commande.date_creation.month] += commande.total
-            valeur_mensuelle_data = [val_mensuelle_filtre[month] for month in range(1, 13)]
-            mois_label = [calendar.month_name[month][:2] for month in range(1, 13)]
+            valeur_mens_cmde = Commande.objects.filter(paye=True, date_creation__year=datetime.now().year)
 
-            print("-------*----------", valeur_mensuelle_data)
+            for commande in valeur_mens_cmde:
+                val_mensuelle_filtre[commande.date_creation.month] += float(commande.total)
+
+            valeur_mensuelle_data = [val_mensuelle_filtre[month] for month in range(1, 13)]
+
+            print(valeur_mensuelle_data,"-------*----------", revenue_mensuelle_data)
             
             top_categories = (
                 PanierItem.objects.filter(piece__type_voiture__type_voiture__in=['SWIFT', 'ALTO', 'DZIRE'],
@@ -297,7 +293,9 @@ class DashboardView(TemplateView):
             
             total_cms_unpaid = Commande.objects.filter(date_creation__month=date.today().month,).aggregate(total=Sum('montant_reste'))['total'] or 0
             # best_pieces = sorted([x for x in best_pieces if x['recs'] is not None], key=lambda x: x['recs'], reverse=True)[:10]
-            print(total_cms_unpaid)  
+            print(total_cms_unpaid)
+            
+            print("*********",labels, "***********",valeur_mensuelle_data)  
 
         context = {
         'libelle_mois_en_cours': libelle_mois_en_cours,
@@ -315,7 +313,8 @@ class DashboardView(TemplateView):
         'total_quantite_swift': total_quantite_swift,
 
         'revenue_mensuelle_data': revenue_mensuelle_data,
-        'mois_label': mois_label,
+        'valeur_mensuelle_data': valeur_mensuelle_data,
+        'labels': labels,
         'total_pieces': total_pieces,
         'total_inventaire': total_inventaire,
         #'total_orders': total_orders,
@@ -901,22 +900,33 @@ def valider_paiement(request, ticket_id):
 #         'panier_items': panier_items,
 #     }
 #     return render(request, 'caissiere_validation_paiement.html', context)
-
-
 @user_passes_test(is_liveur)
+def livraison_accueil(request):
+    ticket = get_object_or_404(Ticket,  utilise=True)
+    return render(request, 'valider_livraison.html',  {'ticket': ticket})
+
 def valider_livraison(request, ticket_id):
-    ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=True)
-    if request.method == 'POST':
+    try:
+        ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=True)
         panier_non_livre = Panier.objects.filter(ticket=ticket.numero).first()
         panier_non_livre.panier_livre = True
         panier_non_livre.save()
         messages.success(request, f"Livraison validée pour le ticket {ticket.numero}.")
-        return redirect('livraison_dashboard')
-    return render(request, 'valider_livraison.html', {'ticket': ticket})
+    except Exception as e:
+        messages.error(request, f"Erreur lors de la validation de la livraison : {str(e)}")
+    return redirect(request.META.get('HTTP_REFERER', 'livraison_dashboard'))
+# @user_passes_test(is_liveur)
+# def valider_livraison(request, ticket_id):
+#     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=True)
+#     if request.method == 'POST':
+#         panier_non_livre = Panier.objects.filter(ticket=ticket.numero).first()
+#         panier_non_livre.panier_livre = True
+#         panier_non_livre.save()
+#         messages.success(request, f"Livraison validée pour le ticket {ticket.numero}.")
+#         return redirect('livraison_dashboard')
+#     return render(request, 'valider_livraison.html', {'ticket': ticket})
 
-@user_passes_test(is_liveur)
-def livraison_accueil(request):
-    return render(request, 'livraison_accueil.html')
+
 
 @user_passes_test(is_accueillant)
 def accueil(request):
