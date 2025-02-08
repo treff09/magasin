@@ -93,7 +93,8 @@ def login_view(request):
             return redirect('livraison')
         else:
             messages.success(request, "Bienvenue administrateur")
-            return redirect('adminmagasin') 
+            return redirect('caiss') 
+            # return redirect('adminmagasin') 
         
     if request.method == 'POST':
         username = request.POST['username']

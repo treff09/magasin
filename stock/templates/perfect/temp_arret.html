@@ -1,0 +1,135 @@
+{% extends 'perfect/bases.html' %} 
+{% load static %} 
+{% block title %} 
+Temps d'arrêt 
+{% endblock title %} 
+{% block liste %}
+<li class="nav-item">
+    <a href="{% url 'dashgarage' %}" class="nav-link">Accueil</a>
+</li>
+{% if user.user_type == '4' %}
+{% else %}
+<li class="nav-item">
+    <a href="{% url 'rec_day' %}" class="nav-link">Recettes</a>
+</li>
+{% endif %}
+{% if user.is_staff %}
+<li class="nav-item dropdown">
+    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Menu</a>
+    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+        {% if user.user_type == '3' %} 
+        {% else %} 
+            <li><a href="{% url 'saisi_garag' %}" class="dropdown-item">Saisie Garage </a></li>
+            <li><a href="{% url 'temps_arrets' %}" class="dropdown-item">Saisie temp arrêt</a></li>
+        {% endif %}
+        <li class="dropdown-divider"></li>
+        <!-- Level two dropdown-->
+        <li class="dropdown-submenu dropdown-hover">
+            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Autres</a>
+            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                {% if user.user_type == '3' %}
+                    
+                {% else %} 
+                    <li>
+                        <a tabindex="-1" href="{% url 'alerte' %}" class="dropdown-item">Alertes</a>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Arrêts</a>
+                        <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
+                            <li><a href="{% url 'temps' %}" class="dropdown-item">Tableau des temps d'arrêts</a></li>
+                            <li><a href="#" class="dropdown-item">--------</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="dropdown-item">--------</a></li>
+                    <li><a href="#" class="dropdown-item">--------</a></li>
+                {% endif %}
+            </ul>
+        </li>
+    </ul>
+</li>
+{% endif %}
+{% endblock liste %}
+{% block page_title %} TEMPS D'ARRET {% endblock page_title %} 
+{% block search_form %}
+    <div class="col-sm-6">
+        <li class="breadcrumb-item">
+            <select id="month" class="form-control month-select" onchange="selectMonthYear()">
+                {% for i in month_range %}
+                    <option value="{{ i }}" {% if i == month %}selected{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select>
+        </li>
+    </div>
+    <div class="col-sm-6">
+        <li class="breadcrumb-item ">
+            <select id="year" class="form-control year-select" onchange="selectMonthYear()">
+                {% for y in years %}
+                    <option class='' value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </li>
+    </div>
+{% endblock search_form %} 
+{% block main_content %}
+
+<div class="col-lg-12">
+    <table>
+        <thead>
+            <tr style="font-weight: 700;" class="text-danger">
+                <th rowspan="2">Immat</th>
+                <th rowspan="2">Marque</th>
+                <th colspan="{{ days_in_month|length }}">
+                    <a class="btn btn-default btn-prev" onclick="changeMonth(-1)"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a> {{ month_name }} - {{ year}}
+                    <a class="btn btn-default btn-next" onclick="changeMonth(1)"><i class="fa fa-angle-double-right" aria-hidden="true" style=""></i></a>
+                </th>
+                <th rowspan="2">T arrêt</th>
+                <th rowspan="2">T Pièce</th>
+                <th rowspan="2">Recette</th>
+                <th rowspan="2">Détail Pièce</th>
+                <th rowspan="2">Motif réparat</th>
+                <th rowspan="2">Motif arrêt</th>
+            </tr>
+            <tr>
+                {% for day in days_in_month %}
+                    <th class="text-primary">{{ day }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehicule in vehicule_data %}
+                <tr>
+                    <td style="font-weight: 700;"><a href="" title="{{vehicule.category}}">{{ vehicule.immatriculation }}</a></td>
+                    <td>{{ vehicule.marque }}</td>
+                    {% for action in vehicule.daily_actions %}
+                        <td>{{ action }}</td>
+                    {% endfor %}
+                    <td>{{ vehicule.total_actions }}</td>
+                    <td>{{ vehicule.total_cost_parts }}</td>
+                    <td>{{ vehicule.total_income }}</td>
+                    <td>{{ vehicule.part_details }}</td>
+                    <td>{{ vehicule.repairs_by_motif }}</td>
+                    <td>{{ vehicule.motif_arret }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="{{ days_in_month_plus_two }}" style="text-align: right; font-weight: bold; ">Total:</td>
+                <td>{{ total_actions_sum }}</td>
+                <td>{{ total_cost_parts_sum }}</td>
+                <td>{{ total_income_sum }}</td>
+                <td>{{ total_piece_sum }}</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align: right;">
+                    Préparation de visite <i class="text-success">{{total_visit_sum}}</i><br> 
+                    Garage pour panne <i class="text-warning" aria-hidden="true">{{total_panne_sum}}</i><br> 
+                    Accident <i class="text-danger" aria-hidden="true">{{total_accident_sum}}</i><br>                    
+                    Autre arrêt <i class="text-secondary" aria-hidden="true">{{total_autrarret_sum}}</i>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+{% endblock main_content %}

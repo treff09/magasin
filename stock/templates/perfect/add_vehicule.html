@@ -1,0 +1,210 @@
+{% extends 'perfect/base.html' %} 
+{% load static %} 
+{% block title %} Listes des véhicules {% endblock title %} 
+{% block navbar_nav %}
+
+{% endblock navbar_nav %} 
+{% block page_title %}
+<img class="profile-user-img" style="border:none; height:55px;width:55px" src="{% static 'addcar.png' %}" alt="User profile picture">Ajouter un nouveau véhicule 
+{% endblock page_title %} 
+{% block page_a %}
+{% endblock page_a %}
+{% block active_page %} Ajouter un véhicule {% endblock active_page%}
+{% block main_content %}
+<div class="col-md-12">
+    <div class="card" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700;">
+        <div class="card-body table-responsive p-0" style="border-radius:8px; border:none">
+            <table class="table table text-nowrap">
+                <tr>
+                    <div class="col-md-12">
+                        <div class="row bg-danger">
+                            <div class="col-md-2">
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Total véhicule</div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{car_counts}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 6px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Total VTC</div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                T: {{car_vtc_counts}}-{{car_vtc_invent}} frscfa
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 6px; margin-left: 0px;" src="{% static 'taxi.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Total TAXI</div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                T: {{car_taxi_counts}}-{{car_taxi_invent}} frscfa
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 8px;margin-left: 0px;" src="{% static 'rech.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Résultat du filtre</div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">{{cars_events}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight:700;color: #06497C;">Enrégistrer un nouveau véhicule</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method='post' role="form" id="quickForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row card-body text-secondary">
+                        <div class="col-md-6 col-sm-6  form-group">
+                            <label for="fullname"><b>Categorie</b></label> {{forms.category}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Immatriculation</b></label> {{forms.immatriculation}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Marque</b></label> {{forms.marque}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Durée</b></label> {{forms.duree}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Cout d'Acquisition</b></label> {{forms.cout_acquisition}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Numero chassis</b></label> {{forms.num_Chassis}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Photo</b></label> {{forms.image}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Photo Carte Grise</b></label> {{forms.photo_carte_grise}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Date d'Acquisition</b></label> {{forms.date_acquisition}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Numero Carte Grise</b></label> {{forms.num_cart_grise}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Date Edit Carte Grise</b></label> {{forms.dat_edit_carte_grise}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Date Mise en Service</b></label> {{forms.date_mis_service}}
+                        </div>
+                        <div class="col-md-12 col-sm-6  form-group">
+                            {{forms.auteur}}
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(5.2px);-webkit-backdrop-filter: blur(5.2px);">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {% if user.user_type == '1' or user.user_type == '2' %}
+                            <button type="button" class="btn btn-default text-danger" style="font-weight:700" data-toggle="modal" data-target="#modal-lg">Nouveau Véhicule <i class='fa fa-plus-square'></i></button>
+                        {% else %}
+                            <button type="button" class="btn btn-default text-danger" style="font-weight:700">Ajouter un Véhicule <i class='fa fa-plus-square'></i></button>
+                        {% endif %}
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class=" text-center text-danger ">
+                                <th>IMMAT</th>
+                                <th>MARQUE</th>
+                                <th>CATEGORIE</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            {% if list_cars %} 
+                                {% for u in list_cars %}
+                                    <tr class="text-center">
+                                        <td><a href="{% url 'updatecar' u.pk %}" class="mr-3 text-danger">{{u.immatriculation}}</a></td>
+                                        <td><a class="mr-3 text-primary">{{u.marque}}</a></td>
+                                        <td><a class="mr-3 text-primary">{{u.category}}</a></td>
+                                        <td>
+                                            {% if user.user_type == '1' %}
+                                                <a href="{% url 'delvehi' u.pk %}" class="text-danger" onclick="return confirm('Etes-vous sûre de vouloir supprimer le véhicule {{u.immatriculation}} - {{u.marque}} - {{u.category|upper}}? car si vous supprimer toutes les informations liées seront supprimées')">
+                                                    <i style="font-size: 20px; " class="fa fa-trash "></i>
+                                                </a>
+                                            {% else %}
+                                                <a class="text-danger">
+                                                    <i style="font-size: 20px; " class="fa fa-trash "></i>
+                                                </a>
+                                            {% endif %}
+                                            
+                                        </td>
+                                    </tr>
+                                {% endfor %} 
+                            {% endif %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="text-center ">
+                                <th>---</th>
+                                <th>---</th>
+                                <th>---</th>
+                                <th>---</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>      
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

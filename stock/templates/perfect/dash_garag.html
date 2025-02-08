@@ -1,0 +1,512 @@
+{% extends 'perfect/bases.html' %} 
+{% load static %} 
+{% block title %} Tableau de bord garage {% endblock title %} {% block navbar_nav %}
+
+{% endblock navbar_nav %} 
+{% block page_title %}
+<img class="profile-user-img" style="border:none; height:50px;width:50px; " src="{% static 'statgarag.png' %}" alt="User profile picture">Tableau de bord garage
+{% endblock page_title %} 
+{% block page_a %}
+{% endblock page_a %}
+{% block main_content%}
+<div class="col-md-12">
+    <div class="card" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700;">
+        <div class="card-body table-responsive p-0" style="border-radius:8px; border:none">
+            <table class="table table text-nowrap" >
+                <tr style="border-color:red">
+                    <div class="col-md-12">
+                        <div class="row ">
+                            <div class="col-md-2">
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 8px;" src="{% static 'clereparat.png' %}" alt="" srcset="">
+                                            <a href="{% url 'list_repa' %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Réparations</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ total_reparat_format }}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'clereparat.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">T réparations</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ nb_reparat }}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'clereparat.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Réparations VTC</div>
+                                            <div style="font-size:15px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                T: {{ nb_reparatvtc }}-{{total_reparatvtc_format}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frscfa</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'clereparat.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Réparations TAXI</div>
+                                            <div style="font-size:15px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                T: {{ nb_reparataxi }}-{{total_reparataxi_format}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frscfa</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 8px;" src="{% static 'visit.png' %}" alt="" srcset="">
+                                            <a href="{% url 'list_visit' %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Visites Techniques</div>
+                                            <div style="font-size:15px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ total_visit_format }}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 8px;" src="{% static 'clean.png' %}" alt="" srcset="">
+                                            <a href="{% url 'list_entretien' %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Entretiens</div>
+                                            <div style="font-size:15px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ total_ent_format }}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'gear.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div class="mt-1" style="font-size:14px; font-weight: 700; line-height: 1;color: #06497C">Pièces réparations</div>
+                                            <div style="font-size:15px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ total_piece_format}} 
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 8px;" src="{% static 'update.png' %}" alt="" srcset="">
+                                            <a href="{% url 'list_piechange' %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px; color: #06497C">Pièces changées</div>
+                                            <div style="font-size:15px; font-weight: 700; line-height: 1; color: #fa7832;">{{ total_piececha_format }}  <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 8px;" src="{% static 'chargfix.png' %}" alt="" srcset="">
+                                            <a href="" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a>
+                                        </div>
+                                        <div><div style="font-size: 15px;color: #06497C">Pièce interne</div>
+                                            <div style="font-size:15px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ total_pieces_format_int }}  
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="" style="border-radius:20px">
+                <div id="" class="">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-12 p-0">
+                            <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(5.2px);-webkit-backdrop-filter: blur(5.2px);">
+                                <div class="card-header">
+                                    <h3 class="card-title text-danger" style="font-weight: 700;">STATISTIQUE PAR VEHICULE</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr class=" text-center text-danger ">
+                                                <th>IMMATRICULATION</th>
+                                                <th>CATEGORIE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+                                            {% if vehicules %} 
+                                                {% for u in vehicules %}
+                                                    <tr class="text-center">
+                                                        <td><a href="{% url 'dashgaragcar' u.pk %}" class="mr-3 text-primary">{{u.immatriculation}}</a></td>
+                                                        <td><a>{{u.category}}</a></td>
+                                                    </tr>
+                                                {% endfor %} 
+                                            {% endif %}
+                                        </tbody>
+                                        
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="" style="border-radius:20px">
+                <div class="">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-12 p-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- BAR -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Evolution
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="background: rgba(255, 255, 255, 0.3);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                        backdrop-filter: blur(8px);
+                                        -webkit-backdrop-filter: blur(8px);">
+                                            <div class="chart">
+                                                <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                            </div>
+                                            <script>
+                                                const cta = document.getElementById('barChart').getContext('2d');;
+                                                const gradientvtc = cta.createLinearGradient(0, 0, 0, 400); // Adjust the gradient orientation as needed
+                                                gradientvtc.addColorStop(0, 'rgb(255,138,128)'); // Start color
+                                                gradientvtc.addColorStop(1, 'rgb(255,138,128, 0.2)');
+
+                                                const gradientaxi = cta.createLinearGradient(0, 0, 0, 400); // Adjust the gradient orientation as needed
+                                                gradientaxi.addColorStop(0, 'rgb(142,29,29)'); // Start color
+                                                gradientaxi.addColorStop(1, 'rgb(142,29,29, 0.2)');
+                                                new Chart(cta, {
+                                                    type: 'line',
+                                                    data: {
+                                                        labels: {{labels | safe}},
+                                                        datasets: [
+                                                        {
+                                                            label: "Réparations vtc",
+                                                            data: {{rep_mois_vtc_data}},
+                                                            fill: true,
+                                                            borderColor: gradientvtc,
+                                                            tension: 0.4,
+                                                            backgroundColor: [
+                                                                gradientvtc
+                                                            ],
+                                                        },
+                                                        
+                                                        {
+                                                            label: "Réparations taxi",
+                                                            data: {{rep_mois_taxi_data}},
+                                                            fill: true,
+                                                            borderColor: gradientaxi,
+                                                            tension: 0.4,
+                                                            backgroundColor: [
+                                                                gradientaxi
+                                                            ],
+                                                        },
+                                                        ]
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true,
+                                                                easing: 'linear',
+                                                                from: 1,
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <!-- FIN BAR -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 p-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- BAR -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                        Evolution
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="background: rgba(255, 255, 255, 0.3);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                        backdrop-filter: blur(8px);
+                                        -webkit-backdrop-filter: blur(8px);">
+                                            <div class="chart">
+                                                <canvas id="barCharts" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                            </div>
+                                            <script>
+                                                const cty = document.getElementById('barCharts').getContext('2d');
+                                                const gradientvisvtc = cty.createLinearGradient(0, 0, 0, 400);
+                                                gradientvisvtc.addColorStop(0, 'rgb(27,94,32,.9)');
+                                                gradientvisvtc.addColorStop(1, 'rgb(157,254,161,.6)');
+
+                                                const gradientvistax = cty.createLinearGradient(0, 0, 0, 400);
+                                                gradientvistax.addColorStop(0, 'rgb(32,201,151)');
+                                                gradientvistax.addColorStop(1, 'rgb(32,201,151,.6)');
+                                                new Chart(cty, {
+                                                    type: 'bar',
+                                                    data: {
+                                                        labels: {{labels | safe}},
+                                                        datasets: [
+                                                        {
+                                                                label: 'changées vtc',
+                                                                data: {{piecha_mois_vtc_data}},
+                                                                borderWidth: 2,
+                                                                borderColor: gradientvisvtc,
+                                                                tension: 0.4,
+                                                                fill: true,
+                                                                backgroundColor: [
+                                                                    gradientvisvtc,
+                                                                ],
+                                                            }, 
+                                                            {
+                                                                type: 'bar',
+                                                                label: 'réparation vtc',
+                                                                data: {{piec_mois_vtc_data}},
+                                                                backgroundColor: gradientvistax,
+                                                                borderColor: gradientvistax,
+                                                                borderWidth: 2,
+                                                                fill: true,
+                                                                tension: 0.4,
+                                                            },
+                                                        ]
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            </script>
+
+                                        </div>
+                                    </div>
+                                    <!-- FIN BAR -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="" style="border-radius:20px">
+                <div class="">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-12 p-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- BAR -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                        Evolution
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="background: rgba(255, 255, 255, 0.3);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                        backdrop-filter: blur(8px);
+                                        -webkit-backdrop-filter: blur(8px);">
+                                            <div class="chart">
+                                                <canvas id="lineCharts" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                            </div>
+                                            <script>
+                                                const ctz = document.getElementById('lineCharts').getContext('2d');
+                                                const gradiententvtc = ctz.createLinearGradient(0, 0, 0, 400); // Adjust the gradient orientation as needed
+                                                gradiententvtc.addColorStop(0, 'rgb(255,235,59,.9)'); // Start color
+                                                gradiententvtc.addColorStop(1, 'rgb(255,241,118,.1)');
+
+                                                const gradiententaxi = ctz.createLinearGradient(0, 0, 0, 400); // Adjust the gradient orientation as needed
+                                                gradiententaxi.addColorStop(0, 'rgb(255,193,7,.9)'); // Start color
+                                                gradiententaxi.addColorStop(1, 'rgb(255,193,7,.1)');
+                                                new Chart(ctz, {
+                                                    type: 'line',
+                                                    data: {
+                                                        labels: {{labels | safe}},
+                                                        datasets: [
+                                                        {
+                                                            label: 'Entretiens vtc',
+                                                            data: {{ent_mois_vtc_data}},
+                                                            borderWidth: 2,
+                                                            borderColor: gradiententvtc,
+                                                            tension: 0.4,
+                                                            fill: true,
+                                                            backgroundColor: [
+                                                                gradiententvtc,
+                                                            ],
+                                                        },
+                                                        {
+                                                            label: 'Entretiens taxi',
+                                                            data: {{ent_mois_taxi_data}},
+                                                            borderWidth: 2,
+                                                            borderColor: gradiententaxi,
+                                                            tension: 0.4,
+                                                            fill: true,
+                                                            backgroundColor: [
+                                                                gradiententaxi,
+                                                            ],
+                                                        }
+                                                        ]
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <!-- FIN BAR -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 p-0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- BAR -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Evolution Pièces
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="background: rgba(255, 255, 255, 0.3);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                        backdrop-filter: blur(8px);
+                                        -webkit-backdrop-filter: blur(8px);">
+                                            <div class="chart">
+                                                <canvas id="lineChartxy" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                            </div>
+                                            <script>
+                                                const ctxy = document.getElementById('lineChartxy').getContext('2d');
+                                                const gradientpieta = ctxy.createLinearGradient(0, 0, 0, 400);
+                                                gradientpieta.addColorStop(0, 'rgb(244,81,30)'); // Start color54,192,186
+                                                gradientpieta.addColorStop(1, 'rgb(244,81,30,0.1)'); 
+                                                const gradientpiecta = ctxy.createLinearGradient(0, 0, 0, 400);
+                                                gradientpiecta.addColorStop(0, 'rgb(168,68,72)');
+                                                gradientpiecta.addColorStop(1, 'rgb(168,68,72,0.1)'); // End color
+                                                new Chart(ctxy, {
+                                                    type: 'bar',
+                                                    data: {
+                                                        labels: {{labels | safe}},
+                                                        datasets: [
+                                                            
+                                                            {
+                                                                label: 'changées taxi',
+                                                                data: {{piecha_mois_taxi_data}},
+                                                                borderWidth: 2,
+                                                                borderColor: gradientpiecta,
+                                                                tension: 0.4,
+                                                                fill: true,
+                                                                backgroundColor: [
+                                                                    gradientpiecta,
+                                                                ],
+                                                            },
+                                                            {
+                                                                type: 'bar',
+                                                                label: 'réparation taxi',
+                                                                data: {{piec_mois_taxi_data}},
+                                                                backgroundColor: gradientpieta,
+                                                                borderColor: gradientpieta,
+                                                                borderWidth: 2,
+                                                                fill: true,
+                                                                tension: 0.4,
+                                                            },
+                                                        ]
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <!-- FIN BAR -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

@@ -1,0 +1,201 @@
+{% extends 'perfect/base.html' %} 
+{% load static %} 
+{% block title %} Entrée de caisse {% endblock title %} 
+{% block navbar_nav %} {% endblock navbar_nav %} 
+{% block page_title %}
+<a href="{% url 'billetage' %}"><img class="profile-user-img" style="border:none; height:35px;width:35px" src="{% static 'retour.png' %}" alt="Retour"></a>
+<img class="profile-user-img" style="border:none; height:55px;width:55px" src="{% static 'dp.png' %}" alt="User profile picture">Saisie une entrée de caisse {% endblock page_title %} {% block page_a %} {% endblock page_a %} {% block active_page %} Sortie
+de caisse 
+{% endblock active_page%} 
+{% block main_content %}
+{% if user.user_type == '4' %}
+{% else %}
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight:700;color: #06497C;">Enrégistrer une entrée de caisse</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method='post' role="form" id="quickForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row card-body text-secondary">
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Date</b></label> {{forms.date_saisie}}
+                        </div>
+                        <div class="col-md-6 col-sm-6  form-group">
+                            <label for="fullname"><b>N°Pièce</b></label> {{forms.Num_piece}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Libelle</b></label> {{forms.libelle}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Montant</b></label> {{forms.montant}}
+                        </div>
+
+                        <div class="col-md-12 col-sm-6  form-group">
+                            {{forms.auteur}}
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="col-md-12">
+    <div class="card" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700;">
+        <div class="card-body table-responsive p-0" style="border-radius:8px; border:none">
+            <table class="table table text-nowrap">
+                <tr>
+                    <div class="col-md-12">
+                        <div class="row bg-danger">
+                            <div class="col-md-2">
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'recet.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Aujourd'hui</div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{tot_entre_jours}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 6px; margin-left: 0px;" src="{% static 'portefeuille.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{tot_entre_mois}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">{{mois}} <small></small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 8px; margin-left: 3px;" src="{% static 'calendar.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{tot_entre_annuel}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">{{annee}} <small></small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 8px; margin-left: 3px;" src="{% static 'rech.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{resuults_filtre}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">Resultat <small></small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="" style="border-radius:20px">
+                <div id="" class="">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-12 p-0">
+                            <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(5.2px);-webkit-backdrop-filter: blur(5.2px);">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <button type="button" class="btn btn-default text-danger">PDF <i class='fa fa-file-pdf-o'></i></button>
+                                        <button type="button" class="btn btn-default text-success">Excell <i class='fa fa-file-excel-o'></i></button>
+                                        {% if user.user_type == '1' or user.user_type == '3' %}
+                                            <button type="button" class="btn btn-default text-primary" data-toggle="modal" data-target="#modal-lg">Saisir <i class='fa fa-plus-square'></i></button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-default text-primary">Saisir <i class='fa fa-plus-square'></i></button>
+                                        {% endif %}
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr class=" text-center text-danger ">
+                                                <th>N°PIECE</th>
+                                                <th>LIBELLE</th>
+                                                <th>MONTANT</th>
+                                                <th>DATE</th>
+                                                <th>SAISIE PAR</th>
+                                                <th>ACTION</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if enters_liste %} 
+                                                {% for e in enters_liste %}
+                                                    <tr class="text-center">
+                                                        <td>{{e.Num_piece}}</td>
+                                                        <td><a class="text-primary" type="button" data-toggle="tooltip" data-placement="top" title="{{e.libelle}}">{{e.libelle|slice:":15"}}{% if e.libelle|length > 15 %}...{% endif %}</a></td>
+                                                        <td>{{e.montant}}</td>
+                                                        <td>{{e.date_saisie}}</td>
+                                                        <td>
+                                                            <a class="mr-3 text-primary">{{e.auteur.username}}</a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {% if user.user_type == '1' %}
+                                                                <a href="{% url 'delet_encaisse' e.pk %}" class="text-danger" onclick="return confirm('Etes-vous sûre de vouloir supprimer l\'entrée de caisse  {{e.Num_piece}} - {{e.libelle}} - {{e.montant}} frscfa? car si vous supprimer toutes les informations liées seront supprimées')">
+                                                                    <i style="font-size: 20px;" class="fa fa-trash "></i>
+                                                                </a>
+                                                            {% else %}
+                                                                <a href="" class="text-danger">
+                                                                    <i style="font-size: 20px;" class="fa fa-trash "></i>
+                                                                </a>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %} 
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock main_content %}

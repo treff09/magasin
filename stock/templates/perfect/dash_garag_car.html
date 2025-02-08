@@ -1,0 +1,615 @@
+{% extends 'perfect/bases.html' %} 
+{% load static %} 
+{% block title %} Statistique du {{vehicules.immatriculation}}{% endblock title %} 
+{% block navbar_nav %}
+{% endblock navbar_nav %} 
+{% block page_title %}
+<img class="profile-user-img" style="border:none; height:50px;width:50px" src="{% static 'diagramme.png' %}" alt="User profile picture">Tableau de bord garage du <b class="text-danger">{{vehicule.immatriculation}}</b>
+{% endblock page_title %} 
+{% block page_a %}
+{% endblock page_a %}
+{% block active_page %} Statistique véhicule {% endblock active_page %} 
+{% block main_content%}
+
+<div class="col-md-4">
+    <div class="card" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700;">
+    {% if vehicules %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div style="display: flex; align-items: center;">
+                            <div style="height: 70px; width: 70px; border-radius: 0px;" class="mr-3 text-center">
+                                {% if vehicule.image %}
+                                    <img src="{{vehicule.image.url}}" style="height: 100px; width: 120px; position:absolute; margin-top: -5px; margin-left: 30px;">
+                                {% else %}
+                                    <img src="{% static 'alto.png' %}" style="height: 150px; width: 150px; position:absolute; margin-top: -30px; margin-left: 20px;">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body table-responsive p-0" style="border-radius:8px; border:none">
+                    <table class="table table text-nowrap">
+                        <tr>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px" title="Pas encore disponible">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        CATEGORIE
+                                                    </div>
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.category}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 0px;" src="{% static 'calendar.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        DUREE EN ENTREPRISE
+                                                    </div> 
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.age}} an{% if vehicule.age > 1  %}s{% endif %}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 8px; margin-left: 0px;" src="{% static 'marq.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        MARQUE
+                                                    </div>
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.marque}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 0px;" src="{% static 'file.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        N° CARTE GRISE
+                                                    </div>
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.num_cart_grise}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 0px;" src="{% static 'file.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        N° CHASSIS
+                                                    </div>
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.num_Chassis}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 0px;" src="{% static 'sum.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        COUT D'ACQUISITION
+                                                    </div>
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.cout_acquisition}} Fscfa</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 0px;" src="{% static 'calendar.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        DATE D'ACQUISITION
+                                                    </div>
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.date_acquisition}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 0px;" src="{% static 'calendar.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        DATE EDITION CARTE GRISE
+                                                    </div>
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.dat_edit_carte_grise}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="border:none">
+                                            <div style="display: flex; align-items: center;">
+                                                <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                    <a href="" style="font-size:20px">
+                                                        <img style="height: 35px; width: 35px; position:relative; margin-top: 7px; margin-left: 0px;" src="{% static 'calendar.png' %}" alt="" srcset="">
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size:16px; font-weight: 700; line-height: 1;color: #06497C;">
+                                                        DATE MISE EN SERVICE
+                                                    </div>
+                                                    <div style="font-size: 14px; color: #fa7832;">{{vehicule.date_mis_service}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-header" style="font-size:15px; font-weight: 700; line-height: 1; color: #8b1516;">
+            SELECTIONNER UN VEHICULE
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr class=" text-center text-danger ">
+                        <th>IMMATRICULATION</th>
+                        <th>CATEGORIE</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% if vehicules %} 
+                        {% for u in vehicules %}
+                            <tr class="text-center">
+                                <td><a href="{% url 'dashgaragcar' u.pk %}" class="mr-3 text-primary">{{u.immatriculation}}</a></td>
+                                <td>{{u.category}}</td>
+                            </tr>
+                        {% endfor %} 
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>  
+</div>
+
+<div class="col-md-8">
+    <div class="card" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700;">
+        <div class="card-body table-responsive p-0" style="border-radius:8px; border:none">
+            <table class="table table text-nowrap">
+                <tr>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'clereparat.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addpoid' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Réparation</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ reparations }}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'clereparat.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addglycemie' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Pièces réparation</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ piecerep }}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'chargfix.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addtaille' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px;color: #06497C">Pièces changées</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">{{ piechang }}  <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'chargfvar.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addtemperature' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px; color: #06497C">Entretiens</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ entretiens }}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'chargfvar.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addtemperature' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px; color: #06497C">Visite technique</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ visitechniques }}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'gear.png' %}" alt="" srcset="">
+
+                                            {% comment %} <a href="{ url 'addtension' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div class="mt-1" style="font-size:14px; font-weight: 700; line-height: 1;color: #06497C">Nombre réparations</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{ tot_reparation}} 
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;"></small>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'update.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addperibras' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 14px; color: #06497C">Pièces internes</div>
+                                            <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">{{ tot_piecerep_int }} <small style="color: #06497C; font-weight: 700; line-height: 1;">pièce{% if tot_piecerep_int > 1 %}s{% endif %}</small></div>
+                                            <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">{{ tot_piece_cout_int }} <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'update.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addperibras' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 14px; color: #06497C">Vignettes</div>
+                                            <div style="font-size: 16px; font-weight: 700; line-height: 1; color: #fa7832;">{{ vignettes }}  <small style="color: #06497C; font-weight: 700; line-height: 1;">frs </small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'update.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addperibras' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 14px; color: #06497C">Patentes</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">{{ patentes }}  <small style="color: #06497C; font-weight: 700; line-height: 1;">frs </small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border:none">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'update.png' %}" alt="" srcset="">
+                                            {% comment %} <a href="{ url 'addperibras' patient.pk %}" style="font-size:20px"><i class="fa fa-plus-circle text-success" style="position:relative; font-size:20px;top:-10px"></i></a> {% endcomment %}
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 14px; color: #06497C">stationnement</div>
+                                            <div style="font-size:16px; font-weight: 700; line-height: 1; color: #fa7832;">{{ stations }}  <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+        </div><br>
+        <div class="card-body table-responsive p-0" style="border-radius:8px; border:none">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="" style="border-radius:20px">
+                            <div class="">
+                                <div class="row p-0 m-0">
+                                    <div class="col-md-12 p-0">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <!-- BAR -->
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                    Evolution
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body" style="background: rgba(255, 255, 255, 0.3);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                                    backdrop-filter: blur(8px);
+                                                    -webkit-backdrop-filter: blur(8px);">
+                                                        <div class="chart">
+                                                            <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                                        </div>
+                                                        <script>
+                                                            const cta = document.getElementById('barChart').getContext('2d');;
+                                                            const gradient = cta.createLinearGradient(0, 0, 0, 400); // Adjust the gradient orientation as needed
+                                                            gradient.addColorStop(0, 'rgb(23,84,133)'); // Start color
+                                                            gradient.addColorStop(1, 'rgb(154, 214, 241,.1)');
+                                                            new Chart(cta, {
+                                                                type: 'line',
+                                                                data: {
+                                                                    labels: {{label|safe}},
+                                                                    datasets: [{
+                                                                        label: "Evolution des réparations",
+                                                                        data: {{rep_mois_data}},
+                                                                        fill: true,
+                                                                        borderColor: gradient,
+                                                                        tension: 0.4,
+                                                                        backgroundColor: [
+                                                                            gradient
+                                                                        ],
+                                                                    }]
+                                                                },
+                                                                options: {
+                                                                    scales: {
+                                                                        y: {
+                                                                            beginAtZero: true,
+                                                                            easing: 'linear',
+                                                                            from: 1,
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 p-0">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <!-- BAR -->
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                    Evolution
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body" style="background: rgba(255, 255, 255, 0.3);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                                    backdrop-filter: blur(8px);
+                                                    -webkit-backdrop-filter: blur(8px);">
+                                                        <div class="chart">
+                                                            <canvas id="barCharts" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                                        </div>
+                                                        <script>
+                                                            const cty = document.getElementById('barCharts').getContext('2d');
+                                                            const gradient1 = cty.createLinearGradient(0, 0, 0, 400);
+                                                            gradient1.addColorStop(0, 'rgb(27,94,32,.9)');
+                                                            gradient1.addColorStop(1, 'rgb(157,254,161,.6)');
+
+                                                            const gradient4 = cty.createLinearGradient(0, 0, 0, 400);
+                                                            gradient4.addColorStop(0, 'rgb(32,201,151)'); // Start color54,192,186
+                                                            gradient4.addColorStop(1, 'rgb(32,201,151,0.1)'); // End color
+                                                            new Chart(cty, {
+                                                                type: 'bar',
+                                                                data: {
+                                                                    labels: {{label|safe}},
+                                                                    datasets: [{
+                                                                        label: 'Charges fixes',
+                                                                        data: {{entret_mois_data}},
+                                                                        borderWidth: 2,
+                                                                        borderColor: 'rgb(157,254,161,.6)',
+                                                                        tension: 0.4,
+                                                                        fill: true,
+                                                                        backgroundColor: [
+                                                                            gradient1,
+                                                                        ],
+                                                                    }]
+                                                                },
+                                                                options: {
+                                                                    scales: {
+                                                                        y: {
+                                                                            beginAtZero: true
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="" style="border-radius:20px">
+                            <div class="">
+                                <div class="row p-0 m-0">
+                                    <div class="col-md-12 p-0">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <!-- BAR -->
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        Evolution
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body" style="background: rgba(255, 255, 255, 0.3);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                                    backdrop-filter: blur(8px);
+                                                    -webkit-backdrop-filter: blur(8px);">
+                                                        <div class="chart">
+                                                            <canvas id="lineCharts" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                                        </div>
+                                                        <script>
+                                                            const ctz = document.getElementById('lineCharts').getContext('2d');
+                                                            const gradient2 = ctz.createLinearGradient(0, 0, 0, 400); // Adjust the gradient orientation as needed
+                                                            gradient2.addColorStop(0, 'rgb(255,111,0,.9)'); // Start color
+                                                            gradient2.addColorStop(1, 'rgb(248,248,248,.1)');
+                                                            new Chart(ctz, {
+                                                                type: 'line',
+                                                                data: {
+                                                                    labels: {{label| safe}},
+                                                                    datasets: [{
+                                                                        label: 'Pièce de réparation',
+                                                                        data: {{piece_mois_data}},
+                                                                        borderWidth: 2,
+                                                                        borderColor: 'rgb(253,126,20,.1)',
+                                                                        tension: 0.4,
+                                                                        fill: true,
+                                                                        backgroundColor: [
+                                                                            gradient2,
+                                                                        ],
+                                                                    }]
+                                                                },
+                                                                options: {
+                                                                    scales: {
+                                                                        y: {
+                                                                            beginAtZero: true
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                        </script>
+
+                                                    </div>
+                                                </div>
+                                                <!-- FIN BAR -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 p-0">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <!-- BAR -->
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                    Evolution
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body" style="background: rgba(255, 255, 255, 0.3);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                                                    backdrop-filter: blur(8px);
+                                                    -webkit-backdrop-filter: blur(8px);">
+                                                        <div class="chart">
+                                                            <canvas id="lineChartxy" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                                        </div>
+                                                        <script>
+                                                            const ctxy = document.getElementById('lineChartxy').getContext('2d');
+                                                            const gradient3 = ctxy.createLinearGradient(0, 0, 0, 400);
+                                                            gradient3.addColorStop(0, 'rgb(233,30,99)');
+                                                            gradient3.addColorStop(1, 'rgb(187,222,251,.1)');
+                                                            new Chart(ctxy, {
+                                                                type: 'bar',
+                                                                data: {
+                                                                    labels: {{label|safe}},
+                                                                    datasets: [
+                                                                        {
+                                                                            type: 'bar',
+                                                                            label: 'Pièces changées',
+                                                                            data: {{piecha_mois_data}},
+                                                                            backgroundColor: gradient3,
+                                                                            borderColor: gradient3,
+                                                                            borderWidth: 2,
+                                                                            fill: true,
+                                                                            tension: 0.4,
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                options: {
+                                                                    scales: {
+                                                                        y: {
+                                                                            beginAtZero: true,
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %} 

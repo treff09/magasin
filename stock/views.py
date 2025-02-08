@@ -15,6 +15,11 @@ from django.db.models.functions import TruncMonth
 from django.db.models.functions import ExtractMonth
 
 
+def raci(request):
+    return render(request,'perfect/tableau_bord.html',)
+def caisse(request):
+    return render(request,'perfect/caisse.html',)
+
 def base(request):
     return render(request,'magasin/base.html',)
 login_required(login_url='login')
@@ -368,7 +373,6 @@ def piece_list(request):
     role = None
     if hasattr(user, 'profile'):
         role = user.profile.role
-
     form = DateForm(request.GET)
     if form.is_valid():
         date_debut = form.cleaned_data['date_debut']
@@ -915,18 +919,6 @@ def valider_livraison(request, ticket_id):
     except Exception as e:
         messages.error(request, f"Erreur lors de la validation de la livraison : {str(e)}")
     return redirect(request.META.get('HTTP_REFERER', 'livraison_dashboard'))
-# @user_passes_test(is_liveur)
-# def valider_livraison(request, ticket_id):
-#     ticket = get_object_or_404(Ticket, numero=ticket_id, utilise=True)
-#     if request.method == 'POST':
-#         panier_non_livre = Panier.objects.filter(ticket=ticket.numero).first()
-#         panier_non_livre.panier_livre = True
-#         panier_non_livre.save()
-#         messages.success(request, f"Livraison validée pour le ticket {ticket.numero}.")
-#         return redirect('livraison_dashboard')
-#     return render(request, 'valider_livraison.html', {'ticket': ticket})
-
-
 
 @user_passes_test(is_accueillant)
 def accueil(request):
@@ -935,11 +927,91 @@ def accueil(request):
 @user_passes_test(is_caissier)
 def caisseDashboard(request):
     paniers_non_valides = Panier.objects.filter(valide=True,panier_paye = False,panier_livre=False)
-    context =  {
-        'paniers_non_valides': paniers_non_valides,
+    user = request.user
+    role = None
+    if hasattr(user, 'profile'):
+        role = user.profile.role
+    form = DateForm(request.GET)
+    if form.is_valid():
+        date_debut = form.cleaned_data['date_debut']
+        date_fin = form.cleaned_data['date_fin']
+
+        total_revenue_jour = Commande.objects.filter(utilisateur=user, date_creation__range=[date_debut, date_fin]).aggregate(total=Sum('total'))['total'] or 0
+        if role in ['AdminMagasin', 'superadmin']:
+            paniers = Panier.objects.filter(valide=True,date_creation__range=[date_debut, date_fin])
+        else:
+            # Show only paniers related to the connected user
+            paniers = Panier.objects.filter(utilisateur=user, valide=True, date_creation__range=[date_debut, date_fin])
+        
+        total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
+        total_inventory_value = Piece.objects.aggregate(total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField())))['total_value'] or 0
+
+        panier_valide = PanierItem.objects.filter(panier__in=paniers, date_creation__range=[date_debut, date_fin]).count()
+        command_valide = Commande.objects.filter(panier__in=paniers, date_creation__range=[date_debut, date_fin]).count()
+        
+        command_valide_en_attente = Commande.objects.filter(utilisateur=user, paye=False, panier__in=paniers, date_creation__range=[date_debut, date_fin]).count()
+        total_revenue_jour_paye = Commande.objects.filter(utilisateur=user, paye=True, date_creation__range=[date_debut, date_fin]).aggregate(total=Sum('total'))['total'] or 0
+        total_revenue_mois_an_paye = Commande.objects.filter(utilisateur=user, paye=True, date_creation__range=[date_debut, date_fin]).aggregate(total=Sum('total'))['total'] or 0
+        total_revenue_an_paye = Commande.objects.filter(utilisateur=user, paye=True, date_creation__range=[date_debut, date_fin]).aggregate(total=Sum('total'))['total'] or 0
+        
+        print(total_revenue_jour,"-------------------------",panier_valide,"-------------------------",command_valide)
+
+        pieces = Piece.objects.filter(quantite__gt=0)
+        # Retrieve or create the cart for the current user
+        panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
+        
+        panier_items = PanierItem.objects.filter(panier=panier)
+        for item in panier_items:
+            item.total = item.piece.prix_unitaire * item.quantite
+        sous_total = sum(item.total for item in panier_items)
+        total_revenue_mois = Commande.objects.filter(utilisateur=user, date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('total'))['total'] or 0
+        nb_command_valide_mois = Commande.objects.filter(utilisateur=user, date_creation__year=date.today().year, date_creation__month=date.today().month).count()
+        nb_panier_mensuelle_valide = PanierItem.objects.filter(panier__utilisateur=user, date_creation__year=date.today().year, date_creation__month=date.today().month).count()
+        
+    else:
+        
+        # Check if the user is a superadmin or adminMagasin
+        if role in ['AdminMagasin', 'superadmin']:
+            # Show all panier instances
+            paniers = Panier.objects.filter(valide=True, date_creation=date.today())
+        else:
+            # Show only paniers related to the connected user
+            paniers = Panier.objects.filter(utilisateur=user, valide=True, date_creation=date.today())
+        
+        total_pieces = Piece.objects.aggregate(total=Sum('quantite'))['total'] or 0
+        panier_valide = PanierItem.objects.filter(panier__in=paniers).count()
+        nb_panier_mensuelle_valide = PanierItem.objects.filter(panier__utilisateur=user, date_creation__year=date.today().year, date_creation__month=date.today().month).count()
+        total_inventory_value = Piece.objects.aggregate(total_value=Sum(ExpressionWrapper(F('prix_unitaire') * F('quantite'), output_field=DecimalField())))['total_value'] or 0
+        
+        command_valide_en_attente = Commande.objects.filter(utilisateur=user, paye=False, panier__in=paniers, date_creation=date.today()).count()
+        total_revenue_jour_paye = Commande.objects.filter(utilisateur=user, paye=True, date_creation=date.today()).aggregate(total=Sum('total'))['total'] or 0
+        total_revenue_mois_an_paye = Commande.objects.filter(utilisateur=user, paye=True, date_creation__year=date.today().year, date_creation__month=date.today().month).aggregate(total=Sum('total'))['total'] or 0
+        total_revenue_an_paye = Commande.objects.filter(utilisateur=user, paye=True, date_creation__year=date.today().year).aggregate(total=Sum('total'))['total'] or 0
+
+        panier_items = PanierItem.objects.filter(panier__in=paniers)
+        pieces = Piece.objects.filter(quantite__gt=0)
+        # Retrieve or create the cart for the current user
+        panier, created = Panier.objects.get_or_create(utilisateur=request.user, valide=False)
+        panier_items = PanierItem.objects.filter(panier=panier)
+        # Calculate totals
+        for item in panier_items:
+            item.total = item.piece.prix_unitaire * item.quantite
+        sous_total = sum(item.total for item in panier_items)
+    context = {
+        'total_pieces': total_pieces,
+        'total_inventory_value': total_inventory_value,
+        'pieces': pieces,
+        'panier_items': panier_items,
+        'sous_total': sous_total,
+        'form': form,
+        'panier_valide': panier_valide or 0,
+        
+        'command_valide_en_attente' : command_valide_en_attente,
+        'total_revenue_jour_paye': total_revenue_jour_paye,
+        'total_revenue_mois_an_paye' : total_revenue_mois_an_paye,
+        'total_revenue_an_paye' : total_revenue_an_paye
     }
     return render(request, 'caissiere_validation_paiement.html', context)
-
 
 @user_passes_test(is_liveur)
 def livraison_dashboard(request):

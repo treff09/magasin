@@ -1,0 +1,158 @@
+{% extends 'perfect/base.html' %} 
+{% load static %} 
+{% block title %} Détails de réparation {% endblock title %} 
+{% block navbar_nav %} {% endblock navbar_nav %} 
+{% block page_title %}
+<a href="{% url 'add_reparation' reparation.vehicule.pk %}"><img class="profile-user-img" style="border:none; height:35px;width:35px" src="{% static 'retour.png' %}" alt="Retour"></a>
+<img class="profile-user-img" style="border:none; height:55px;width:55px" src="{% static 'addcar.png' %}" alt="User profile picture">
+Détails de réparation <b class="text-danger"> {{ reparation.vehicule.immatriculation }}</b> 
+{% endblock page_title %} 
+{% block page_a %}
+{% endblock page_a %}
+{% block active_page %} Détail de réparation {% endblock active_page%} 
+{% block main_content %}
+
+
+<div class="col-md-4 ">
+    <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(5.2px);-webkit-backdrop-filter: blur(5.2px);">
+        <div class="card-header">
+            <h3 class="card-title" style="color: rgb(3, 92, 159); font-weight:700;">
+                IMAGE DU VEHICULE
+            </h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            {% if reparation.vehicule %}
+                <img src="{{ reparation.vehicule.image.url }}" style="height: 180px; width: 300px; margin-left: 80px;">
+            {% else %}
+                <img src="{% static 'alto.png' %}" style="height: 100px; width: 130px;">
+            {% endif %}
+        </div>
+        <button type="button" class="btn btn-default text-danger" id="printButton">PDF <i class='fa fa-file-pdf-o'></i></button>
+
+        <!-- /.card-body -->
+    </div>
+</div>
+
+<div class="col-md-8">
+    <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); backdrop-filter: blur(5.2px); -webkit-backdrop-filter: blur(5.2px);">
+        <div class="card-header">
+            <h3 class="card-title  text-danger" style="font-weight:700;">
+                INFORMATIONS DE LA REPARATION
+            </h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="example1">
+                <thead>
+                    <tr class="bg-danger">
+                        <th colspan="8" style="color: rgb(3, 92, 159);">
+                            Enregistrer le : {{reparation.date}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" style="color:red">{{reparation.vehicule.immatriculation}} - {{reparation.vehicule.category}} - {{reparation.vehicule.marque}}</th>
+                        <th colspan="7" style="color: rgb(3, 92, 159)">N° Fiche {{reparation.num_fich}}</th>
+                    </tr>
+                    <tr style="font-weight:700;color: rgb(3, 92, 159)">
+                        <th>MOTIF</th>
+                        <th>DATE ENTREE</th>
+                        <th>DATE SORTIE</th>
+                        <th>DUREE</th>
+                        <th colspan="2">PERTE</th>
+                        <th colspan="2">NETTE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-primary">{{reparation.motif}}</td>
+                        <td class="text-primary">{{reparation.date_entree}}</td>
+                        <td class="text-primary">{{reparation.date_sortie}}</td>
+                        <td class="text-danger" style="font-weight:700;">{{duree_effective_heures}}</td>
+                        <td colspan="2" class="text-danger" style="font-weight:700;">{{perte}} frs</td>
+                        <td colspan="2" class="text-danger" style="font-weight:700;">{{recette_nette}} frs</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" style="color: rgb(3, 92, 159);">
+                            Description
+                        </td>
+                        <td colspan="5" class="text-primary">
+                            {{reparation.description}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="color: rgb(3, 92, 159);">
+                            Main d'oeuvre
+                        </td>
+                        <td colspan="5" class="text-danger" style="font-weight:700;">
+                            {{reparation.prestation}} frs
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" class="text-secondary"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" class="text-secondary btn-default">
+                            LISTE DES PIECES POUR LA REPARATION
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" class="text-primary">
+                            <tr style="font-weight:700;color: rgb(3, 92, 159)">
+                                <th colspan="2">LIBELLE</th>
+                                <th colspan="2">LIEU</th>
+                                <th colspan="2">MONTANT</th>
+                                <th colspan="2">DATE SAISIE</th>
+                            </tr>
+                        </td>
+                        {% if list_piece %}
+                            {% for u in list_piece %}
+                                <tr>
+                                    <td colspan="2" class="text-primary">{{u.libelle}}</td>
+                                    <td colspan="2" class="text-primary">{{u.lieu}}</td>
+                                    <td colspan="2" class="text-danger">{{u.montant}} frs</td>
+                                    <td colspan="2" class="text-danger">{{u.date_saisie}} </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="8" class="text-secondary">Pas de pièce....</td>
+                            </tr>
+                        {% endif %} 
+                    </tr>
+                    <tr class="text-danger" style="font-weight:700;">
+                        <td colspan="4">
+                            TOTAL REPARATION
+                        </td>
+                        <td colspan="4">
+                            {{reparation.montant}} frs
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" class="text-secondary"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" class="text-secondary">
+                            {% if reparation.image %}
+                                <img src="{{ reparation.image.url }}" style="height: 300px; width: 900px;">
+                            {% else %}
+                                <img src="{% static 'alto.png' %}" style="height: 100px; width: 130px;">
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock main_content %}

@@ -1,0 +1,125 @@
+{% extends 'perfect/base.html' %} 
+{% load static %} 
+{% block title %} Solde de journée {% endblock title %} 
+{% block navbar_nav %}
+
+{% endblock navbar_nav %} 
+{% block page_title %}
+<a href="{% url 'billetage' %}"><img class="profile-user-img" style="border:none; height:35px;width:35px" src="{% static 'retour.png' %}" alt="Retour"></a>
+<img class="profile-user-img" style="border:none; height:45px;width:45px" src="{% static 'sold.png' %}" alt="User profile picture">Saisie de solde de fin de journée 
+{% endblock page_title %} 
+{% block page_a %}
+{% endblock page_a %}
+{% block active_page %} solde journalier {% endblock active_page%}
+{% block main_content %}
+
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight:700;color: #06497C;">Enrégistrer le solde de fin de journée</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method='post' role="form" id="quickForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row card-body text-secondary">
+                        <div class="col-md-12 col-sm-6 form-group">
+                            <label for="fullname"><b>Date</b></label> {{forms.date_saisie}}
+                        </div>
+                        <div class="col-md-12 col-sm-6 form-group">
+                            <label for="fullname"><b>Montant</b></label> {{forms.montant}}
+                        </div>
+                        
+                        <div class="col-md-12 col-sm-6  form-group">
+                            {{forms.auteur}}
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="" style="border-radius:20px">
+                <div id="" class="">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-12 p-0">
+                            <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(5.2px);-webkit-backdrop-filter: blur(5.2px);">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <button type="button" class="btn btn-default text-danger">PDF <i class='fa fa-file-pdf-o'></i></button>
+                                        <button type="button" class="btn btn-default text-success">Excell <i class='fa fa-file-excel-o'></i></button>
+                                        {% if user.user_type == '1' or user.user_type == '3' %}
+                                            <button type="button" class="btn btn-default text-primary" data-toggle="modal" data-target="#modal-lg">Saisir <i class='fa fa-plus-square'></i></button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-default text-primary">Saisir <i class='fa fa-plus-square'></i></button>
+                                        {% endif %}
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr class=" text-center text-danger ">
+                                                <th>MONTANT</th>
+                                                <th>DATE</th>
+                                                <th>ENREGISTRER PAR</th>
+                                                <th>ACTION</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+                                            {% if soldes_liste %} 
+                                                {% for e in soldes_liste %}
+                                                    <tr class="text-center">
+                                                        <td>{{e.montant}}</td>
+                                                        <td>{{e.date_saisie}}</td>
+                                                        <td>
+                                                            <a class="mr-3 text-primary">{{e.auteur.username}}</a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a href="{% url 'delet_solde' e.pk %}" class="text-danger" onclick="return confirm('Etes-vous sûre de vouloir supprimer le solde du {{e.date_saisie}} - {{e.montant}} frscfa? car si vous supprimer toutes les informations liées seront supprimées')">
+                                                                <i style="font-size: 20px; " class="fa fa-trash "></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %} 
+                                            {% endif %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="text-center ">
+                                                <th>---</th>
+                                                <th>---</th>
+                                                <th>---</th>
+                                                <th>---</th>
+                                                {% comment %}
+                                                <th>CSS grade</th> {% endcomment %}
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

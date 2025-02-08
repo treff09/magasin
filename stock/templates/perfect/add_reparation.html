@@ -1,0 +1,333 @@
+{% extends 'perfect/base.html' %} 
+{% load static %} 
+{% block title %}Saisie & Etat des réparations  {% endblock title %} 
+{% block navbar_nav %}
+
+{% endblock navbar_nav %} 
+{% block page_title %}
+<a href="{% url 'temps_arrets' %}"><img class="profile-user-img" style="border:none; height:35px;width:35px" src="{% static 'retour.png' %}" alt="Retour"></a>
+<img class="profile-user-img" style="border:none; height:45px;width:45px" src="{% static 'clereparat.png' %}" alt="User profile picture">Saisie & Etat des réparations du <b class="text-danger"> {{vehicule}}</b> 
+{% endblock page_title %} 
+{% block page_a %}
+{% endblock page_a %}
+{% block active_page %} Etat des recettes {% endblock active_page%}
+{% block main_content %}
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+<div class="col-md-12">
+    <div class="card" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700;">
+        <div class="card-body table-responsive p-0" style="border-radius:8px; border:none">
+            <table class="table table text-nowrap">
+                <tr>
+                    <div class="col-md-12">
+                        <div class="row bg-danger">
+                            <div class="col-md-2">
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{repare_jours}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">Aujourd'hui</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 6px; margin-left: 0px;" src="{% static 'taxi.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{repare_mois}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C"><small>{{mois}}</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 8px; margin-left: 3px;" src="{% static 'marge.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{repare_an}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C"><small>{{annee}}</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 8px;margin-left: 0px;" src="{% static 'rech.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">{{repare_result}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">Résultat</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+ <div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight:700;color: #06497C;">Enrégistrer une nouvelle réparation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method='post' role="form" id="quickForm">
+                    {% csrf_token %}
+                    <div class="row card-body">
+                        <div class="col-md-12 form-group ">
+                            <input value="REPARATION" class="form-control text-center" id="exampleInputPassword1" disabled>
+                        </div>
+                        <div class="col-md-12 col-sm-6  form-group">
+                            <label>Motif de réparation</label> {{forms.motif}}
+                        </div>
+                        <div class="col-md-4 col-sm-6  form-group">
+                            <label>Heure d'entrée</label> {{forms.date_entree}}
+                        </div>
+                        <div class="col-md-4 col-sm-6  form-group">
+                            <label>Heure de sortie</label> {{forms.date_sortie}}
+                        </div>
+                        <div class="col-md-4 col-sm-6  form-group">
+                            <label>N°facture</label> {{forms.num_fich}}
+                        </div>
+                        <div class="col-md-4 col-sm-6  form-group">
+                            <label>Réçu</label> {{forms.image}}
+                        </div>
+                        <div class="col-md-12 col-sm-6  form-group">
+                            <label>Description de la réparation</label> {{forms.description}}
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <input value="LES PIECES DE REPARATION" class="form-control text-center" id="exampleInputPassword1" disabled>
+                        </div>
+                       
+                        {% if piece_formset %}
+                          {{ piece_formset.management_form }} 
+                          <div id="empty-ord-forms-listes" class="p-2 col-md-12">
+                            {% for form in piece_formset %}
+                              <div class="ingredient-ord-form" class="col-md-3 form-group">
+                                <label>Libelle</label> 
+                                {{ form.libelle }}
+                              </div>
+                              <div class="ingredient-ord-form" class="col-md-2  form-group">
+                                <label>Lieu</label> 
+                                {{ form.lieu }}
+                              </div>
+                              <div class="ingredient-ord-form" class="col-md-2 form-group">
+                                <label>Montant</label> 
+                                {{ form.montant }}
+                              </div>
+                            <hr>
+                            {% endfor %}
+                              <div id="empty-ord-forms" class="col-md-12 form-group hidden">
+                                <hr>
+                                {{ piece_formset.empty_form }}
+                              </div>
+                          </div>
+                        {% endif %}
+                        <div class="col-md-12 col-sm-6  form-group">
+                            <label>Coût de pretation</label> {{forms.prestation}}
+                        </div>
+                        <div class="col-md-12 col-sm-6  form-group">
+                            <label>Montant total de la réparation</label> {{forms.montant}}
+                        </div>
+                        <div class=" p-2 col-md-12 form-group">   
+                          <button id="add-piece" type="button" class="btn btn-outline-primary">+</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                      <button type="submit" class="btn btn-outline-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div class="col-md-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="" style="border-radius:20px">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-12 p-0">
+                            <div class="card">
+                                <div class="card-header" style="font-size:15px; font-weight: 700; line-height: 1; color: #8b1516;">
+                                    SELECTIONNER UN VEHICULE
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr class=" text-center text-danger ">
+                                                <th>IMMATRICULATION</th>
+                                                <th>CATEGORIE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+                                            {% if vehicules %} 
+                                                {% for u in vehicules %}
+                                                    <tr class="text-center">
+                                                        <td><a href="{% url 'add_reparation' u.pk %}" class="mr-3 text-primary">{{u.immatriculation}}</a></td>
+                                                        <td>{{u.category}}</td>
+                                                    </tr>
+                                                {% endfor %} 
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-7">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="" style="border-radius:20px">
+                <div id="" class="">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-12 p-0">
+                            <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(5.2px);-webkit-backdrop-filter: blur(5.2px);">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <button type="button" class="btn btn-default" id="printButton">PDF <i class='text-danger fa fa-file-pdf-o'></i></button>
+                                        <button type="button" class="btn btn-default">Excell <i class='text-success fa fa-file-excel-o'></i></button>
+                                        {% if user.user_type == '1' or user.user_type == '2' or user.user_type == '4' %}
+                                            <button type="button" class="btn btn-default text-primary" style="font-weight:700" data-toggle="modal" data-target="#modal-lg">Saisie <i class='fa fa-plus-square'></i></button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-default text-primary" style="font-weight:700">Saisie <i class='fa fa-plus-square'></i></button>
+                                        {% endif %}
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example2" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr class=" text-center text-danger ">
+                                                <th>IMMAT</th>
+                                                <th>MOTIF</th>
+                                                <th>MONTANT</th>
+                                                <th>DATE SAISIE</th>
+                                                <th>SAISIR PAR</th>
+                                                <th>ACTION</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+                                            {% if repare_list %} 
+                                                {% for u in repare_list %}
+                                                    <tr class="text-center">
+                                                        <td>
+                                                            <a href="{% url 'detail_reparat' u.pk %}" class="mr-3 text-primary">{{u.vehicule.immatriculation}}</a>
+                                                        </td>
+                                                        <td>{{u.motif}}</td>
+                                                        <td>{{u.montant}}</td>
+                                                        <td>{{u.date_saisie}}</td>
+                                                        <td>{{u.auteur.username}}</td>
+                                                        <td class="text-center">
+                                                            {% if user.user_type == '1' %}
+                                                                <a href="{% url 'delete_reparation' u.pk %}" class="text-danger" onclick="return confirm('Etes-vous sûre de vouloir supprimer la réparation {{u.vehicule.immatriculation}} - {{u.date_saisie}} - Montant: {{u.montant}}frs? car si vous supprimer toutes les informations liées seront supprimées')">
+                                                                    <i style="font-size: 20px; " class="fa fa-trash "></i>
+                                                                </a>
+                                                            {% else %}
+                                                                <a class="text-danger">
+                                                                    <i style="font-size: 20px; " class="fa fa-trash "></i>
+                                                                </a>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %} 
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+    const addMorePieceBtn = document.getElementById('add-piece');
+    const totalForms = document.getElementById('id_pieces-TOTAL_FORMS');
+    addMorePieceBtn.addEventListener('click', addPieceNewForm);
+    function addPieceNewForm(event) {
+        if (event) {
+            event.preventDefault();
+        }
+        // Get the current number of forms and the empty form template
+        const currentFormCount = parseInt(totalForms.value, 10);
+        const emptyFormTemplate = document.getElementById('empty-ord-forms').cloneNode(true);
+        // Update the template to replace __prefix__ with the current form count
+        const regExp = new RegExp('__prefix__', 'g');
+        emptyFormTemplate.innerHTML = emptyFormTemplate.innerHTML.replace(regExp, currentFormCount);
+        // Update the total form count
+        totalForms.value = currentFormCount + 1;
+        // Remove unnecessary classes and IDs
+        emptyFormTemplate.classList.remove('hidden');
+        emptyFormTemplate.removeAttribute('id');
+        // Append the updated template to the list of forms
+        const formList = document.getElementById('empty-ord-forms-listes');
+        formList.appendChild(emptyFormTemplate);
+    }
+
+    // Ensure dynamic forms are validated on submission
+    const form = document.getElementById('quickForm');
+    form.addEventListener('submit', function (event) {
+        const inputs = form.querySelectorAll('input, select, textarea');
+        let isValid = true;
+        inputs.forEach(input => {
+            if (input.hasAttribute('required') && !input.value) {
+                isValid = false;
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+        if (!isValid) {
+            event.preventDefault();
+            alert('Veuillez remplir tous les champs obligatoires.');
+        }
+    });
+</script>
+{% endblock custom_js %}
+
+

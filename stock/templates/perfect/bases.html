@@ -1,0 +1,459 @@
+{% load static %} 
+{% if user.is_authenticated %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="{% static 'icn.png' %}" rel="icon">
+    <title>
+        {% block title %} P&BENTREPRISE {% endblock title %}
+    </title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %} ">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+    <!-- jsGrid -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/jsgrid/jsgrid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pb/plugins/jsgrid/jsgrid-theme.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/toastr/toastr.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'pb/dists/css/adminlte.min.css' %}">
+
+    <style>
+        {% block style %}
+        
+        .content-wrapper {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.123), rgba(221, 221, 221, 0.197));
+            background-size: 200% 200%;
+            animation: iceEffect 10s ease infinite;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 2px;
+        }
+        /* Animation pour l'effet de glace */
+        
+        @keyframes iceEffect {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th,td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .main-sidebar {
+            left: auto !important;
+            right: 0 !important;
+        }
+        
+        .content-wrapper {
+            margin-left: 0;
+            margin-right: 320px; /* Ajuste selon la largeur du sidebar */
+        }
+
+        .main-sidebar {
+            top: calc(56px + 10px); /* Ajuster avec une marge */
+            bottom: calc(50px + 10px);
+        }
+        .toast-center {
+          position: fixed;
+          top: 7%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 9999; /* Assure que le toast est au-dessus des autres éléments */
+        }
+
+        {% endblock style %}
+    </style>
+
+</head>
+    <body class="hold-transition layout-top-nav layout-fixed layout-navbar-fixed layout-footer-fixed" style="background-color:rgb(173,213,208, 0.3)">
+        <div class="wrapper">
+            <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                <div class="container-fluid">
+                    <a href="{ url 'dash' %}" class="brand-link" style="background-color: #ffffff;width:150px">
+                        <span class="brand-text font-weight-danger text-danger" style="font-weight: 700; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); ">AUTO-PIECE <i class="fas fa-tools"></i></span>
+                    </a>
+                    <div class="collapse navbar-collapse order-3 d-flex justify-content-center w-100" id="navbarCollapse">
+                        <div class="card" style="color: #0176bf; font-weight: 700; background-color:rgba(255, 255, 255, 0.47); width:960px; height: 54px; position:absolute; margin-left: 225px; margin-top: 16px; border: 2px solid white;">
+                            <div class="card-body table-responsive p-0" style="border-radius:0px; border:none">
+                                <table class="">
+                                    <tr>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <td style="border: none;">
+                                                        <div style="display: flex; align-items: center;">
+                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                                            </div>
+                                                            <div>
+                                                                <div style="font-size: 14px;color: #06497C">Aujourd'hui</div>
+                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                                    {{car_counts}}0
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="border: none;">
+                                                        <div style="display: flex; align-items: center;">
+                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                                            </div>
+                                                            <div>
+                                                                <div style="font-size: 14px;color: #06497C">Mois</div>
+                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                                    {{car_counts}}0
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="border: none;">
+                                                        <div style="display: flex; align-items: center;">
+                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                                            </div>
+                                                            <div>
+                                                                <div style="font-size: 14px;color: #06497C">Aujourd'hui</div>
+                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                                    {{car_counts}}0
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="border: none;">
+                                                        <div style="display: flex; align-items: center;">
+                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                                            </div>
+                                                            <div>
+                                                                <div style="font-size: 14px;color: #06497C">Marge</div>
+                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                                    {{car_counts}}0 %
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="border: none;">
+                                                        <div style="display: flex; align-items: center;">
+                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                                            </div>
+                                                            <div>
+                                                                <div style="font-size: 14px;color: #06497C">Resultat</div>
+                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                                    {{car_counts}}0
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                        <a class="nav-link" href="#" data-widget="control-sidebar" data-slide="true" >
+                            <span class="brand-text font-weight-danger text-danger" style="font-weight: 700; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);"><i class="fa fa" style="font-size:14px">Username</i></span>
+                        </a>
+                    </ul>
+                    <ul class="navbar-nav" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700; background-color:rgba(255, 255, 255, 0.47);position:absolute; margin-left:150px;">
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Menu</a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                <li><a href="#" class="dropdown-item">Some action </a></li>
+                                <li><a href="#" class="dropdown-item">Some other action</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-submenu dropdown-hover">
+                                    <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Hover for action</a>
+                                    <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                                        <li><a tabindex="-1" href="#" class="dropdown-item">level 2</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li><a href="#" class="dropdown-item">level 2</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li><a href="#" class="dropdown-item">level 2</a></li>
+                                    </ul>
+                                </li>
+                                <!-- End Level two -->
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                        <a class="nav-link" href="#" data-widget="control-sidebar" data-slide="true" >
+                            <span class="brand-text font-weight-danger text-danger" style="font-weight: 700; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);"><i class="fa fa-user-circle" style="font-size:20px"></i></span>
+                        </a>
+                    </ul>
+                </div>
+            </nav>
+            
+            {% comment %} <aside class="main-sidebar sidebar-dark-cyan elevation-1" style="width:320px; height:200px; top:56px; background-color:rgba(227, 248, 252, 0.8);"> {% endcomment %}
+            <aside class="main-sidebar sidebar-dark-cyan elevation-1" style="width:320px; height:200px; top:56px; background-color:rgba(245, 253, 255, 0.91);">
+                <div class="col-md-12">
+                    <div class="row text-secondary" style="background-color:rgba(228, 238, 240, 0.4); font-size:14px">
+                        <div class="col-md-6 p-1">
+                            <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:20px"></i> <input type="text" style="width:25px; height:25px; border-radius:80px; border-color:rgba(0, 255, 221, 0.8);" class="form-group text-center bg-light" placeholder='0' disabled> 
+                        </div>
+                        <div class="col-md-6 p-1">
+                            TOTAL <input type="text" style="width:98px; height:25px; border-radius:80px; border-color:rgba(0, 255, 221, 0.8)" class="form-group text-center bg-light" placeholder='0' disabled> 
+                        </div> 
+                    </div>
+                    <div class="row"> 
+                        <div class="col-md-12 p-0" style="height:270px; margin-top:-14px">
+                           <div class="card" style="height:270px; transform: translateY(0px); box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); background-color:rgba(255, 255, 255, 0.51)">
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-head-fixed text-nowrap" style="height:0px; font-size:10px; background-color:rgba(227, 248, 252, 0.22);border:none">
+                                        <thead >
+                                          <tr style="height:10px; color:rgb(220,53,69,.6)">
+                                            <th>Article</th>
+                                            <th>Véh</th>
+                                            <th>Qte</th>
+                                            <th>Mont</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody style="font-size:10px">
+                                          <tr> 
+                                            <td>11-7-2014</td>
+                                            <td>##458##</td> 
+                                            <td>##458##</td> 
+                                            <td><span class="text-success">Approved</span></td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pos-sidebar-footer text-dark ">
+                        <div class="mt-2 p-1" style="border-radius: 4px;">
+                            {% if commande %}
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>Montant TTC</div>
+                                    <div id="sous-total" class="text-end h6 mb-0 ms-auto">{{ commande.total_sans_remise }}</div>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>Remise (%)</div>
+                                    <div id="remise" class="text-end h6 mb-0 ms-auto">{{ commande.remise }}</div>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>Montant à payer</div>
+                                    <div id="total" class="text-end h6 mb-0 ms-auto">{{ commande.total }}</div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-md-3 mb-3">Montant</div>
+                                    <div class="col-md-9">
+                                        <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px;" required>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>Montant TTC</div>
+                                    <div id="sous-total" class="text-end h6 mb-0 ms-auto">0</div>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>Remise (%)</div>
+                                    <div id="remise" class="text-end h6 mb-0 ms-auto">0.0</div>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>Montant à payer</div>
+                                    <div id="total" class="text-end h6 mb-0 ms-auto">0</div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <div>Montant payer</div>
+                                    <input type="number" step="0.01" name="montant" id="montant"
+                                           class="form-control text-secondary text-end h1 ms-auto"
+                                           style="border-radius: 8px; background-color: transparent; height: 30px; width: 170px;" required>
+                                </div>
+
+                            {% endif %}
+                        </div>
+                        <div class="mt-0 bg-light">
+                            <div class="d-flex justify-content-between align-items-center p-2">
+                                <a href="{% url 'caisseDashboard' %}" class="btn btn-outline-danger btn-lg d-flex align-items-center justify-content-center px-1 py-1" 
+                                   style="border-radius: 12px; width: 48%; transform: translateY(0px); box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3); font-size:16px">
+                                    <i class="fa fa-times-circle me-2"></i> ANNULER
+                                </a>
+                                <button type="submit" class="btn btn-outline-success btn-lg d-flex align-items-center justify-content-center px-1 py-1" 
+                                        style="border-radius: 12px; width: 48%; transform: translateY(0px); box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3);font-size:16px">
+                                    <i class="fa fa-check-circle me-2"></i> VALIDER
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <aside class="control-sidebar" style="border-radius: 4px; max-height: 100px; background-color: rgba(255, 255, 255, 0.22); 
+                    border-radius: 16px;box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); backdrop-filter: blur(12.5px); 
+                    --webkit-backdrop-filter: blur(12.5px); border: 1px solid rgba(255, 255, 255, 0.03);">
+                    <div class="p-3 text-left header ">
+                        {% if user.is_authenticated %}
+                        <p><i class="fa fa-key text-danger"></i> <a href="{ url 'change_password' %}">Profil & mot de passe</a></p>
+                        {% endif %}
+                        <p><i class="fa fa-sign-out text-danger "></i> <a href="{ url 'log_out' %} "> Deconnexion</a></p>
+                    </div>
+                </aside>
+
+                
+            </aside>
+            <!-- Content Wrapper. Contains page content -->
+            
+            <div class="content-wrapper">
+                <div class="content ">
+                    <div class="container-fluid">
+                        <div class="row">
+                            {% block main_content %} 
+                            {% endblock main_content %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.content-wrapper -->
+
+            <!-- Control Sidebar -->
+            <footer class="main-footer">
+                <div class="float-right d-none d-sm-inline">
+                    <b><small>Version Bradi One</small></b>
+                </div>
+                {% comment %} {{ site.time | date: '%Y' }} {% endcomment %}
+                <strong style="font-size:12px">Copyright &copy; <span id="currentYear"></span> <a>AUTO-PIECE</a>.</strong>
+            </footer>
+
+            <script>
+                document.getElementById("currentYear").textContent = new Date().getFullYear();
+            </script>
+        </div>
+
+        {% block custom_js %}
+            <script>
+                function updateTable(month, year) {
+                    const url = `?month=${month}&year=${year}`;
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const newDoc = parser.parseFromString(html, 'text/html');
+                            const newTable = newDoc.querySelector('table'); // Remplace uniquement le tableau
+                            const oldTable = document.querySelector('table');
+                            if (newTable && oldTable) {
+                                oldTable.innerHTML = newTable.innerHTML; // Mise à jour des données
+                            }
+                        })
+                        .catch(err => console.error('Error updating table:', err));
+                }
+                function changeMonth(offset) {
+                    let month = parseInt(document.getElementById('month').value);
+                    let year = parseInt(document.getElementById('year').value);
+                    month += offset;
+                    if (month > 12) {
+                        month = 1;
+                        year++;
+                    } else if (month < 1) {
+                        month = 12;
+                        year--;
+                    }
+                    // Mettre à jour les sélections
+                    document.getElementById('month').value = month;
+                    document.getElementById('year').value = year;
+                    updateTable(month, year);
+                }
+                function selectMonthYear() {
+                    const month = document.getElementById('month').value;
+                    const year = document.getElementById('year').value;
+                    updateTable(month, year);
+                }
+            </script>
+        {% endblock custom_js %}
+
+        <script src="{% static 'pb/plugins/jquery/jquery.min.js' %} "></script>
+        <script src="{% static 'pb/plugins/bootstrap/js/bootstrap.bundle.min.js' %} "></script>
+        <script src="{% static 'pb/dists/js/adminlte.min.js' %} "></script>
+
+        <script src="{% static 'pb/plugins/jsgrid/demos/db.js' %} "></script>
+        <script src="{% static 'pb/plugins/jsgrid/jsgrid.min.js' %} "></script>
+
+        <script src="{% static 'pb/plugins/datatables/jquery.dataTables.js' %} "></script>
+        <script src="{% static 'pb/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %} "></script>
+
+        <script src="{% static 'pb/plugins/sweetalert2/sweetalert2.min.js' %} "></script>
+        <!-- Toastr -->
+        <script src="{% static 'pb/plugins/toastr/toastr.min.js' %} "></script>
+
+        <script>
+            $(function() {
+                $("#example1").DataTable();
+                $('#example2').DataTable({
+                    "paging ": true,
+                    "lengthChange ": false,
+                    "searching ": false,
+                    "ordering ": true,
+                    "info ": true,
+                    "autoWidth ": false,
+                });
+            });
+
+            
+        </script>
+        <script type="text/javascript">
+            $(function() {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                {% if messages %}
+                    {% for msg in messages %}
+                        {% if msg.tags == "error" %}
+                            toastr.error('{{ msg|escapejs }}', '', {
+                                timeOut: 2000,
+                                progressBar: true,
+                                closeButton: false,
+                                positionClass: 'toast-top-center'
+                            });
+                        {% else %}
+                            toastr.success('{{ msg|escapejs }}', '', {
+                                timeOut: 2000,
+                                progressBar: true,
+                                closeButton: false,
+                                positionClass: 'toast-top-center'
+                            });
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            });
+        </script>
+    </body>
+
+</html>
+{% endif %}

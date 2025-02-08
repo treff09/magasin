@@ -1,0 +1,224 @@
+{% extends 'perfect/base.html' %} 
+{% load static %} 
+{% block title %} Modification de véhicule {% endblock title %} 
+{% block navbar_nav %} {% endblock navbar_nav %} 
+{% block page_title %}
+<a href="{% url 'add_car' %}"><img class="profile-user-img" style="border:none; height:35px;width:35px" src="{% static 'retour.png' %}" alt="Retour"></a>
+<img class="profile-user-img" style="border:none; height:55px;width:55px" src="{% static 'addcar.png' %}" alt="User profile picture">
+Information et Modification du véhicule
+{% endblock page_title %} 
+{% block page_a %}
+{% endblock page_a %}
+{% block active_page %} Détail et modification {% endblock active_page%} 
+{% block main_content %}
+
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight:700;color: #06497C;">Modifier véhicule</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method='post' role="form" id="quickForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row card-body text-secondary">
+                        <div class="col-md-6 col-sm-6  form-group">
+                            <label for="fullname"><b>Categorie</b></label> {{form.category}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Immatriculation</b></label> {{form.immatriculation}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Marque</b></label> {{form.marque}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Durée</b></label> {{form.duree}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Cout d'Acquisition</b></label> {{form.cout_acquisition}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Numero chassis</b></label> {{form.num_Chassis}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Photo</b></label> {{form.image}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Photo Carte Grise</b></label> {{form.photo_carte_grise}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Date d'Acquisition</b></label> {{form.date_acquisition}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Numero Carte Grise</b></label> {{form.num_cart_grise}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Date Edit Carte Grise</b></label> {{form.dat_edit_carte_grise}}
+                        </div>
+                        <div class="col-md-6 col-sm-6 form-group">
+                            <label for="fullname"><b>Date Mise en Service</b></label> {{form.date_mis_service}}
+                        </div>
+                        <div class="col-md-12 col-sm-6  form-group">
+                            {{form.auteur}}
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<div class="col-md-4 ">
+    <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(5.2px);-webkit-backdrop-filter: blur(5.2px);">
+        <div class="card-header">
+            <h3 class="card-title">
+                Liste véhicule
+            </h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr class=" text-center text-danger ">
+                        <th>IMMATRICULATION</th>
+                        <th>CATEGORIE</th>
+                        {% comment %}
+                        <th>CSS grade</th> {% endcomment %}
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% if vehicules %} 
+                        {% for u in vehicules %}
+                            <tr class="text-center">
+                                <td><a href="{% url 'updatecar' u.pk %}" class="mr-3 text-primary">{{u.immatriculation}}</a></td>
+                                <td>{{u.category.category}}</td>
+                            </tr>
+                        {% endfor %} 
+                    {% endif %}
+                </tbody>
+                <tfoot>
+                    <tr class="text-center ">
+                        <th>---</th>
+                        <th>---</th>
+                        {% comment %}
+                        <th>CSS grade</th> {% endcomment %}
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+
+<div class="col-md-8">
+    <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); backdrop-filter: blur(5.2px); -webkit-backdrop-filter: blur(5.2px);">
+        <div class="card-header">
+            <h3 class="card-title">
+            {% if user.user_type == '1' or user.user_type == '2' %}
+                <button type="button" class="btn btn-default text-danger" data-toggle="modal" data-target="#modal-lg" style="font-weight:700;">modifier <i class='fa fa-plus-square text-success'></i></button>
+            {% else %}
+                <button type="button" class="btn btn-default text-danger" style="font-weight:700;">modifier <i class='fa fa-plus-square text-success'></i></button>
+            {% endif %}
+            </h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="example">
+                <thead>
+                    <tr>
+                        <th colspan="12" style="text-align: center; " class="text-danger">
+                            INFORMATION DU VEHICULE
+                        </th>
+                    </tr>
+                    <tr class="bg-danger">
+                        <th colspan="2" rowspan="2" style="color:red">
+                            
+                            {% if vehicule.image %}
+                                <img src="{{ vehicule.image.url }}" style="height: 100px; width: 130px;">
+                            {% else %}
+                                <img src="{% static 'alto.png' %}" style="height: 100px; width: 130px;">
+                            {% endif %}
+                        </th>
+                        <th colspan="8" style="color: rgb(3, 92, 159);" >{{vehicule.immatriculation}}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="color: rgb(3, 92, 159)"> {{vehicule.category}}</th>
+                        <th colspan="2" style="color: rgb(3, 92, 159)">COUT: {{vehicule.cout_acquisition}} FCFA</th>
+                    </tr>
+                    <tr style="font-weight:700;color: rgb(3, 92, 159)">
+                        <th>LIBELLE</th>
+                        <th>INFORMATIONS</th>
+                        <th>LIBELLE</th>
+                        <th>INFORMATIONS</th>
+                        <th>LIBELLE</th>
+                        <th>INFORMATIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-primary">Marque</td>
+                        <td>{{vehicule.marque}}</td>
+                        <td class="text-primary">N° CARTE GRISE</td>
+                        <td>{{vehicule.num_cart_grise}}</</td>
+                        <td class="text-primary">EDITION CARTE GRISE</td>
+                        <td> {{vehicule.dat_edit_carte_grise}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-primary">N° CHASSIS</td>
+                        <td>{{vehicule.num_Chassis}}</td>
+                        <td class="text-primary">DATE ACQUISITION</td>
+                        <td>{{vehicule.date_acquisition}}</td>
+                        <td class="text-primary">MISE EN SERVICE</td>
+                        <td>{{vehicule.date_mis_service}}</td>
+                    </tr>
+                    <!-- Continue adding rows similarly -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="text-primary">ENREGISTRER</td>
+                        <td>{{vehicule.date_saisie}}</td>
+                        <td class="text-primary">DUREE</td>
+                        <td> {% if vehicule.age >= 5 %}
+                            <a class="text-danger"> {{vehicule.age}} an{% if vehicule.age > 1 %}s{% endif %}</a>
+                        {% else %}
+                            <a class="text-success"> {{vehicule.age}} an{% if vehicule.age > 1 %}s{% endif %}</a>
+                        {% endif %} 
+                             </td>
+                        <td class="text-primary">SAVE BY</td>
+                        <td class="text-danger">{{vehicule.auteur.username}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="7" class="text-primary">
+                            {% if vehicule.photo_carte_grise %}
+                                <img src="{{ vehicule.photo_carte_grise.url }}" style="height: 800px; width: 800px; border-radius:8px">
+                            {% else %}
+                                <img src="{% static 'alto.png' %}" style="height: 100px; width: 130px;">
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock main_content %}

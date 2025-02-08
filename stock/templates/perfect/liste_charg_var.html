@@ -1,0 +1,255 @@
+{% extends 'perfect/base.html' %} 
+{% load static %} 
+{% block title %} Table des charges variables {% endblock title %} 
+{% block navbar_nav %}
+
+{% endblock navbar_nav %} 
+{% block page_title %}
+<a href="{% url 'dash' %}"><img class="profile-user-img" style="border:none; height:35px;width:35px" src="{% static 'retour.png' %}" alt="Retour"></a>
+<img class="profile-user-img" style="border:none; height:45px;width:45px" src="{% static 'chargfvar.png' %}" alt="User profile picture">Etat des charges variables 
+{% endblock page_title %} 
+{% block page_a %}
+{% endblock page_a %}
+{% block active_page %} Ajouter un véhicule {% endblock active_page%}
+{% block main_content %}
+{% if user.user_type == '4' %}
+{% else %}
+<div class="col-md-12">
+    <div class="card" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700;">
+        <div class="card-body table-responsive p-0" style="border-radius:8px; border:none">
+            <table class="table table text-nowrap">
+                <tr>
+                    <div class="col-md-12">
+                        <div class="row bg-danger">
+                            <div class="col-md-2">
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px; margin-left: 1px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{chargevar_jour}} 
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">Aujourd'hui</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 5px; margin-left: px;" src="{% static 'taxi.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{chargevar_jour_taxi}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">TAXI: <small>Aujourd'hui</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 8px; margin-left: 3px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{chargevar_jour_vtc}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">VTC: <small>Aujourd'hui</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 5px; margin-left: px;" src="{% static 'taxi.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{chargevar_mois_taxi}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">TAXI: <small>{{libelles_mois}}</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px;margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">
+                                                {{chargevar_mois_vtc}}
+                                                <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small>
+                                            </div>
+                                            <div style="font-size: 15px;color: #06497C">VTC: <small>{{libelles_mois}}</small></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="border: none;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="height: 50px; width: 50px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
+                                            <img style="height: 35px; width: 35px; position:relative; margin-top: 9px;margin-left: 0px;" src="{% static 'calendar.png' %}" alt="" srcset="">
+                                        </div>
+                                        <div>
+                                            <div style="font-size:18px; font-weight: 700; line-height: 1; color: #fa7832;">{{chargevar_mois_all}} <small style="color: #06497C; font-weight: 700; line-height: 1;">frs</small></div>
+                                            <div style="font-size: 15px;color: #06497C">Total de {{libelles_mois}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MEILLEUR RECETTE -->
+<div class="col-md-2">
+    <div class="card card-outline" style="border-radius:20px">
+        <div class="card-body box-profile">
+            <div class="row p-0 m-0">
+                <div class="col-md-12 p-0">
+                    <div class="text-center" style="font-size:17px; font-weight: 700; line-height: 1; color: #8b1516; text-decoration: underline;">Resultat du filtre</div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <div style="display: flex; align-items: center;">
+                                <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-1 text-center">
+                                    <img style="height: 25px; width: 25px; position:relative; margin-top: 8px;" src="{% static 'vtc.png' %}" alt="" srcset="">
+                                </div>
+                                <div>
+                                    <div style="font-size:16px; font-weight: 700; line-height: 1; color: #06497C; text-decoration: underline;">VTC</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div style="display: flex; align-items: center;">
+                                <div class="text-center p-1 m-2">
+                                    <div class="text-center" style="font-size:14px; color: #06497C; text-align: center;font-weight:700">
+                                        <li>{{chargevar_all_vtc}} Frscfa</li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div style="display: flex; align-items: center;">
+                                <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-1 text-center">
+                                    <img style="height: 25px; width: 25px; position:relative; margin-top: 8px;" src="{% static 'taxi.png' %}" alt="" srcset="">
+                                </div>
+                                <div>
+                                    <div style="font-size:16px; font-weight: 700; line-height: 1; color: #06497C;text-decoration: underline;">TAXI</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div style="display: flex; align-items: center;">
+                                <div class="text-center p-1 m-2">
+                                    <div class="text-center" style="font-size:14px; color: #06497C; text-align: center;font-weight:700">
+                                        <li>{{chargevar_all_taxi}} Frscfa</li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div style="display: flex; align-items: center;">
+                                <div class="text-center p-1 m-2">
+                                    <div class="text-center" style="font-size:16px; color: #06497C; text-align: center;font-weight:700">
+                                        ---------------------------
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div style="display: flex; align-items: center;">
+                                <div class="text-center p-1 m-2">
+                                    <div class="text-center" style="font-size:14px; color: #06497C; text-align: center;font-weight:700">
+                                        TOTAL = {{chargvar_all}} Frscfa
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- FIN MEILLEUR RECETTE -->
+<div class="col-md-10">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="" style="border-radius:20px">
+                <div id="" class="">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-12 p-0">
+                            <div class="card" style="box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(5.2px);-webkit-backdrop-filter: blur(5.2px);">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <button type="button" class="btn btn-default text-danger">PDF <i class='fa fa-file-pdf-o text-danger'></i></button>
+                                        <button type="button" class="btn btn-default text-success">Excell <i class='fa fa-file-excel-o text-success'></i></button>
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr class=" text-center text-danger ">
+                                                <th>IMMAT</th>
+                                                <th>MARQUE</th>
+                                                <th>CATEGORIE</th>
+                                                <th>MONTANT</th>
+                                                <th>DATE SAISIE</th>
+                                                <th>SAISIR PAR</th>
+                                                <th>ACTION</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+                                            {% if list_chargevar %} 
+                                                {% for u in list_chargevar %}
+                                                    <tr class="text-center">
+                                                        <td>
+                                                            <a class="mr-3 text-primary">{{u.vehicule.immatriculation}}</a>
+                                                        </td>
+                                                        <td>{{u.vehicule.marque}}</td>
+                                                        <td>{{u.vehicule.category}}</td>
+                                                        <td>{{u.montant}}</td>
+                                                        <td>{{u.date_saisie}}</td>
+                                                        <td>{{u.auteur.username}}</td>
+                                                        <td class="text-center">
+                                                            {% if user.user_type == '1' %}
+                                                                <a href="{% url 'delete_chargvar' u.pk %}" class="text-danger" onclick="return confirm('Etes-vous sûre de vouloir supprimer la charge variable du {{u.vehicule.immatriculation}} - {{u.vehicule.marque}} - {{u.vehicule.category|upper}}? car si vous supprimer toutes les informations liées seront supprimées')">
+                                                                    <i style="font-size: 20px; " class="fa fa-trash "></i>
+                                                                </a>
+                                                            {% else %}
+                                                                <a class="text-danger">
+                                                                    <i style="font-size: 20px; " class="fa fa-trash "></i>
+                                                                </a>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %} 
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock main_content %}
