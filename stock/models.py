@@ -66,6 +66,7 @@ class Commande(models.Model):
     montant_reste=models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     remise =models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commandes_validees', null=True, blank=True)
+    profoma = models.PositiveIntegerField(default=0)
     history = HistoricalRecords()
 
 class Ticket(models.Model):
