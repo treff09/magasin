@@ -158,8 +158,7 @@
                                     {% for item in panier_items %}
                                         <div class="pos-order">
                                             <div class="pos-order-product">
-                                                {% comment %}
-                                                <div class="img" style="background-image: url(assets/img/pos/product-1.jpg)"></div> {% endcomment %}
+                                                {% comment %}<div class="img" style="background-image: url(assets/img/pos/product-1.jpg)"></div> {% endcomment %}
                                                 <div class="flex-1">
                                                     <div class="fw-semibold text-white">{{item.piece.designation}}</div>
                                                     <div class="mb-1">{{item.piece.prix_unitaire}}</div>
@@ -231,12 +230,12 @@
         <a href="#" class="pos-mobile-sidebar-toggler" data-toggle-class="pos-mobile-sidebar-toggled" data-toggle-target="#pos">
             <i class="fa fa-shopping-bag"></i>
             <span class="badge">
-						{% if panier_items %}
-							{{panier_items.count}}
-						{% else %}
-							0
-						{% endif %}
-					</span>
+				{% if panier_items %}
+					{{panier_items.count}}
+				{% else %}
+					0
+				{% endif %}
+			</span>
         </a>
     </div>
     <a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">

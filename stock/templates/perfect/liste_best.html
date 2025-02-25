@@ -1,0 +1,95 @@
+{% extends 'perfect/bas.html' %} 
+{% load static %} 
+{% block title %}Meilleurs ventes {% endblock title %} 
+{% block main_content %} 
+    {% if user %}
+        <div class="col-md-4 p-1">
+      <div class="card" style="height: 364%; background-color:rgba(231, 245, 255, 0);">
+        <div class="card-body table-responsive p-0" style="height: 114px; font-size:12px">
+            <div class="col-md-12 p-0 m-0" style="height: 50%; background-color:rgba(255, 255, 255, 0.45);">
+              <div class="chart" style="border-radius: 0px; border-radius: 4px;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <canvas id="barChart" style="min-height: 200px; height: 200px; max-height: 200px; max-width: 100%;"></canvas>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              </div>
+              <script>
+                  const ctyo = document.getElementById('barChart').getContext('2d');
+                  new Chart(ctyo, {
+                      type: 'pie',
+                      data: {
+                          labels: ["A", "B", "CD"],
+                          datasets: [{
+                              label: 'changées vtc',
+                              data: [40, 30, 30],
+                              borderWidth: 2,
+                              borderColor: ['rgb(220,53,69)', 'rgb(255, 230, 7)', 'rgb(5,203,163)'],
+                              backgroundColor: [
+                                  'rgb(255, 0, 0,.6)', // Rouge pour A
+                                  'rgba(255, 255, 2, .6)', // Jaune pour B
+                                  'rgb(5,203,163,.6)' // Vert pour C
+                              ],
+                              tension: 0.4,
+                              fill: true,
+                          }, ]
+                      },
+                  });
+              </script>
+            </div>
+            <div class="col-md-12 p-0 m-0" style="height: 50%; background-color:rgba(255, 88, 88, 0.47);">
+              <div class="card-body text-secondary" style="height: 100%; border-radius: 0px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px);background-color:rgba(255, 255, 255, 0.47);--webkit-backdrop-filter: blur(8px);">
+                <div class="d-flex justify-content-center text-secondary" style="font-weight:700; font-size:12px">
+                      bilan du stocks
+                </div>
+                <div style="margin-left: 0px; margin-top: 5px;">
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>Alto </div>
+                      <div id="remise" class="text-end mb-0 ms-auto">{{ commande.remise }}07000</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>Dzire</div>
+                      <div id="remise" class="text-end mb-0 ms-auto">{{ commande.remise }}20000</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>S-presso</div>
+                      <div id="remise" class="text-end mb-2 ms-auto">{{ commande.remise }}45000</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-secondary" style="font-weight:700">
+                      Nombre de pièce
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>A: 200</div> <div>D: 74</div> <div>S: 58</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>A: 200</div> <div>D: 74</div> <div>S: 58</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 p-1">
+      <div class="card" style="height: 364%; background-color:rgba(255, 255, 255, 0.77);">
+        <div class="card-body table-responsive p-1" style="height: 114px; font-size:12px">
+          <table id="example2" class="table table-head-fixed text-nowrap">
+            <thead>
+              <tr class="text-secondary">
+                <th>N°Pieces</th>
+                <th>Libelle</th>
+                <th>Vehicule</th>
+                <th>Valider</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#0125</td>
+                <td>Frein</td>
+                <td>3500</td>
+                <td><a href=""><i class="fa fa-share text-success" style="font-size:18px"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+{% endblock main_content %}

@@ -1,0 +1,311 @@
+{% load static %} 
+{% if user.is_authenticated %}
+{% else %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="{% static 'icn.png' %}" rel="icon">
+    <title>
+        {% block title %} AUTO-PIECE {% endblock title %}
+    </title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %} ">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+    <!-- jsGrid -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/jsgrid/jsgrid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pb/plugins/jsgrid/jsgrid-theme.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{% static 'pb/plugins/toastr/toastr.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'pb/dists/css/adminlte.min.css' %}">
+    <style>
+        .btn{
+            background-color:rgba(255, 255, 255, 0.24);
+            color:rgba(0, 139, 163, 0.58)
+        }
+        .btn:hover{
+            background-color:rgba(234, 252, 255, 0.32);
+            color:rgb(41, 159, 180)
+        }
+        @import url('https://fonts.googleapis.com/css?family=Nuto:400,700');
+
+body{
+    font-family: poppins;
+}
+
+
+.context {
+    width: 100%;
+    position: absolute;
+}
+
+.context h1{
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+  font-border: 1px solid rgba(255, 255, 255, 0.65);
+    font-size: 50px;
+    backdrop-filter: blur(10px);
+}
+
+
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 4px 0 rgba(31, 38, 135, 0.64);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 80px;
+  border: 1px solid rgba(159, 255, 255, 0.6);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 20s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 8s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 1s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 10s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 30s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+    </style>
+</head>
+<body class="hold-transition login-page" style="background-image: linear-gradient(135deg,rgb(247, 246, 246) 10%,rgba(254, 253, 255, 0.64) 100%">
+    <div class="area" >
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>  
+    </div>
+    {% block content %}
+    {% endblock content %}
+
+    {% block custom_js %}
+        <script>
+            function updateTable(month, year) {
+                const url = `?month=${month}&year=${year}`;
+                fetch(url)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const newDoc = parser.parseFromString(html, 'text/html');
+                        const newTable = newDoc.querySelector('table'); // Remplace uniquement le tableau
+                        const oldTable = document.querySelector('table');
+                        if (newTable && oldTable) {
+                            oldTable.innerHTML = newTable.innerHTML; // Mise à jour des données
+                        }
+                    })
+                    .catch(err => console.error('Error updating table:', err));
+            }
+            function changeMonth(offset) {
+                let month = parseInt(document.getElementById('month').value);
+                let year = parseInt(document.getElementById('year').value);
+                month += offset;
+                if (month > 12) {
+                    month = 1;
+                    year++;
+                } else if (month < 1) {
+                    month = 12;
+                    year--;
+                }
+                document.getElementById('month').value = month;
+                document.getElementById('year').value = year;
+                updateTable(month, year);
+            }
+            function selectMonthYear() {
+                const month = document.getElementById('month').value;
+                const year = document.getElementById('year').value;
+                updateTable(month, year);
+            }
+        </script>
+    {% endblock custom_js %}
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+            let button = document.getElementById("loginButton");
+            let buttonText = document.getElementById("buttonText");
+            let spinner = document.getElementById("spinner");
+            buttonText.classList.add("d-none");
+            spinner.classList.remove("d-none");
+            setTimeout(() => {
+                this.submit();
+            }, 500);
+        });
+    </script>
+    <script src="{% static 'pb/plugins/jquery/jquery.min.js' %} "></script>
+    <script src="{% static 'pb/plugins/bootstrap/js/bootstrap.bundle.min.js' %} "></script>
+    <script src="{% static 'pb/dists/js/adminlte.min.js' %} "></script>
+    <script src="{% static 'pb/plugins/jsgrid/demos/db.js' %} "></script>
+    <script src="{% static 'pb/plugins/jsgrid/jsgrid.min.js' %} "></script>
+    <script src="{% static 'pb/plugins/datatables/jquery.dataTables.js' %} "></script>
+    <script src="{% static 'pb/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %} "></script>
+    <script src="{% static 'pb/plugins/sweetalert2/sweetalert2.min.js' %} "></script>
+    <!-- Toastr -->
+    <script src="{% static 'pb/plugins/toastr/toastr.min.js' %} "></script>
+    <script>
+        $(function() {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging ": true,
+                "lengthChange ": false,
+                "searching ": false,
+                "ordering ": true,
+                "info ": true,
+                "autoWidth ": false,
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            {% if messages %}
+                {% for msg in messages %}
+                    {% if msg.tags == "error" %}
+                        toastr.error('{{ msg|escapejs }}', '', {
+                            timeOut: 5000,
+                            progressBar: true,
+                            closeButton: false,
+                            positionClass: 'toast-top-center'
+                        });
+                    {% else %}
+                        toastr.success('{{ msg|escapejs }}', '', {
+                            timeOut: 5000,
+                            progressBar: true,
+                            closeButton: false,
+                            positionClass: 'toast-top-center'
+                        });
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
+</body>
+</html>
+{% endif %}

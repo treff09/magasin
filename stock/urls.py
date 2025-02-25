@@ -7,6 +7,7 @@ from . import views
 urlpatterns = [
     path('rac', raci, name='rac'),
     path('caiss', caisse, name='caiss'),
+    path('acc', accu, name='acc'),
     
     path('admin_magasin', DashboardView.as_view(), name='adminmagasin'),
     #piece

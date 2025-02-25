@@ -117,11 +117,10 @@ def login_view(request):
                 else:
                     return redirect('login')
             else:
-                messages.error(request, f"Nom d'utilisateur ou mot de passe incorrecte")
+                messages.error(request, f"Utilisateur ou mot de passe incorrecte")
         except:
             messages.error(request, "Information de connexion invalides!!!")
-    return render(request, "logins.html")
-    
+    return render(request, "perfect/logins.html")
     
 def logout_view(request):
     logout(request)
@@ -141,7 +140,7 @@ from django.utils import timezone
 # Vue pour afficher le formulaire de saisie de l'email
 class ForgotPasswordView(View):
     def get(self, request):
-        return render(request, 'forgot_password.html')
+        return render(request, 'perfect/forgot_password.html')
 
 
 # class opt(View):
@@ -162,34 +161,35 @@ class RequestEmailView(View):
 
             # HTML message
             html_content = f'''
-           <!DOCTYPE html>
+            <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
                 <title>Réinitialisation du mot de passe</title>
             </head>
-            <body style="font-family: Arial, sans-serif; background-color: #121212; color: black; margin: 0; padding: 0;">
-                <div style="width: 80%; margin: auto; padding: 20px; background-color: #ffff;">
-                    <div style="background-color: #fca503; padding: 10px 0; text-align: center;">
-                        <h1 style="margin: 0; color: white;">OTP</h1>
-                        <p style="margin: 0; color: white;">réinitialisation de mot de passe</p>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+                    <h2 style="text-align: center; color: #333;">REINITIALISATION DE MOT DE PASSE</h2>
+                    <p>Bonjour cher {user.username},</p>
+                    <p>Vous avez demandé à réinitialiser votre mot de passe. Veuillez utiliser le code OTP ci-dessous pour compléter cette action :</p>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <p style="font-size: 20px; font-weight: bold; color: #2c3e50;">Votre code OTP : <span style="color: #e74c3c;">{otp}</span></p>
                     </div>
-                    <div style="padding: 20px;">
-                        <h2 style="color: #333;">Réinitialisation de mot de passe</h2>
-                        <p>Cher(e) {user.username},</p>
-                        <p>Nous avons reçu une demande de réinitialisation de votre mot de passe.</p>
-                        <p>Votre code OTP est :</p>
-                        <p><strong style="color: #00FF00;">{otp}</strong></p>
-                        <p>Ce code est valide pour les 2 prochaines minutes.</p>
-                        <p>Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet e-mail.</p>
-                        <p style="margin-top: 20px; font-size: 12px; color: #666;">Pour toute question, veuillez contacter notre support.</p>
-                    </div>
+                    
+                    <p style="color: #555;">Ce code est valable pour une durée limitée. Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail. Pour toute assistance, veuillez nous contacter immédiatement.</p>
+            
+                    <p>Merci de votre confiance.</p>
+            
+                    <p>Cordialement,<br>L'équipe support</p>
+            
+                    <footer style="margin-top: 20px; text-align: center; font-size: 12px; color: #999;">
+                        &copy; 2024-2025 Bradi One. Tous droits réservés.
+                    </footer>
                 </div>
             </body>
             </html>
-
             '''
-
             # Create email message with HTML content
             email_message = EmailMultiAlternatives(subject, 'Votre OTP est {otp}', from_email, to)
             email_message.attach_alternative(html_content, 'text/html')
@@ -198,14 +198,14 @@ class RequestEmailView(View):
             return redirect("otp")
         except User.DoesNotExist:
             messages.error(request, "Utilisateur non trouvé.")
-            return  render(request, "forgot_password.html")
+            return  render(request, "perfect/forgot_password.html")
 
 # Vue pour vérifier l'OTP envoyé par email
 User = get_user_model()
 
 class VerifyOtpView(View):
     def get(self, request):
-        return render(request, 'reinitializ_password.html')
+        return render(request, 'perfect/reinitialise.html')
 
     def post(self, request):
         otp = request.session.get('otp')
@@ -216,14 +216,15 @@ class VerifyOtpView(View):
             return JsonResponse({'error': 'Tous les champs sont obligatoires.'}, status=400)
 
         if new_password != confirm_password:
-             messages.error(request, "Les mots de passe ne correspondent pas.")
-             return  render(request, "reinitializ_password.html")
+            messages.error(request, "Mots de passe pas identique.")
+            return  render(request, "perfect/reinitialise.html")
 
         try:
             reset_request = PWD_FORGET.objects.get(otp=otp, status='0')
             # Vérifiez si l'OTP a expiré
             if (timezone.now() - reset_request.creat_at).total_seconds() > 120:  # 2 minutes
-                return JsonResponse({'error': 'OTP expiré.'}, status=400)
+                messages.error(request, "OTP expiré")
+                return redirect('otp')
             # Marquer l'OTP comme utilisé
             reset_request.status = '1'
             reset_request.save()
@@ -232,18 +233,15 @@ class VerifyOtpView(View):
             user = reset_request.user_id
             user.password = make_password(new_password)
             user.save()
-            return JsonResponse({'success': 'Mot de passe réinitialisé avec succès.'})
-
-            messages.error(request, 'Mot de passe réinitialisé avec succès.')
-            return render(request, "logins.html")
-
+            messages.success(request, 'Mot de passe réinitialisé avec succès.')
+            return redirect('login')
         except PWD_FORGET.DoesNotExist:
             messages.error(request, 'OTP non valide.')
-            return  render(request, "opt.html")
+            return  render(request, "perfect/otp.html")
 
 class OptValid(View):
     def get(self, request):
-        return render(request, 'Opt.html')
+        return render(request, 'perfect/otp.html')
     def post(self, request):
         otp = request.POST.get('otp')
         try :
@@ -256,7 +254,7 @@ class OptValid(View):
                 return redirect("verify_otp")
         except PWD_FORGET.DoesNotExist:
                  messages.error(request, "OTP non valide.")
-                 return  render(request, "opt.html")
+                 return  render(request, "perfect/otp.html")
                
 from .forms import ChangePasswordForm
 from django.contrib.auth.views import PasswordChangeView 

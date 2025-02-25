@@ -1,0 +1,120 @@
+{% extends 'perfect/bacompt.html' %} 
+{% load static %} 
+{% block title %}OTP{% endblock title %}
+ 
+{% block content %}
+    <style>
+        .otp-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 5px;
+        }
+        .otp-input {
+            width: 45px; 
+            height: 45px;
+            text-align: center;
+            font-size: 18px;
+            border-radius: 50px;
+            border: 1px solid #ccc;
+            padding: 0;
+            box-sizing: border-box; 
+        }
+        .otp-input:focus {
+            outline: none;
+            border-color:rgba(129, 190, 255, 0.42);
+        }
+        .label-container {
+            display: flex;
+            justify-content: center; 
+            margin-bottom: 10px;
+        }
+        .form-label {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+    
+    <div class="login-box">
+        <div class="login-logo" style="font-size: 30px">
+            <a href="#" class="text-secondary"><b><i class="fa fa-spin fa-gear text-secondary"></i>AUTO-PIECE</b></a>
+        </div>
+        <div class="card" style="background-color:rgba(255, 255, 255, 0.1); border-radius: 10px">
+            <div class="card-body login-card-body" style="background-color:rgba(255, 255, 255, 0.1);border-radius: 10px">
+                <h3 class="text-center text-secondary"><img src="{% static 'security.png' %}" alt="" srcset=""></h3>
+                <h3 class="text-center text-secondary" style="font-size:18px;">Vérification OTP</h3>
+                <p class="login-box-msg text-secondary">Veuillez entrer l'OTP reçu par e-mail pour vérifier votre identité..</p>
+                <form method="post" id="otp-form" name="loginForm" class="text-center">
+                  {% csrf_token %}
+                    <div class="otp-container">
+                        <input class="otp-input" style="border-color: gba(255, 255, 255, 0.24); background-color:rgba(255, 255, 255, 0.1)" type="text" id="otp1" maxlength="1" required />
+                        <input class="otp-input" style="border-color: gba(255, 255, 255, 0.24); background-color:rgba(255, 255, 255, 0.1)" type="text" id="otp2" maxlength="1" required />
+                        <input class="otp-input" style="border-color: gba(255, 255, 255, 0.24); background-color:rgba(255, 255, 255, 0.1)" type="text" id="otp3" maxlength="1" required />
+                        <input class="otp-input" style="border-color: gba(255, 255, 255, 0.24); background-color:rgba(255, 255, 255, 0.1)" type="text" id="otp4" maxlength="1" required />
+                    </div>
+                    <input type="hidden" id="otp" name="otp" />
+                    <br>
+                    <div class="d-grid text-center">
+                        <button type="submit" class="btn btn-outline-primary w-100" id="loginButton" style="border-radius: 50px;">
+                            <span id="buttonText">Vérifier</span>
+                            <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </form>
+                <p class="mt-2 mb-1 text-center">
+                    <a href="{% url 'login' %}" class="text-secondary">Se connecter</a>
+                </p>
+            </div>
+       </div>
+    </div>
+    <script>
+        // Script pour la navigation automatique entre les champs OTP
+        document.querySelectorAll('.otp-input').forEach((input, index, inputs) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && index > 0 && input.value === '') {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+        // Script pour combiner les valeurs des champs OTP en un seul champ caché avant la soumission du formulaire
+        document.getElementById('otp-form').addEventListener('submit', (e) => {
+            e.preventDefault(); // Empêcher la soumission normale
+            let otpValue = '';
+            document.querySelectorAll('.otp-input').forEach(input => {
+                otpValue += input.value;
+            });
+            document.getElementById('otp').value = otpValue;
+            document.getElementById('otp-form').submit(); // Soumettre le formulaire après avoir mis à jour le champ caché
+        });
+
+        // Script pour masquer le message après 3 secondes
+        setTimeout(function() {
+            const message = document.getElementById('message');
+            if (message) {
+                message.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+    <script>
+        document.getElementById("otp-form").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+            let button = document.getElementById("loginButton");
+            let buttonText = document.getElementById("buttonText");
+            let spinner = document.getElementById("spinner");
+            buttonText.classList.add("d-none");
+            spinner.classList.remove("d-none");
+            setTimeout(() => {
+                this.submit();
+            }, 500);
+        });
+    </script>
+{% endblock content %}

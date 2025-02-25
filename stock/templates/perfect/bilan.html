@@ -1,0 +1,101 @@
+{% extends 'perfect/bases.html' %} 
+{% load static %} 
+{% block title %} 
+Mes Recettes
+{% endblock title %} 
+{% block liste %}
+<li class="nav-item"><a href="{% url 'dash' %}" class="nav-link">Accueil</a></li>
+<li class="nav-item"><a href="{% url 'temps' %}" class="nav-link">Temps d'arrêt</a></li>
+{% endblock liste %}
+
+{% block page_title %} RECETTES {% endblock page_title %} 
+{% block search_form %}
+    <div class="col-sm-6">
+        <li class="breadcrumb-item">
+            <select id="month" class="form-control month-select" onchange="selectMonthYear()">
+                    {% for i in month_range %}
+                        <option value="{{ i }}" {% if i == month %}selected{% endif %}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+        </li>
+    </div>
+    <div class="col-sm-6">
+        <li class="breadcrumb-item ">
+            <select id="year" class="form-control year-select" onchange="selectMonthYear()">
+                {% for y in years %}
+                    <option class='' value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </li>
+    </div>
+{% endblock search_form %} 
+{% block main_content %}
+{% if user.user_type == '4' %}
+{% else %}
+<div class="col-lg-12">
+    <table>
+        <thead>
+            <tr style="font-weight: 700; font-size:12px" class="text-danger">
+                <th rowspan="2">Immat</th>
+                <th rowspan="2">Marque</th>
+                <th colspan="{{ days_in_month|length }}">
+                    <a style='font-size:10px' class="btn btn-default btn-prev" onclick="changeMonth(-1)"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a> {{ month_name }} - {{ year}}
+                    <a style='font-size:10px' class="btn btn-default btn-next" onclick="changeMonth(1)"><i class="fa fa-angle-double-right" aria-hidden="true" style=""></i></a>
+                </th>
+                <th rowspan="2">Aujourd'hui</th>
+                <th rowspan="2">A verser</th>
+                <th rowspan="2">Ecart</th>
+                <th rowspan="2">T Recette</th>
+                <th rowspan="2">A payer</th>
+                
+                <th rowspan="2">Motif du jour</th>
+            </tr>
+            <tr>
+                {% for day in days_in_month %}
+                    <th style="font-size:12px" class="text-primary">{{ day }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehicule in recette_details %}
+                <tr style="font-weight: 700; font-size:12px">
+                    <td style="font-weight: 700; "><a href="" title="{{vehicule.category}}">{{ vehicule.vehicule }}</a></td>
+                    <td>{{ vehicule.marque }}</td>
+                    {% for action in vehicule.daily_actions %}
+                        <td class="text-cyan">{{ action }}</td>
+                    {% endfor %}
+                    <td class="text-warning">{{ vehicule.recette_versee }}</td>
+                    <td>{{ vehicule.recette_attendue }}</td>
+                    <td>{{ vehicule.difference }}</td>
+                    <td>{{ vehicule.recette_mensuelle }}</td>
+                    <td>{{ vehicule.difference_mensuelle }}</td>
+                    <td>{{ vehicule.motif_arrets }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+        <tfoot>
+            <tr style=" font-weight: bold; font-size:12px">
+                <td colspan="{{ days_in_month_plus_two }}" style="text-align: right;">Total:</td>
+                <td class="text-danger">{{ sum_recets_jours }}</td>
+                <td class="text-danger">{{ total_cost_parts_sum }}</td>
+                <td class="text-danger">{{ sum_difference }}</td>
+                <td class="text-danger">{{ sum_recettes_vehicule_mois }}</td>
+                <td class="text-danger">{{ sum_difference_mensuelle }}</td>
+                <td class="text-danger"> {{sum_motif_arrets}} </td>
+            </tr>
+            <tr style="font-size:12px" class="text-secondary">
+                <td colspan="25" style="text-align: right;">
+                    Recette à verser de chaque VTC <br> 
+                    Recette à verser de chaque TAXI<br> 
+                </td>
+                <td colspan="8" style="text-align: right;">
+                    <i style="font-weight:700" class="text-success">{{recette_vtc_attendue}} frs</i> <br> 
+                    <i style="font-weight:700" class="text-success" aria-hidden="true">{{recette_taxi_attendue}} frs</i> <br> 
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+{% endif %}
+{% endblock main_content %}

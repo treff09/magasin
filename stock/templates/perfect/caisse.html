@@ -1,138 +1,238 @@
-{% extends 'perfect/bases.html' %} {% load static %} {% block title %} Caisse{% endblock title %} {% block main_content %} {% if user.user_type == '4' %} {% else %}
-<div class="col-md-12">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-6 p-1">
-          <div class="card" style="height: 132%; background-color:rgba(255, 255, 255, 0.91);">
-            <div class="row p-0 m-0">
-              <div class="col-md-8 p-1">
-                <div class="chart p-0" style="border-radius: 0px; background: rgba(255, 255, 255, 0.3); border-radius: 4px;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    backdrop-filter: blur(2px);--webkit-backdrop-filter: blur(2px);">
-                  <canvas id="barChart" style="min-height: 100%; height: 100%; max-height: 100%; max-width: 100%;"></canvas>
-                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                </div>
-                <script>
-                    const ctyo = document.getElementById('barChart').getContext('2d');
-                    new Chart(ctyo, {
-                        type: 'pie',
-                        data: {
-                            labels: ["A", "B", "C"],
-                            datasets: [{
-                                label: 'changées vtc',
-                                data: [12, 20, 45],
-                                borderWidth: 2,
-                                borderColor: ['rgb(220,53,69)', 'rgb(255, 230, 7)', 'rgb(5,203,163)'],
-                                backgroundColor: [
-                                    'rgb(255, 0, 0,.6)', // Rouge pour A
-                                    'rgba(255, 255, 2, .6)', // Jaune pour B
-                                    'rgb(5,203,163,.6)' // Vert pour C
-                                ],
-                                tension: 0.4,
-                                fill: true,
-                            }, ]
-                        },
-                    });
-                </script>
-              </div>
+{% extends 'perfect/bases.html' %} 
+{% load static %} 
+{% block title %} Caisse{% endblock title %} 
 
-              <div class="col-md-4 p-1 text-secondary" style="border-radius: 4px; background: rgba(255, 255, 255, 0.3);
-                backdrop-filter: blur(4px);--webkit-backdrop-filter: blur(4px); font-size: 12px">
-                      Ventes du [date]
-                  <div class="card-body" style="height: 78%; border-radius: 0px; background: rgba(255, 255, 255, 0.3);box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    backdrop-filter: blur(8px);--webkit-backdrop-filter: blur(8px);">
-                    <div style="margin-left: -10px; margin-top: 1px;">
-                      <div class="d-flex justify-content-between mb-2">
-                        <div>Alto </div>
-                        <div id="remise" class="text-end mb-0 ms-auto">{{ commande.remise }}7000</div>
-                      </div>
-                      <div class="d-flex justify-content-between mb-2">
-                        <div>Dzire</div>
-                        <div id="remise" class="text-end mb-0 ms-auto">{{ commande.remise }}20000</div>
-                      </div>
-                      <div class="d-flex justify-content-between mb-2">
-                        <div>S-presso</div>
-                        <div id="remise" class="text-end mb-2 ms-auto">{{ commande.remise }}45000</div>
-                      </div>
-                      <div class="d-flex justify-content-between mb-2">
-                        <div>A: 200</div> <div>D: 74</div> <div>S: 58</div>
+{% block aside %}
+  <div class="col-md-12">
+    <div class="row text-secondary" style="background-color:rgba(228, 238, 240, 0.4); font-size:14px">
+        <div class="col-md-6 p-0">
+            <i class="fa fa-shopping-cart text-secondary" aria-hidden="true" style="font-size:20px; margin-top:2px; margin-left:2px"></i> <input type="text" style="width:26px; height:25px; border-radius:80px; border-color:rgba(0, 255, 221, 0.8); font-size:10px" class="form-group text-center bg-light p-1" placeholder='0000' disabled> 
+        </div>
+        <div class="col-md-6 p-0">
+            TOTAL <input type="text" style="width:108px; height:25px; border-radius:80px; border-color:rgba(0, 255, 221, 0.8); margin-top:2px" class="form-group text-center bg-light" placeholder='0' disabled> 
+        </div> 
+    </div>
+    <div class="row"> 
+      <div class="col-md-12 p-0" style="height:270px; margin-top:-14px">
+        <div class="card" style="height:285px; transform: translateY(0px); box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); background-color:rgba(255, 255, 255, 0.51)">
+          <div class="card-body table-responsive p-0">
+            <form method="post" action="{% url 'valider_panier' %}">
+              <div class="tab-pane fade h-100 show active p-0" id="newOrderTab">
+                  {% csrf_token %} 
+                  {% comment %} {% for item in panier_items %} {% endcomment %}
+                    <div class="pos-order p-2">
+                      <div class="pos-order-product">
+                          <div class="flex-1">
+                              <div class="row">
+                                  <div class="col-4">
+                                      <div class="fw-semibold" style="color:rgb(5, 83, 107);">Article</div>
+                                  </div>
+                                  <div class="col-3">
+                                      <div class="fw-semibold" style="color:rgb(5, 83, 107)">véhicule</div>
+                                  </div>
+                                  <div class="col-2">
+                                      <div class="fw-semibold" style="color:rgb(5, 83, 107)">Qte</div>
+                                  </div>
+                                  <div class="col-3">
+                                      <div class="fw-semibold" style="color:rgb(5, 83, 107)">Montant</div>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
 
-              {% comment %} <div class="card col-md-12 p-1"> {% endcomment %}
-                <p class="p-1 text-secondary" style="font-weight:700; font-size:12px"> Liste des ventes du jour</p>
-                <div class="card-body table-responsive p-1" style="height: 114px; font-size:12px">
-                  <table id="example2" class="table table-head-fixed text-nowrap">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Reason</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>11-7-2014</td>
-                        <td><span class="text-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>11-7-2014</td>
-                        <td><span class="text-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>11-7-2014</td>
-                        <td><span class="text-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>11-7-2014</td>
-                        <td><span class="text-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td>11-7-2014</td>
-                        <td><span class="text-success">Approved</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              {% comment %} </div> {% endcomment %}
-            </div>
-          </div>
-
-          <div class="col-md-6 p-1">
-            <div class="card" style="height: 132%; background-color:rgba(255, 255, 255, 0.91);">
-              <p class="p-1 text-secondary" style="font-weight:700; font-size:12px;">Liste des commandes</p>
-              <div class="card-body table-responsive p-1" style="height: 300px; font-size:10px;">
-                <table id="example1" class="table table-head-fixed text-nowrap">
-                  <thead>
-                    <tr>
-                      <th>DATE</th>
-                      <th>N°TICKET</th>
-                      <th>VALIDATION</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>11-7-2014</td>
-                      <td>##458##</td>
-                      <td><span class="text-success"><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:20px"></i></span></td>
-                    </tr>
-                  </tbody>
-                </table>
+                    {% for item in panier_items %}
+                      <div class="pos-order p-2">
+                        <div class="pos-order-product">
+                          <div class="flex-1">
+                            <div class="row text-secondary">
+                              <div class="col-4">
+                                  <div class="small">{{ item.piece.designation }}0azertyuiop</div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="small">{{ item.piece.type_voiture.type_voiture }}0azert</div>
+                              </div>
+                              <div class="col-2">
+                                  <div class="small">{{ item.quantite }}40</div>
+                              </div>
+                              <div class="col-3">
+                                  <div class="small">{{item.piece.prix_unitaire}}78550</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr style="margin-top:-4px">
+                    {% endfor %}
               </div>
-            </div>
-            
+            </form>
           </div>
         </div>
       </div>
     </div>
+    <div class="pos-sidebar-footer" style="">
+        <div class="mt-4 p-0 text-secondary" style="border-radius: 4px; font-size:14px">
+            {% if commande %}
+              <div class="d-flex justify-content-between mb-1">
+                  <div>Montant TTC</div>
+                  <div id="sous-total" class="text-end h6 mb-0 ms-auto">{{ commande.total_sans_remise }}</div>
+              </div>
+              <div class="d-flex justify-content-between mb-1">
+                  <div>Remise (%)</div>
+                  <div id="remise" class="text-end h6 mb-0 ms-auto">{{ commande.remise }}</div>
+              </div>
+              <div class="d-flex justify-content-between mb-1">
+                  <div>Montant à payer</div>
+                  <div id="total" class="text-end h6 mb-0 ms-auto">{{ commande.total }}</div>
+              </div>
+              <div class="row align-items-center">
+                  <div class="col-md-3 mb-3">Montant</div>
+                  <div class="col-md-9">
+                    <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px;" required>
+                  </div>
+              </div>
+            {% else %}
+              <div class="d-flex justify-content-between mb-2">
+                  <div>Montant TTC</div>
+                  <div id="sous-total" class="text-end h6 mb-0 ms-auto">0</div>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                  <div>Remise (%)</div>
+                  <div id="remise" class="text-end h6 mb-0 ms-auto">0.0</div>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+              <div>Montant à payer</div>
+              <div id="total" class="text-end h6 mb-0 ms-auto">0</div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+              <div>Montant payer</div>
+              <input type="number" step="0.01" name="montant" id="montant"
+                class="form-control text-secondary text-end h1 ms-auto"
+                style="border-radius: 8px; background-color: transparent; height: 30px; width: 170px;" required>
+              </div>
+            {% endif %}
+        </div>
+        <div class="mt-3">
+            <div class="d-flex justify-content-between align-items-center p-0">
+                <a href="{% url 'caisseDashboard' %}" class="btn btn-outline-danger btn-lg d-flex align-items-center justify-content-center px-1 py-1" 
+                   style="border-radius: 50px; width:140px; transform: translateY(0px); box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3); font-size:16px">
+                    <i class="fa fa-times-circle me-2"></i> ANNULER
+                </a>
+                <button type="submit" class="btn btn-outline-success btn-lg d-flex align-items-center justify-content-center px-1 py-1" 
+                    style="border-radius: 50px; width:140px; transform: translateY(0px); box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3);font-size:16px">
+                    <i class="fa fa-check-circle me-2"></i> VALIDER
+                </button>
+            </div>
+        </div>
+    </div>
   </div>
+{% endblock aside %}
+{% block collapse %}
+  <div class="col-md-2">
+      <td style="border: none;">
+          <div style="display: flex; align-items: center;">
+              <div style="font-size: 14px; " class="mr-3 mt-1 text-center">
+                  Alto5 {{car_counts}}0
+              </div>
+          </div>
+      </td>
+  </div>
+{% endblock collapse %}
+
+{% block main_content %} 
+{% if user.user_type == '4' %} 
+{% else %}
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-4 p-1">
+      <div class="card" style="height: 364%; background-color:rgba(231, 245, 255, 0);">
+        <div class="card-body table-responsive p-0" style="height: 114px; font-size:12px">
+            <div class="col-md-12 p-0 m-0" style="height: 50%; background-color:rgba(255, 255, 255, 0.45);">
+              <div class="chart" style="border-radius: 0px; border-radius: 4px;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <canvas id="barChart" style="min-height: 200px; height: 200px; max-height: 200px; max-width: 100%;"></canvas>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              </div>
+              <script>
+                  const ctyo = document.getElementById('barChart').getContext('2d');
+                  new Chart(ctyo, {
+                      type: 'pie',
+                      data: {
+                          labels: ["A", "B", "CD"],
+                          datasets: [{
+                              label: 'changées vtc',
+                              data: [40, 30, 30],
+                              borderWidth: 2,
+                              borderColor: ['rgb(220,53,69)', 'rgb(255, 230, 7)', 'rgb(5,203,163)'],
+                              backgroundColor: [
+                                  'rgb(255, 0, 0,.6)', // Rouge pour A
+                                  'rgba(255, 255, 2, .6)', // Jaune pour B
+                                  'rgb(5,203,163,.6)' // Vert pour C
+                              ],
+                              tension: 0.4,
+                              fill: true,
+                          }, ]
+                      },
+                  });
+              </script>
+            </div>
+            <div class="col-md-12 p-0 m-0" style="height: 50%; background-color:rgba(255, 88, 88, 0.47);">
+              <div class="card-body text-secondary" style="height: 100%; border-radius: 0px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px);background-color:rgba(255, 255, 255, 0.47);--webkit-backdrop-filter: blur(8px);">
+                <div class="d-flex justify-content-center text-secondary" style="font-weight:700; font-size:12px">
+                      bilan du stocks
+                </div>
+                <div style="margin-left: 0px; margin-top: 5px;">
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>Alto </div>
+                      <div id="remise" class="text-end mb-0 ms-auto">{{ commande.remise }}07000</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>Dzire</div>
+                      <div id="remise" class="text-end mb-0 ms-auto">{{ commande.remise }}20000</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>S-presso</div>
+                      <div id="remise" class="text-end mb-2 ms-auto">{{ commande.remise }}45000</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-secondary" style="font-weight:700">
+                      Nombre de pièce
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>A: 200</div> <div>D: 74</div> <div>S: 58</div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>A: 200</div> <div>D: 74</div> <div>S: 58</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 p-1">
+      <div class="card" style="height: 364%; background-color:rgba(255, 255, 255, 0.45);">
+        <div class="card-body table-responsive p-1" style="height: 114px; font-size:12px">
+          <table id="example2" class="table table-head-fixed text-nowrap" style="background-color:rgba(255, 255, 255, 0.45);">
+            <thead>
+              <tr class="text-secondary">
+                <th>N°Pieces</th>
+                <th>Libelle</th>
+                <th>Vehicule</th>
+                <th>Valider</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#0125</td>
+                <td>Frein</td>
+                <td>3500</td>
+                <td><a href=""><i class="fa fa-share text-success" style="font-size:18px"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endif %} 
 {% endblock main_content %}

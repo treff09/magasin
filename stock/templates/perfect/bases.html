@@ -88,98 +88,102 @@
           transform: translate(-50%, -50%);
           z-index: 9999; /* Assure que le toast est au-dessus des autres éléments */
         }
-
+        input,textarea {
+              border: 1px solid #eeeeee;
+              box-sizing: border-box;
+              margin: 0;
+              outline: none;
+              padding: 10px;
+            }
+            
+            input[type="button"] {
+              --webkit-appearance: button;
+              cursor: pointer;
+            }
+            
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+            }
+            
+            .input-group {
+              clear: both;
+              margin: 15px 0;
+              position: relative;
+            }
+            
+            .input-group input[type='button'] {
+              background-color: #eeeeee;
+              min-width: 28px;
+              width: auto;
+              transition: all 300ms ease;
+            }
+            
+            .input-group .button-minus, .btn-retirer, .btn-ajouter,
+            .input-group .button-plus {
+              font-weight: bold;
+              height: 24px;
+              padding: 0;
+              width: 28px;
+              position: relative;
+            }
+            
+            .input-group .quantity-field {
+              position: relative;
+              height: 24px;
+              left: 0px;
+              text-align: center;
+              width: 62px;
+              display: inline-block;
+              font-size: 13px;
+              margin: 0 0 5px;
+              resize: vertical;
+            }
+            
+            .button-plus {
+              left: -13px;
+            }
+            
+            input[type="number"] {
+              -moz-appearance: textfield;
+              -webkit-appearance: none;
+            }
         {% endblock style %}
+
     </style>
 
 </head>
-    <body class="hold-transition layout-top-nav layout-fixed layout-navbar-fixed layout-footer-fixed" style="background-color:rgb(173,213,208, 0.3)">
+    <body class="hold-transition layout-top-nav layout-fixed layout-navbar-fixed layout-footer-fixed" style="background-color: rgb(173,213,208, 0.2)">
         <div class="wrapper">
-            <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="backdrop-filter: blur(18px);background-color:rgba(255, 255, 255, 0.60);--webkit-backdrop-filter: blur(18px);">
                 <div class="container-fluid">
-                    <a href="{ url 'dash' %}" class="brand-link" style="background-color: #ffffff;width:150px">
+                    <a href="{ url 'dash' %}" class="brand-link" style="backdrop-filter: blur(18px);background-color:rgba(247, 254, 255, 0.36);--webkit-backdrop-filter: blur(18px);;width:150px">
                         <span class="brand-text font-weight-danger text-danger" style="font-weight: 700; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); ">AUTO-PIECE <i class="fas fa-tools"></i></span>
                     </a>
                     <div class="collapse navbar-collapse order-3 d-flex justify-content-center w-100" id="navbarCollapse">
-                        <div class="card" style="color: #0176bf; font-weight: 700; background-color:rgba(255, 255, 255, 0.47); width:960px; height: 54px; position:absolute; margin-left: 225px; margin-top: 16px; border: 2px solid white;">
-                            <div class="card-body table-responsive p-0" style="border-radius:0px; border:none">
+                        <div class="card" style="color: #0176bf; font-weight: 700; background-color:rgba(255, 255, 255, 0.47); width:820px; height: 45px; position:absolute; margin-left: 40px; margin-top: 15px; border: 2px solid white;">
+                            <div class="card-body p-0" style="border-radius:0px; border:none">
                                 <table class="">
                                     <tr>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" >
                                             <div class="row">
-                                                <div class="col-md-2">
-                                                    <td style="border: none;">
-                                                        <div style="display: flex; align-items: center;">
-                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
-                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
-                                                            </div>
-                                                            <div>
-                                                                <div style="font-size: 14px;color: #06497C">Aujourd'hui</div>
-                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
-                                                                    {{car_counts}}0
+                                                {% block collapse %}
+                                                    <div class="col-md-2">
+                                                        <td style="border: none;">
+                                                            <div style="display: flex; align-items: center;">
+                                                                <div style="font-size: 14px; " class="mr-3 mt-1 text-center">
+                                                                    Alto {{car_counts}}0
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td style="border: none;">
-                                                        <div style="display: flex; align-items: center;">
-                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
-                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
-                                                            </div>
-                                                            <div>
-                                                                <div style="font-size: 14px;color: #06497C">Mois</div>
-                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
-                                                                    {{car_counts}}0
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td style="border: none;">
-                                                        <div style="display: flex; align-items: center;">
-                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
-                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
-                                                            </div>
-                                                            <div>
-                                                                <div style="font-size: 14px;color: #06497C">Aujourd'hui</div>
-                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
-                                                                    {{car_counts}}0
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td style="border: none;">
-                                                        <div style="display: flex; align-items: center;">
-                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
-                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
-                                                            </div>
-                                                            <div>
-                                                                <div style="font-size: 14px;color: #06497C">Marge</div>
-                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
-                                                                    {{car_counts}}0 %
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td style="border: none;">
-                                                        <div style="display: flex; align-items: center;">
-                                                            <div style="height: 40px; width: 40px; background-color: #f4f6f9; border-radius: 50px; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" class="mr-3 text-center">
-                                                                <img style="height: 25px; width: 25px; position:relative; margin-top: 9px; margin-left: 0px;" src="{% static 'vtc.png' %}" alt="" srcset="">
-                                                            </div>
-                                                            <div>
-                                                                <div style="font-size: 14px;color: #06497C">Resultat</div>
-                                                                <div style="font-size:14px; font-weight: 700; line-height: 1; color: #fa7832;">
-                                                                    {{car_counts}}0
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </div>
+                                                        </td>
+                                                    </div>
+                                                {% endblock collapse %}
                                             </div>
                                         </div>
                                     </tr>
                                 </table>
                             </div>
-                        </div>
+                        </div> 
                     </div>
 
                     <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
@@ -187,9 +191,9 @@
                             <span class="brand-text font-weight-danger text-danger" style="font-weight: 700; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);"><i class="fa fa" style="font-size:14px">Username</i></span>
                         </a>
                     </ul>
-                    <ul class="navbar-nav" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700; background-color:rgba(255, 255, 255, 0.47);position:absolute; margin-left:150px;">
+                    <ul class="navbar-nav" style="color: #0176bf; border-radius: 20px; border-color: #00217b; font-weight: 700; background-color:rgba(255, 255, 255, 0.47);position:absolute; margin-left:160px;">
                         <li class="nav-item dropdown">
-                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Menu</a>
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bars text-orange"></i></a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                 <li><a href="#" class="dropdown-item">Some action </a></li>
                                 <li><a href="#" class="dropdown-item">Some other action</a></li>
@@ -216,102 +220,10 @@
                 </div>
             </nav>
             
-            {% comment %} <aside class="main-sidebar sidebar-dark-cyan elevation-1" style="width:320px; height:200px; top:56px; background-color:rgba(227, 248, 252, 0.8);"> {% endcomment %}
-            <aside class="main-sidebar sidebar-dark-cyan elevation-1" style="width:320px; height:200px; top:56px; background-color:rgba(245, 253, 255, 0.91);">
-                <div class="col-md-12">
-                    <div class="row text-secondary" style="background-color:rgba(228, 238, 240, 0.4); font-size:14px">
-                        <div class="col-md-6 p-1">
-                            <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size:20px"></i> <input type="text" style="width:25px; height:25px; border-radius:80px; border-color:rgba(0, 255, 221, 0.8);" class="form-group text-center bg-light" placeholder='0' disabled> 
-                        </div>
-                        <div class="col-md-6 p-1">
-                            TOTAL <input type="text" style="width:98px; height:25px; border-radius:80px; border-color:rgba(0, 255, 221, 0.8)" class="form-group text-center bg-light" placeholder='0' disabled> 
-                        </div> 
-                    </div>
-                    <div class="row"> 
-                        <div class="col-md-12 p-0" style="height:270px; margin-top:-14px">
-                           <div class="card" style="height:270px; transform: translateY(0px); box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); background-color:rgba(255, 255, 255, 0.51)">
-                                <div class="card-body table-responsive p-0">
-                                    <table class="table table-head-fixed text-nowrap" style="height:0px; font-size:10px; background-color:rgba(227, 248, 252, 0.22);border:none">
-                                        <thead >
-                                          <tr style="height:10px; color:rgb(220,53,69,.6)">
-                                            <th>Article</th>
-                                            <th>Véh</th>
-                                            <th>Qte</th>
-                                            <th>Mont</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody style="font-size:10px">
-                                          <tr> 
-                                            <td>11-7-2014</td>
-                                            <td>##458##</td> 
-                                            <td>##458##</td> 
-                                            <td><span class="text-success">Approved</span></td>
-                                          </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pos-sidebar-footer text-dark ">
-                        <div class="mt-2 p-1" style="border-radius: 4px;">
-                            {% if commande %}
-                                <div class="d-flex justify-content-between mb-2">
-                                    <div>Montant TTC</div>
-                                    <div id="sous-total" class="text-end h6 mb-0 ms-auto">{{ commande.total_sans_remise }}</div>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <div>Remise (%)</div>
-                                    <div id="remise" class="text-end h6 mb-0 ms-auto">{{ commande.remise }}</div>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <div>Montant à payer</div>
-                                    <div id="total" class="text-end h6 mb-0 ms-auto">{{ commande.total }}</div>
-                                </div>
-                                <div class="row align-items-center">
-                                    <div class="col-md-3 mb-3">Montant</div>
-                                    <div class="col-md-9">
-                                        <input type="number" step="0.01" name="montant" id="montant" class="form-control" style="width: 100%; border-radius:8px;" required>
-                                    </div>
-                                </div>
-                            {% else %}
-                                <div class="d-flex justify-content-between mb-2">
-                                    <div>Montant TTC</div>
-                                    <div id="sous-total" class="text-end h6 mb-0 ms-auto">0</div>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <div>Remise (%)</div>
-                                    <div id="remise" class="text-end h6 mb-0 ms-auto">0.0</div>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <div>Montant à payer</div>
-                                    <div id="total" class="text-end h6 mb-0 ms-auto">0</div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <div>Montant payer</div>
-                                    <input type="number" step="0.01" name="montant" id="montant"
-                                           class="form-control text-secondary text-end h1 ms-auto"
-                                           style="border-radius: 8px; background-color: transparent; height: 30px; width: 170px;" required>
-                                </div>
-
-                            {% endif %}
-                        </div>
-                        <div class="mt-0 bg-light">
-                            <div class="d-flex justify-content-between align-items-center p-2">
-                                <a href="{% url 'caisseDashboard' %}" class="btn btn-outline-danger btn-lg d-flex align-items-center justify-content-center px-1 py-1" 
-                                   style="border-radius: 12px; width: 48%; transform: translateY(0px); box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3); font-size:16px">
-                                    <i class="fa fa-times-circle me-2"></i> ANNULER
-                                </a>
-                                <button type="submit" class="btn btn-outline-success btn-lg d-flex align-items-center justify-content-center px-1 py-1" 
-                                        style="border-radius: 12px; width: 48%; transform: translateY(0px); box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3);font-size:16px">
-                                    <i class="fa fa-check-circle me-2"></i> VALIDER
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                
+            <aside class="main-sidebar sidebar-dark-cyan elevation-1" style="width:320px; height:200px; top:56px; background-image: linear-gradient(rgb(226, 249, 255), rgba(205, 247, 255, 0.81)); box-shadow: 0px 4px 128px rgba(0, 0, 0, 0.3);">
+                {% block aside %}
+                    
+                {% endblock aside %}
                 <aside class="control-sidebar" style="border-radius: 4px; max-height: 100px; background-color: rgba(255, 255, 255, 0.22); 
                     border-radius: 16px;box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1); backdrop-filter: blur(12.5px); 
                     --webkit-backdrop-filter: blur(12.5px); border: 1px solid rgba(255, 255, 255, 0.03);">
@@ -319,12 +231,11 @@
                         {% if user.is_authenticated %}
                         <p><i class="fa fa-key text-danger"></i> <a href="{ url 'change_password' %}">Profil & mot de passe</a></p>
                         {% endif %}
-                        <p><i class="fa fa-sign-out text-danger "></i> <a href="{ url 'log_out' %} "> Deconnexion</a></p>
+                        <p><i class="fa fa-sign-out text-danger "></i> <a href="{% url 'deconnexion' %}"> Deconnexion</a></p>
                     </div>
                 </aside>
-
-                
             </aside>
+            
             <!-- Content Wrapper. Contains page content -->
             
             <div class="content-wrapper">
@@ -341,7 +252,7 @@
             <!-- /.content-wrapper -->
 
             <!-- Control Sidebar -->
-            <footer class="main-footer">
+            <footer class="main-footer" style="backdrop-filter: blur(18px);background-color:rgba(255, 255, 255, 0.60);--webkit-backdrop-filter: blur(18px);">
                 <div class="float-right d-none d-sm-inline">
                     <b><small>Version Bradi One</small></b>
                 </div>
@@ -421,8 +332,6 @@
                     "autoWidth ": false,
                 });
             });
-
-            
         </script>
         <script type="text/javascript">
             $(function() {

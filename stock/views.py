@@ -2,7 +2,7 @@ import calendar
 from datetime import date, datetime, timedelta, timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import user_passes_test
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from .models import Categorie, Piece, Fournisseur, Panier, PanierItem, Commande, Ticket
 from .forms import AjouterAuPanierForm, PieceForm, DateForm, FournisseurForm
 from django.contrib import messages 
@@ -19,6 +19,145 @@ def raci(request):
     return render(request,'perfect/tableau_bord.html',)
 def caisse(request):
     return render(request,'perfect/caisse.html',)
+def accu(request):
+    return render(request,'perfect/serv_accueil.html',)
+
+
+class UpdatVehiculeView(UpdateView):
+    model = Piece
+    form_class = PieceForm
+    template_name = 'perfect/updatpiec.html'
+    success_message = 'Pièce Modifiée avec succès ✓✓'
+    error_message = "Erreur de saisie ✘✘ "
+    # success_url = reverse_lazy ('listvehi')
+    timeout_minutes = 120
+    def dispatch(self, request, *args, **kwargs):
+        last_activity = request.session.get('last_activity')
+        if last_activity:
+            last_activity = datetime.strptime(last_activity, '%Y-%m-%d %H:%M:%S')
+            if datetime.now() - last_activity > timedelta(minutes=self.timeout_minutes):
+                logout(request)
+                messages.warning(request, "Vous avez été déconnecté ")
+                return redirect("login")
+        return super().dispatch(request, *args, **kwargs)
+    def form_valid(self, form):
+        reponse = super().form_valid(form)
+        messages.success(self.request, self.success_message)
+        return reponse
+    def form_invalid(self, form):
+        reponse =  super().form_invalid(form)
+        messages.success(self.request, self.error_message)
+        return reponse
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        piecs = Piece.objects.all()
+        context.update({
+            'piecs':piecs,
+        })
+        return context
+    def get_success_url(self):
+        return reverse('updatecar', kwargs={'pk': self.kwargs['pk']})
+
+
+
+class ListPiec_moisView(ListView):
+    model = Piece
+    template_name = 'perfect/liste_visites.html'
+    timeout_minutes = 500
+    # def dispatch(self, request, *args, **kwargs):
+    #     last_activity = request.session.get('last_activity')
+    #     if last_activity:
+    #         last_activity = datetime.strptime(last_activity, '%Y-%m-%d %H:%M:%S')
+    #         if datetime.now() - last_activity > timedelta(minutes=self.timeout_minutes):
+    #             logout(request)
+    #             messages.warning(request, "Vous avez été déconnecté ")
+    #             return redirect("login")
+    #     return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        dates =date.today()
+        annee =date.today().year
+        mois =date.today().month
+        
+        libelle_mois= calendar.month_name[mois]
+        forms = DateForm(self.request.GET)
+        if forms.is_valid():
+            date_debut = forms.cleaned_data['date_debut'] 
+            date_fin = forms.cleaned_data['date_fin']
+            print("Date")
+        else:
+            print("Date")
+        context={
+            'dates':dates,
+            'libelles_mois':libelle_mois,
+            'annees':annee,
+            'form':forms,
+            }
+        return context
+
+class ListPiec_jourView(ListView):
+    model = Piece
+    template_name = 'perfect/liste_visites.html'
+    timeout_minutes = 500
+    # def dispatch(self, request, *args, **kwargs):
+    #     last_activity = request.session.get('last_activity')
+    #     if last_activity:
+    #         last_activity = datetime.strptime(last_activity, '%Y-%m-%d %H:%M:%S')
+    #         if datetime.now() - last_activity > timedelta(minutes=self.timeout_minutes):
+    #             logout(request)
+    #             messages.warning(request, "Vous avez été déconnecté ")
+    #             return redirect("login")
+    #     return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        dates =date.today()
+        annee =date.today().year
+        mois =date.today().month
+        
+        libelle_mois= calendar.month_name[mois]
+        forms = DateForm(self.request.GET)
+        if forms.is_valid():
+            date_debut = forms.cleaned_data['date_debut'] 
+            date_fin = forms.cleaned_data['date_fin']
+            print (date_debut, date_fin)
+        else:
+            print('*********')
+        context={
+            'dates':dates,
+            'libelles_mois':libelle_mois,
+            'annees':annee,
+            'form':forms,
+            }
+        return context
+
+class List_best_venteView(ListView):
+    model = Piece
+    template_name = 'perfect/liste_visites.html'
+    timeout_minutes = 500
+    # def dispatch(self, request, *args, **kwargs):
+    #     last_activity = request.session.get('last_activity')
+    #     if last_activity:
+    #         last_activity = datetime.strptime(last_activity, '%Y-%m-%d %H:%M:%S')
+    #         if datetime.now() - last_activity > timedelta(minutes=self.timeout_minutes):
+    #             logout(request)
+    #             messages.warning(request, "Vous avez été déconnecté ")
+    #             return redirect("login")
+    #     return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        dates =date.today()
+        annee =date.today().year
+        mois =date.today().month
+        
+        libelle_mois= calendar.month_name[mois]
+        context={
+            'dates':dates,
+            'libelles_mois':libelle_mois,
+            'annees':annee,
+            }
+        return context
+
+
 
 def base(request):
     return render(request,'magasin/base.html',)
@@ -452,7 +591,7 @@ def piece_list(request):
         'nb_panier_mensuelle_valide': nb_panier_mensuelle_valide,
         # 'nb_commands_valid': nb_commands_valid or 0,
     }
-    return render(request, 'piece_list.html', context)
+    return render(request, 'perfect/serv_accueil.html', context)
 
 @user_passes_test(is_accueillant)
 def ajouter_au_panier(request, piece_id):
